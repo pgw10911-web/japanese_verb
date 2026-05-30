@@ -1,0 +1,3285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>일본어 동사 마스터 200</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      min-width: 360px;
+      margin: 0;
+      background: #050505;
+      color: #f4f4f5;
+      font-family: "Pretendard", "Noto Sans KR", "Noto Sans JP", "Hiragino Sans", "Yu Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    button, input { font-family: inherit; }
+    button { cursor: pointer; border: 0; }
+    .app { max-width: 460px; min-height: 100vh; margin: 0 auto; padding: 20px 16px 32px; }
+    .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+    .eyebrow { margin: 0 0 4px; color: #d97706; font-size: 11px; font-weight: 900; letter-spacing: .32em; }
+    h1 { margin: 0; color: #f59e0b; font-size: 42px; line-height: 1; font-weight: 800; letter-spacing: -0.03em; }
+    .sub { margin: 6px 0 0; color: #a1a1aa; font-size: 14px; }
+    .counter { flex-shrink: 0; padding: 9px 14px; border: 1px solid #3f3f46; border-radius: 999px; background: #09090b; color: #d4d4d8; font-size: 16px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+    .stat { padding: 12px; border: 1px solid #27272a; border-radius: 18px; background: #09090b; }
+    .stat p { margin: 0; color: #71717a; font-size: 12px; font-weight: 800; }
+    .stat strong { display: block; margin-top: 4px; color: #fbbf24; font-size: 22px; }
+    .tabs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; padding: 4px; margin-bottom: 12px; border: 1px solid #27272a; border-radius: 18px; background: #09090b; }
+    .tab { min-height: 42px; border-radius: 14px; background: transparent; color: #a1a1aa; font-size: 11px; font-weight: 700; letter-spacing: -0.02em; }
+    .tab.active { background: #b45309; color: #fff; }
+    .search { display: none; align-items: center; gap: 8px; margin-bottom: 12px; padding: 12px 14px; border: 1px solid #27272a; border-radius: 18px; background: #09090b; }
+    .search.show { display: flex; }
+    .search input { width: 100%; border: 0; outline: 0; background: transparent; color: #fff; font-size: 14px; }
+    .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 9px; scrollbar-width: none; }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip { flex-shrink: 0; padding: 9px 14px; border: 1px solid #3f3f46; border-radius: 999px; background: transparent; color: #a1a1aa; font-size: 13px; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; }
+    .chip.active { border-color: #d97706; background: #18181b; color: #fbbf24; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .panel { padding: 22px; border: 1px solid #3f3f46; border-radius: 28px; background: #09090b; }
+    .section { margin-top: 14px; padding: 18px; border: 1px solid #27272a; border-radius: 24px; background: #09090b; }
+    .section-title { margin: 0; color: #fff; font-size: 18px; font-weight: 950; }
+    .muted { color: #71717a; font-size: 13px; }
+    .between { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .hero-title { margin: 12px 0 0; color: #fff; font-size: 27px; line-height: 1.25; font-weight: 950; }
+    .desc { margin: 12px 0 0; color: #a1a1aa; font-size: 14px; line-height: 1.7; }
+    .bar { height: 12px; overflow: hidden; margin-top: 18px; border-radius: 999px; background: #27272a; }
+    .fill { height: 100%; width: 0%; border-radius: 999px; background: #d97706; transition: width .2s; }
+    .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 16px; }
+    .btn-main, .btn-sub { min-height: 52px; border-radius: 18px; font-weight: 950; }
+    .btn-main { background: #b45309; color: #fff; }
+    .btn-sub { border: 1px solid #3f3f46; background: transparent; color: #d4d4d8; }
+    .list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+    .list-btn, .list-card { width: 100%; padding: 14px; border: 1px solid #27272a; border-radius: 18px; background: #000; color: #d4d4d8; text-align: left; }
+    .quick { min-height: 76px; padding: 14px; border: 1px solid #27272a; border-radius: 18px; background: #000; color: #d4d4d8; text-align: left; font-weight: 900; }
+    .quick span { display: block; margin-top: 4px; color: #71717a; font-size: 13px; font-weight: 700; }
+    .card { min-height: 420px; padding: 24px; border: 1px solid #3f3f46; border-radius: 28px; background: #09090b; text-align: center; }
+    .front { min-height: 365px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .tag { display: inline-flex; padding: 8px 14px; border: 1px solid #78350f; border-radius: 999px; color: #f59e0b; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    .word { margin: 34px 0 0; color: #c69b35; font-size: 48px; font-weight: 500; line-height: 1.18; word-break: keep-all; letter-spacing: 0; font-kerning: normal; font-feature-settings: "palt" 1; font-variant-east-asian: proportional-width; }
+    .kana { margin: 14px 0 0; color: #a1a1aa; font-size: 22px; }
+    .form { display: inline-flex; margin-top: 18px; padding: 8px 14px; border-radius: 999px; background: #18181b; color: #c69b35; font-weight: 600; letter-spacing: 0; }
+    .audio { display: inline-flex; align-items: center; gap: 7px; margin-top: 22px; padding: 12px 18px; border: 1px solid #b45309; border-radius: 999px; background: transparent; color: #fbbf24; font-weight: 700; letter-spacing: 0; }
+    .hint { margin-top: 18px; color: #71717a; font-size: 13px; }
+    .meaning { margin: 30px 0 0; color: #58a87d; font-size: 40px; font-weight: 700; letter-spacing: 0; }
+    .back-word { margin: 18px 0 0; color: #fff; font-size: 30px; font-weight: 500; letter-spacing: 0; font-kerning: normal; font-feature-settings: "palt" 1; font-variant-east-asian: proportional-width; }
+    .example { margin-top: 24px; padding: 18px; border-radius: 20px; background: #18181b; text-align: left; }
+    .example p { margin: 0; color: #000000 !important; }
+    .example .jp { color: #000000 !important; font-size: 20px; font-weight: 500; letter-spacing: 0; font-kerning: normal; font-feature-settings: "palt" 1; font-variant-east-asian: proportional-width; }
+    .example .ko { margin-top: 8px; color: #000000 !important; }
+    .mini { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .mini button { padding: 9px 12px; border: 1px solid #b45309; border-radius: 999px; background: transparent; color: #fbbf24; font-size: 12px; font-weight: 900; }
+    .conj { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; text-align: left; }
+    .conj div { padding: 14px; border: 1px solid #27272a; border-radius: 18px; background: #050505; }
+    .conj div.on { border-color: #b45309; }
+    .conj b { display: block; color: #f59e0b; font-weight: 700; }
+    .conj p { margin: 4px 0 0; color: #000000 !important; font-size: 19px; font-weight: 500; letter-spacing: 0; font-kerning: normal; font-feature-settings: "palt" 1; font-variant-east-asian: proportional-width; }
+    .conj span { color: #71717a; font-size: 14px; font-weight: 700; }
+    .card-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+    .nav, .fav { min-height: 54px; border-radius: 18px; background: #27272a; color: #d4d4d8; font-size: 22px; font-weight: 950; }
+    .next { background: #b45309; color: #fff; }
+    .fav { border: 1px solid #3f3f46; background: transparent; }
+    .fav.on { border-color: #f59e0b; color: #fbbf24; }
+    .complete { width: 100%; min-height: 54px; margin-top: 8px; border: 1px solid #3f3f46; border-radius: 18px; background: #09090b; color: #d4d4d8; font-weight: 950; }
+    .complete.on { border-color: #059669; background: #022c22; color: #6ee7b7; }
+    .empty { padding: 42px 20px; border: 1px solid #3f3f46; border-radius: 28px; background: #09090b; text-align: center; }
+    .empty strong { display: block; margin-top: 12px; color: #d4d4d8; }
+    .quiz-head { display: flex; justify-content: space-between; gap: 12px; margin: 16px 0; color: #a1a1aa; font-size: 13px; }
+    .quiz-box { padding: 24px; border-radius: 20px; background: #18181b; text-align: center; }
+    .quiz-prompt { margin: 0; color: #fff; font-size: 28px; font-weight: 950; line-height: 1.3; }
+    .options { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+    .option { display: flex; justify-content: space-between; align-items: center; min-height: 56px; padding: 14px; border: 1px solid #27272a; border-radius: 18px; background: #000; color: #e4e4e7; text-align: left; font-size: 17px; font-weight: 900; }
+    .option.correct { border-color: #10b981; background: #022c22; color: #6ee7b7; }
+    .option.wrong { border-color: #ef4444; background: #450a0a; color: #fca5a5; }
+    .explain { display: none; margin-top: 14px; padding: 14px; border: 1px solid #3f3f46; border-radius: 18px; background: #050505; }
+    .explain.show { display: block; }
+    .explain.correct { border-color: #047857; background: rgba(2,44,34,.5); }
+    .explain.wrong { border-color: #7f1d1d; background: rgba(69,10,10,.4); }
+    .full { width: 100%; min-height: 54px; margin-top: 14px; border-radius: 18px; background: #b45309; color: #fff; font-weight: 950; }
+    .item-word { margin: 0; color: #fff; font-size: 20px; font-weight: 950; }
+    .item-kana { margin: 2px 0 0; color: #71717a; font-size: 13px; }
+    .item-meaning { margin: 8px 0 0; color: #34d399; font-size: 14px; }
+    .item-cat { margin: 4px 0 0; color: #71717a; font-size: 12px; }
+    .clear { padding: 8px 12px; border: 1px solid #3f3f46; border-radius: 999px; background: transparent; color: #a1a1aa; font-size: 12px; font-weight: 900; }
+    .wrong-type { margin: 0; color: #f59e0b; font-size: 13px; font-weight: 950; }
+    .wrong-q { margin: 8px 0 0; color: #d4d4d8; }
+    .wrong-a { margin: 8px 0 0; color: #71717a; font-size: 13px; }
+    .red { color: #f87171; } .green { color: #34d399; } .amber { color: #fbbf24; }
+    .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
+    .result-card { padding: 14px; border: 1px solid #27272a; border-radius: 18px; background: #000; text-align: center; }
+    .result-card p { margin: 0; color: #71717a; font-size: 12px; }
+    .result-card strong { display: block; margin-top: 8px; font-size: 26px; }
+    .footer { margin-top: 18px; padding: 14px; border: 1px solid #27272a; border-radius: 18px; background: #09090b; color: #71717a; font-size: 13px; line-height: 1.6; }
+    .hide { display: none !important; }
+
+    /* ===== 하늘색 톤 테마 + 오늘학습 ===== */
+    body {
+      background: linear-gradient(180deg, #e0f7ff 0%, #f5fcff 54%, #eef9ff 100%);
+      color: #1f2937;
+    }
+    .app {
+      max-width: 460px;
+      background: linear-gradient(180deg, #f8fdff 0%, #eef9ff 100%);
+    }
+    .eyebrow { color: #0284c7; }
+    h1 { color: #0369a1; }
+    .sub, .desc, .muted, .item-kana, .item-cat, .wrong-a { color: #64748b; }
+    .counter, .stat, .tabs, .search, .panel, .section, .card, .footer, .list-btn, .list-card, .quick, .example, .conj div, .result-card, .empty {
+      border-color: #bae6fd;
+      background: rgba(255,255,255,.86);
+      color: #1f2937;
+      box-shadow: 0 10px 24px rgba(14, 116, 144, .07);
+    }
+    .tabs { grid-template-columns: repeat(4, 1fr); }
+    .tab, .chip { color: #475569; }
+    .tab.active, .btn-main, .next, .full, .chip.active {
+      background: #0ea5e9;
+      color: #fff;
+      border-color: #0ea5e9;
+    }
+    .btn-sub, .nav, .fav, .complete, .clear {
+      border-color: #bae6fd;
+      background: #f0f9ff;
+      color: #0369a1;
+    }
+    .stat p { color: #64748b; }
+    .stat strong, .section-title, .hero-title, .quiz-prompt, .item-word, .back-word { color: #0f172a; }
+    .word, .form, .audio, .tag, .conj b, .wrong-type, .amber { color: #0369a1; }
+    .meaning, .item-meaning, .green { color: #059669; }
+    .tag, .audio, .mini button { border-color: #7dd3fc; background: #f0f9ff; }
+    .form, .bar, .quiz-box, .conj div, .explain, .result-card, .quick span { background: #f0f9ff; }
+    .fill { background: #38bdf8; }
+    .list-btn, .quick, .option { background: #ffffff; }
+    .option { border-color: #bae6fd; color: #1f2937; }
+    .complete.on {
+      border-color: #34d399;
+      background: #dcfce7;
+      color: #047857;
+    }
+    .red { color: #dc2626; }
+    .favorite.on, .fav.on { border-color: #38bdf8; color: #0369a1; }
+    .daily-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px; }
+    .daily-small-btn { flex:0 0 auto; padding:9px 11px; border-radius:999px; background:#0ea5e9; color:#fff; font-size:12px; font-weight:900; }
+    .daily-score-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px; }
+    .daily-score-card { padding:12px 10px; border:1px solid #bae6fd; border-radius:16px; background:#fff; }
+    .daily-score-card span { display:block; color:#64748b; font-size:12px; margin-bottom:5px; }
+    .daily-score-card strong { display:block; color:#0369a1; font-size:18px; }
+    .attendance-check-box, .attendance-calendar-box, .daily-stage-info, .daily-example-box {
+      padding:13px 14px;
+      border:1px solid #bae6fd;
+      border-radius:18px;
+      background:#f0f9ff;
+      margin-bottom:14px;
+    }
+    .attendance-check-box { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .attendance-check-box strong { display:block; font-size:15px; color:#0f172a; margin-bottom:4px; }
+    .attendance-check-box p { margin:0; color:#64748b; font-size:12px; line-height:1.4; }
+    .attendance-btn { flex:0 0 auto; padding:10px 12px; border-radius:999px; background:#0ea5e9; color:#fff; font-size:13px; font-weight:900; }
+    .attendance-btn.done { background:#22c55e; }
+    .attendance-btn.locked { opacity:.55; }
+    .calendar-head { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; }
+    .calendar-head strong { font-size:15px; color:#0f172a; }
+    .calendar-head span { font-size:12px; color:#64748b; }
+    .calendar-week, .calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
+    .calendar-week span { text-align:center; font-size:11px; color:#64748b; padding-bottom:4px; }
+    .calendar-day { position:relative; height:34px; border-radius:10px; background:#fff; color:#475569; font-size:12px; display:flex; align-items:center; justify-content:center; }
+    .calendar-day.empty { background:transparent; }
+    .calendar-day.today { outline:2px solid #38bdf8; }
+    .calendar-day.checked { background:#0ea5e9; color:#fff; }
+    .calendar-day.checked::after { content:"✓"; position:absolute; right:4px; top:2px; font-size:10px; }
+    .daily-progress { margin-bottom:14px; }
+    .daily-progress-row { display:flex; justify-content:space-between; margin-bottom:8px; color:#334155; font-size:14px; }
+    .daily-bar { width:100%; height:10px; border-radius:999px; background:#dbeafe; overflow:hidden; }
+    .daily-bar span { display:block; width:0%; height:100%; border-radius:inherit; background:#0ea5e9; transition:width .25s ease; }
+    .daily-stage-info { display:none !important; color:#475569; font-size:14px; line-height:1.45; }
+    .daily-single-wrap { perspective:1000px; margin-bottom:14px; }
+    .daily-single-card { position:relative; min-height:620px; border-radius:24px; transform-style:preserve-3d; transition:transform .45s ease; cursor:pointer; }
+    .daily-single-card.flipped { transform:rotateY(180deg); }
+    .daily-single-face { position:absolute; inset:0; padding:18px; border:1px solid #bae6fd; border-radius:24px; backface-visibility:hidden; overflow-y:auto; background:#e0f2fe; box-shadow:0 14px 32px rgba(14,116,144,.08); }
+    .daily-single-back { transform:rotateY(180deg); background:#f8fdff; }
+    .daily-front-word { margin:24px 0 10px; color:#075985; font-size:38px; line-height:1.2; text-align:left; font-weight:500; letter-spacing:0 !important; word-spacing:0 !important; }
+    .daily-front-sub { margin:0 0 18px; text-align:left; color:#64748b; font-size:14px; line-height:1.45; }
+    .daily-back-title { margin:16px 0 6px; color:#075985; font-size:30px; line-height:1.25; font-weight:500; letter-spacing:0 !important; word-spacing:0 !important; }
+    .daily-back-meaning { color:#059669; font-size:22px; margin-bottom:14px; }
+    .daily-form-list { display:grid; gap:8px; }
+    .daily-form-row { padding:16px 16px 18px; border:1px solid #bae6fd; border-radius:22px; background:#ffffff; }
+    .daily-form-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; margin-bottom:12px; }
+    .daily-form-label { flex:0 0 auto; font-size:12px; color:#64748b; font-weight:700; }
+    .daily-form-value { flex:1; text-align:right; color:#0f172a; font-size:18px; line-height:1.35; font-weight:500; letter-spacing:0 !important; word-spacing:0 !important; }
+    .daily-example-line { margin:0 0 10px; color:#000000 !important; font-size:17px; line-height:1.55; letter-spacing:0 !important; word-spacing:0 !important; }
+    .daily-ko-line { margin:0 0 12px; color:#475569; font-size:14px; line-height:1.45; }
+    .daily-sound-row, .daily-nav-actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .daily-mini-sound, .daily-nav-btn { padding:13px 12px; border-radius:15px; background:#1f2937; color:#fff; font-size:14px; font-weight:900; }
+    .daily-mini-sound { padding:12px 10px; border-radius:16px; font-size:13px; }
+    .daily-nav-btn.secondary { background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; }
+    .complete-daily { width:100%; margin:8px 0 14px; }
+    .complete-daily.done { background:#22c55e; }
+    .daily-list { display:grid; gap:8px; margin-top:4px; }
+    .daily-item { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:11px 13px; border-radius:15px; background:#fff; border:1px solid #bae6fd; color:#0f172a; text-align:left; }
+    .daily-item.now { border-color:#0ea5e9; box-shadow:0 0 0 2px rgba(14,165,233,.14); }
+    .daily-item.done { background:#dcfce7; border-color:#86efac; }
+    .daily-item-word { font-size:17px; font-weight:500; }
+    .daily-item-meaning { display:block; color:#64748b; font-size:13px; margin-top:3px; }
+    .daily-done-pill { flex:0 0 auto; padding:5px 8px; border-radius:999px; background:#0ea5e9; color:#fff; font-size:11px; font-weight:900; }
+    .notify-modal { position:fixed; inset:0; z-index:9999; display:flex; align-items:flex-end; justify-content:center; padding:18px; background:rgba(15,23,42,.34); }
+    .notify-modal.hidden { display:none !important; }
+    .notify-panel { width:100%; max-width:430px; padding:22px; border-radius:28px; background:#fff; box-shadow:0 18px 45px rgba(15,23,42,.18); }
+    .notify-panel h3 { margin:0 0 8px; font-size:22px; color:#0f172a; }
+    .notify-panel p { margin:0 0 16px; color:#475569; font-size:14px; line-height:1.5; }
+    .notify-time-label { display:block; margin-bottom:14px; color:#334155; font-size:14px; }
+    #notifyTimeInput { width:100%; margin:8px 0 0; height:54px; border:1px solid #bae6fd; border-radius:16px; font-size:20px; text-align:center; background:#f0f9ff; color:#0f172a; }
+    .notify-actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; }
+    .notify-action-btn { padding:14px 12px; border-radius:16px; background:#0ea5e9; color:#fff; font-size:14px; font-weight:900; }
+    .notify-action-btn.secondary { background:#e0f2fe; color:#0369a1; }
+    .notify-action-btn.ghost { width:100%; margin-top:8px; background:transparent; color:#64748b; }
+    @media (min-width: 430px) { .tabs { grid-template-columns: repeat(7, 1fr); } }
+    @media (max-width:380px){
+      .tabs { grid-template-columns: repeat(4, 1fr); }
+      .daily-single-card { min-height:600px; }
+      .daily-front-word { font-size:31px; }
+      .daily-back-title { font-size:25px; }
+      .daily-form-value { font-size:16px; }
+      .daily-example-line { font-size:15px; }
+      .daily-score-card strong { font-size:16px; }
+      .calendar-day { height:30px; font-size:11px; }
+    }
+
+  
+    /* ===== 최종 색상 고정: 카드 뒷면 예문/활용표 글씨 검정 ===== */
+    #cardBack .example,
+    #cardBack .conj div {
+      background: #ffffff !important;
+    }
+
+    #cardBack .example,
+    #cardBack .example *,
+    #cardBack #exJp,
+    #cardBack #exKana,
+    #cardBack #exKr,
+    #cardBack .conj p,
+    #cardBack .conj div p,
+    #cardBack .conj span,
+    #cardBack .conj div span {
+      color: #000000 !important;
+    }
+
+    #cardBack .conj b {
+      color: #0369a1 !important;
+    }
+
+    .daily-single-back .daily-example-line,
+    .daily-single-back .daily-form-value,
+    .daily-single-back .daily-form-row,
+    .daily-single-back .daily-form-row * {
+      color: #000000 !important;
+    }
+
+  
+    .word, .back-word, .conj p, .daily-front-word, .daily-back-title, .daily-form-value, .daily-example-line, .daily-item-word, .daily-back-meaning, .daily-form-row * {
+      letter-spacing: 0 !important;
+      word-spacing: 0 !important;
+      font-kerning: none !important;
+      font-feature-settings: normal !important;
+      font-variant-east-asian: normal !important;
+      white-space: normal;
+    }
+    .daily-sound-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px; }
+
+
+    /* ===== 최종 수정: 카드 예문 표시 + 형용사 버전 출석 달력 스타일 ===== */
+    .card { min-height: 520px; }
+    .front { min-height: 470px; }
+    .card-front-example {
+      width: 100%;
+      margin-top: 22px;
+      padding: 16px 17px;
+      border: 1px solid #bae6fd;
+      border-radius: 20px;
+      background: #ffffff;
+      text-align: left;
+      color: #000000;
+      box-shadow: 0 8px 18px rgba(14, 116, 144, .06);
+    }
+    .card-front-example span {
+      display: inline-flex;
+      margin-bottom: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .card-front-example p { margin: 0; }
+    .card-front-example .jp {
+      color: #000000 !important;
+      font-size: 17px;
+      line-height: 1.55;
+      font-weight: 500;
+      letter-spacing: 0 !important;
+      word-spacing: 0 !important;
+    }
+    .card-front-example .ko {
+      margin-top: 7px;
+      color: #475569 !important;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    #cardBack .example {
+      display: block !important;
+      min-height: 130px;
+      border: 1px solid #bae6fd;
+      background: #ffffff !important;
+    }
+    #cardBack .example .jp,
+    #cardBack .example .ko,
+    #cardBack #exJp,
+    #cardBack #exKr {
+      display: block !important;
+      color: #000000 !important;
+      visibility: visible !important;
+    }
+
+    #dailyScreen .panel.daily-panel {
+      padding: 28px 22px;
+      border: 0;
+      border-radius: 28px;
+      background: #ffffff;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, .08);
+    }
+    #dailyScreen .daily-head { align-items: flex-start; margin-bottom: 28px; }
+    #dailyScreen .daily-head .eyebrow { display: none; }
+    #dailyScreen .daily-head .section-title {
+      color: #222222;
+      font-size: 29px;
+      line-height: 1.25;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+    }
+    #dailyScreen .daily-head .desc {
+      margin-top: 10px;
+      color: #737373;
+      font-size: 17px;
+      line-height: 1.55;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+    #dailyScreen .daily-small-btn {
+      padding: 17px 22px;
+      border-radius: 999px;
+      background: #1f1f1f;
+      color: #ffffff;
+      font-size: 15px;
+      white-space: nowrap;
+      box-shadow: none;
+    }
+    #dailyScreen .daily-score-grid {
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    #dailyScreen .daily-score-card {
+      min-height: 88px;
+      padding: 19px 14px;
+      border: 0;
+      border-radius: 20px;
+      background: #f4f4f4;
+      box-shadow: none;
+    }
+    #dailyScreen .daily-score-card span {
+      color: #777777;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    #dailyScreen .daily-score-card strong {
+      margin-top: 8px;
+      color: #222222;
+      font-size: 25px;
+      line-height: 1.1;
+      font-weight: 500;
+    }
+    #dailyScreen .attendance-check-box {
+      min-height: 86px;
+      padding: 20px 18px;
+      border: 0;
+      border-radius: 20px;
+      background: #f4f4f4;
+      box-shadow: none;
+    }
+    #dailyScreen .attendance-check-box strong {
+      color: #222222;
+      font-size: 21px;
+      line-height: 1.2;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+    }
+    #dailyScreen .attendance-check-box p {
+      margin-top: 7px;
+      color: #777777;
+      font-size: 14px;
+      line-height: 1.4;
+      letter-spacing: -0.03em;
+    }
+    #dailyScreen .attendance-btn {
+      min-width: 64px;
+      min-height: 64px;
+      padding: 0 13px;
+      border-radius: 50%;
+      background: #6aae72;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 900;
+      box-shadow: none;
+    }
+    #dailyScreen .attendance-btn.locked { background: #cccccc; opacity: 1; }
+    #dailyScreen .attendance-calendar-box {
+      padding: 22px 17px 26px;
+      border: 0;
+      border-radius: 24px;
+      background: #f4f4f4;
+      box-shadow: none;
+    }
+    #dailyScreen .calendar-head { margin-bottom: 20px; }
+    #dailyScreen .calendar-head strong {
+      color: #222222;
+      font-size: 23px;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+    }
+    #dailyScreen .calendar-head span {
+      color: #777777;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    #dailyScreen .calendar-week,
+    #dailyScreen .calendar-grid {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+    }
+    #dailyScreen .calendar-week { margin-bottom: 9px; }
+    #dailyScreen .calendar-week span {
+      color: #777777;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 0;
+    }
+    #dailyScreen .calendar-day {
+      height: 46px;
+      border: 0;
+      border-radius: 13px;
+      background: #ffffff;
+      color: #555555;
+      font-size: 17px;
+      font-weight: 500;
+      box-shadow: none;
+      outline: 0;
+    }
+    #dailyScreen .calendar-day.empty {
+      background: transparent;
+      box-shadow: none;
+    }
+    #dailyScreen .calendar-day.today:not(.checked) {
+      outline: 2px solid #6aae72;
+      outline-offset: -2px;
+    }
+    #dailyScreen .calendar-day.checked {
+      background: #6aae72;
+      color: #ffffff;
+    }
+    #dailyScreen .calendar-day.checked.today {
+      outline: 2px solid #333333;
+      outline-offset: -2px;
+    }
+    #dailyScreen .calendar-day.checked::after {
+      right: 8px;
+      top: 5px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    #dailyScreen .daily-progress {
+      margin-top: 18px;
+      padding: 15px 2px 2px;
+    }
+    #dailyScreen .daily-progress-row {
+      color: #222222;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    #dailyScreen .daily-progress-row strong,
+    #dailyScreen #dailyPercentText,
+    #dailyScreen #dailyRangeText {
+      color: #222222;
+    }
+    #dailyScreen .daily-bar { background: #e5e7eb; }
+    #dailyScreen .daily-bar span { background: #6aae72; }
+    @media (max-width: 380px) {
+      #dailyScreen .panel.daily-panel { padding: 24px 18px; }
+      #dailyScreen .daily-head .section-title { font-size: 25px; }
+      #dailyScreen .daily-head .desc { font-size: 15px; }
+      #dailyScreen .daily-small-btn { padding: 14px 16px; font-size: 13px; }
+      #dailyScreen .calendar-week,
+      #dailyScreen .calendar-grid { gap: 7px; }
+      #dailyScreen .calendar-day { height: 41px; font-size: 15px; }
+      #dailyScreen .daily-score-card strong { font-size: 22px; }
+    }
+
+
+
+    /* ===== 일본어 표기 최종 수정: 공백 제거 + 괄호 안 히라가나 작게/회색 ===== */
+    .word,
+    .back-word,
+    .conj p,
+    .example .jp,
+    .card-front-example .jp,
+    .daily-front-word,
+    .daily-back-title,
+    .daily-form-value,
+    .daily-example-line,
+    .daily-item-word,
+    .item-word,
+    .quiz-prompt,
+    .option span:first-child {
+      letter-spacing: -0.035em !important;
+      word-spacing: 0 !important;
+      font-kerning: none !important;
+      font-feature-settings: "palt" 1 !important;
+      font-variant-east-asian: proportional-width !important;
+      white-space: normal !important;
+    }
+
+    .fg-paren,
+    .fg-kana {
+      display: inline !important;
+      color: #7b8794 !important;
+      font-size: 0.58em !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.06em !important;
+      word-spacing: 0 !important;
+      vertical-align: baseline !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .daily-example-line .fg-paren,
+    .daily-example-line .fg-kana,
+    .example .jp .fg-paren,
+    .example .jp .fg-kana,
+    .card-front-example .jp .fg-paren,
+    .card-front-example .jp .fg-kana {
+      font-size: 0.72em !important;
+    }
+
+  
+
+    /* ===== 요청 반영: 앞면 한글 뜻 제거 + 오늘학습 한글 노멀 + 검정 버튼 제거 ===== */
+    #frontExKr,
+    #dailyFrontFormList .daily-ko-line {
+      display: none !important;
+    }
+
+    #dailyScreen .section-title,
+    #dailyScreen .desc,
+    #dailyScreen .daily-small-btn,
+    #dailyScreen .daily-score-card span,
+    #dailyScreen .daily-score-card strong,
+    #dailyScreen .attendance-check-box strong,
+    #dailyScreen .attendance-check-box p,
+    #dailyScreen .attendance-btn,
+    #dailyScreen .calendar-head strong,
+    #dailyScreen .calendar-head span,
+    #dailyScreen .calendar-week span,
+    #dailyScreen .calendar-day,
+    #dailyScreen .daily-progress-row,
+    #dailyScreen .daily-progress-row strong,
+    #dailyScreen #dailyPercentText,
+    #dailyScreen #dailyRangeText,
+    #dailyScreen .daily-front-sub,
+    #dailyScreen .daily-form-label,
+    #dailyScreen .daily-ko-line,
+    #dailyScreen .daily-mini-sound,
+    #dailyScreen .daily-nav-btn,
+    #dailyScreen .daily-item-meaning,
+    #dailyScreen .daily-done-pill,
+    #dailyScreen .complete-daily,
+    #notifyModal .notify-panel,
+    #notifyModal .notify-panel h3,
+    #notifyModal .notify-panel p,
+    #notifyModal .notify-time-label,
+    #notifyModal .notify-action-btn {
+      font-weight: 400 !important;
+    }
+
+    #dailyScreen .daily-small-btn,
+    #dailyScreen .daily-mini-sound,
+    #dailyScreen .daily-nav-btn,
+    #dailyScreen .complete-daily,
+    #dailyScreen .attendance-btn,
+    #notifyModal .notify-action-btn {
+      background: #0ea5e9 !important;
+      color: #ffffff !important;
+      border: 1px solid #7dd3fc !important;
+      box-shadow: none !important;
+    }
+
+    #dailyScreen .daily-nav-btn.secondary,
+    #notifyModal .notify-action-btn.secondary,
+    #notifyModal .notify-action-btn.ghost {
+      background: #e0f2fe !important;
+      color: #0369a1 !important;
+      border: 1px solid #bae6fd !important;
+    }
+
+    #dailyScreen .attendance-btn.done,
+    #dailyScreen .complete-daily.done {
+      background: #22c55e !important;
+      color: #ffffff !important;
+      border-color: #86efac !important;
+    }
+
+    #dailyScreen .attendance-btn.locked {
+      background: #cbd5e1 !important;
+      color: #475569 !important;
+      border-color: #e2e8f0 !important;
+    }
+
+    #cardScreen .audio,
+    #cardScreen .mini button,
+    #cardScreen .nav,
+    #cardScreen .fav,
+    #cardScreen .complete {
+      background: #e0f2fe !important;
+      color: #0369a1 !important;
+      border: 1px solid #7dd3fc !important;
+      box-shadow: none !important;
+    }
+
+    #cardScreen .nav.next,
+    #cardScreen .complete.on {
+      background: #0ea5e9 !important;
+      color: #ffffff !important;
+      border-color: #7dd3fc !important;
+    }
+
+
+    /* ===== 홈 화면 성경 암송구절 100개 ===== */
+    .bible-panel { padding: 22px 20px !important; border-color: #bae6fd !important; background: rgba(255,255,255,.92) !important; }
+    .bible-panel .hero-title { margin-top: 8px; font-size: 27px; line-height: 1.24; font-weight: 800; letter-spacing: -0.04em; }
+    .bible-list { display: grid; gap: 10px; max-height: 430px; overflow-y: auto; margin-top: 16px; padding-right: 4px; scrollbar-width: thin; }
+    .bible-card { display: flex; gap: 11px; padding: 14px 13px; border: 1px solid #bae6fd; border-radius: 18px; background: #ffffff; box-shadow: 0 8px 18px rgba(14,116,144,.06); }
+    .bible-no { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #e0f2fe; color: #0369a1; font-size: 12px; font-weight: 700; }
+    .bible-body { min-width: 0; }
+    .bible-jp { margin: 0; color: #0f172a; font-size: 19px; line-height: 1.45; font-weight: 500; letter-spacing: -0.04em !important; word-spacing: 0 !important; font-kerning: none !important; font-feature-settings: "palt" 1 !important; font-variant-east-asian: proportional-width !important; }
+    .bible-ko { margin: 7px 0 0; color: #475569; font-size: 14px; line-height: 1.45; font-weight: 400; letter-spacing: -0.03em; }
+    .bible-ref { display: inline-flex; margin: 9px 0 0; padding: 5px 9px; border-radius: 999px; background: #f0f9ff; color: #0284c7; font-size: 12px; line-height: 1; font-weight: 500; }
+    .home-hidden-controls { display: none !important; }
+
+    /* ===== 오늘학습 진행 박스 위치 이동 후 형태 정리 ===== */
+    #dailyScreen .daily-progress { margin: 0 0 16px !important; padding: 15px 16px 13px !important; border-radius: 16px; background: #f4f4f4; box-shadow: none; }
+    #dailyScreen .daily-head { margin-bottom: 16px !important; }
+
+
+    /* ===== 오늘학습 상단/출석/달력 컴팩트 수정 ===== */
+    #dailyScreen .daily-head {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas: "dailyTitle dailyButton" "dailyDesc dailyDesc";
+      align-items: start !important;
+      column-gap: 12px;
+      row-gap: 6px;
+      margin-bottom: 10px !important;
+    }
+    #dailyScreen .daily-head > div { display: contents; }
+    #dailyScreen .daily-head .eyebrow { display: none !important; }
+    #dailyScreen .daily-head .section-title {
+      grid-area: dailyTitle;
+      margin: 0 !important;
+      font-size: 27px !important;
+      line-height: 1.15 !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.04em !important;
+    }
+    #dailyScreen .daily-head .desc {
+      grid-area: dailyDesc;
+      margin: 0 !important;
+      color: #555555 !important;
+      font-size: 13px !important;
+      line-height: 1.25 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.04em !important;
+      white-space: nowrap !important;
+      overflow: hidden;
+      text-overflow: clip;
+    }
+    #dailyScreen .daily-small-btn {
+      grid-area: dailyButton;
+      padding: 11px 15px !important;
+      border-radius: 999px !important;
+      background: #0ea5e9 !important;
+      color: #ffffff !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      box-shadow: none !important;
+    }
+
+    #dailyScreen .daily-progress {
+      margin: 0 0 10px !important;
+      padding: 10px 12px 9px !important;
+      border-radius: 14px !important;
+      background: #f4f4f4 !important;
+      box-shadow: none !important;
+    }
+    #dailyScreen .daily-progress-row {
+      margin-bottom: 5px !important;
+      font-size: 13px !important;
+      line-height: 1.2 !important;
+      font-weight: 400 !important;
+    }
+    #dailyScreen .daily-progress-row strong,
+    #dailyScreen #dailyRangeText,
+    #dailyScreen #dailyPercentText {
+      font-size: 12px !important;
+      font-weight: 400 !important;
+    }
+    #dailyScreen .daily-bar { height: 6px !important; }
+    #dailyScreen .daily-progress .between {
+      margin-top: 5px !important;
+      font-size: 12px !important;
+      line-height: 1.2 !important;
+    }
+
+    #dailyScreen .daily-score-grid {
+      gap: 8px !important;
+      margin-bottom: 10px !important;
+    }
+    #dailyScreen .daily-score-card {
+      min-height: 68px !important;
+      padding: 12px 11px !important;
+      border-radius: 17px !important;
+    }
+    #dailyScreen .daily-score-card span {
+      font-size: 12px !important;
+      font-weight: 400 !important;
+    }
+    #dailyScreen .daily-score-card strong {
+      margin-top: 5px !important;
+      font-size: 22px !important;
+      font-weight: 400 !important;
+    }
+
+    #dailyScreen .attendance-check-box {
+      min-height: 68px !important;
+      padding: 13px 13px !important;
+      border-radius: 17px !important;
+      margin-bottom: 10px !important;
+    }
+    #dailyScreen .attendance-check-box strong {
+      font-size: 18px !important;
+      line-height: 1.15 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.04em !important;
+    }
+    #dailyScreen .attendance-check-box p {
+      margin-top: 5px !important;
+      font-size: 12px !important;
+      line-height: 1.2 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.04em !important;
+      white-space: nowrap !important;
+    }
+    #dailyScreen .attendance-btn {
+      min-width: 52px !important;
+      min-height: 52px !important;
+      padding: 0 10px !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      background: #dbeafe !important;
+      color: #475569 !important;
+    }
+    #dailyScreen .attendance-btn.done {
+      background: #6aae72 !important;
+      color: #ffffff !important;
+    }
+    #dailyScreen .attendance-btn.locked {
+      background: #dbeafe !important;
+      color: #475569 !important;
+      opacity: 1 !important;
+    }
+
+    #dailyScreen .attendance-calendar-box {
+      padding: 14px 13px 15px !important;
+      border-radius: 20px !important;
+      margin-bottom: 12px !important;
+      background: #f4f4f4 !important;
+    }
+    #dailyScreen .calendar-head { margin-bottom: 9px !important; }
+    #dailyScreen .calendar-head strong {
+      font-size: 18px !important;
+      line-height: 1.2 !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.04em !important;
+    }
+    #dailyScreen .calendar-head span {
+      font-size: 12px !important;
+      line-height: 1.2 !important;
+      font-weight: 400 !important;
+    }
+    #dailyScreen .calendar-week,
+    #dailyScreen .calendar-grid {
+      gap: 4px !important;
+    }
+    #dailyScreen .calendar-week { margin-bottom: 5px !important; }
+    #dailyScreen .calendar-week span {
+      font-size: 11px !important;
+      line-height: 1.1 !important;
+      font-weight: 400 !important;
+    }
+    #dailyScreen .calendar-day {
+      height: 27px !important;
+      border-radius: 8px !important;
+      font-size: 12px !important;
+      line-height: 1 !important;
+      font-weight: 400 !important;
+    }
+    #dailyScreen .calendar-day.checked::after {
+      right: 4px !important;
+      top: 2px !important;
+      font-size: 9px !important;
+      font-weight: 500 !important;
+    }
+    #dailyScreen .calendar-day.today:not(.checked),
+    #dailyScreen .calendar-day.checked.today {
+      outline-width: 1px !important;
+    }
+
+    @media (max-width: 380px) {
+      #dailyScreen .daily-head .section-title { font-size: 25px !important; }
+      #dailyScreen .daily-head .desc { font-size: 12px !important; }
+      #dailyScreen .daily-small-btn { padding: 10px 13px !important; font-size: 12px !important; }
+      #dailyScreen .calendar-day { height: 24px !important; font-size: 11px !important; }
+      #dailyScreen .calendar-week,
+      #dailyScreen .calendar-grid { gap: 3px !important; }
+    }
+
+
+
+    /* ===== 2026-05-30 최종 보정: 오늘학습 상단 박스 높이 축소 + 출석 달력 빈공간 제거 ===== */
+    #dailyScreen .daily-progress { margin-bottom: 10px; }
+    #dailyScreen .daily-score-grid {
+      gap: 6px !important;
+      margin-bottom: 10px !important;
+    }
+    #dailyScreen .daily-score-card {
+      padding: 8px 10px !important;
+      border-radius: 14px !important;
+    }
+    #dailyScreen .daily-score-card span {
+      margin-bottom: 3px !important;
+      font-size: 11px !important;
+      line-height: 1.2 !important;
+    }
+    #dailyScreen .daily-score-card strong {
+      font-size: 16px !important;
+      line-height: 1.15 !important;
+    }
+    #dailyScreen .attendance-check-box {
+      padding: 10px 12px !important;
+      margin-bottom: 10px !important;
+      border-radius: 16px !important;
+      min-height: auto !important;
+    }
+    #dailyScreen .attendance-check-box strong {
+      margin-bottom: 2px !important;
+      font-size: 14px !important;
+      line-height: 1.2 !important;
+    }
+    #dailyScreen .attendance-check-box p {
+      font-size: 11px !important;
+      line-height: 1.35 !important;
+    }
+    #dailyScreen .attendance-btn {
+      padding: 8px 12px !important;
+      font-size: 12px !important;
+    }
+    #dailyScreen .attendance-calendar-box {
+      padding: 12px 14px !important;
+      margin-bottom: 10px !important;
+    }
+    #dailyScreen .calendar-head {
+      margin-bottom: 8px !important;
+    }
+    #dailyScreen .calendar-week {
+      margin-bottom: 2px !important;
+    }
+    #dailyScreen .calendar-day {
+      padding: 0 !important;
+      min-height: 0 !important;
+    }
+    #dailyScreen .calendar-day.empty {
+      height: 34px !important;
+      padding: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      color: transparent !important;
+    }
+    #dailyScreen .calendar-day.empty::before,
+    #dailyScreen .calendar-day.empty::after {
+      content: none !important;
+    }
+
+
+
+    /* ===== 최종 추가 수정: 홈 상단 글자/여백 타이트화 + 히라가나 표기 ===== */
+    .app {
+      padding-top: 14px !important;
+    }
+
+    .top {
+      align-items: flex-start !important;
+      gap: 10px !important;
+      margin-bottom: 8px !important;
+    }
+
+    .top .eyebrow {
+      margin: 0 0 2px !important;
+      font-size: 9px !important;
+      line-height: 1.05 !important;
+      font-weight: 600 !important;
+      letter-spacing: .42em !important;
+      color: #0284c7 !important;
+    }
+
+    .top h1,
+    .top .main-title {
+      margin: 0 !important;
+      color: #0369a1 !important;
+      font-size: 39px !important;
+      line-height: .92 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.07em !important;
+    }
+
+    .main-title-kana {
+      display: block !important;
+      margin-top: 3px !important;
+      color: #64748b !important;
+      font-size: 13px !important;
+      line-height: 1.05 !important;
+      font-weight: 400 !important;
+      letter-spacing: 0 !important;
+    }
+
+    .top .sub {
+      margin: 4px 0 0 !important;
+      color: #64748b !important;
+      font-size: 12px !important;
+      line-height: 1.15 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.03em !important;
+    }
+
+    .counter {
+      padding: 10px 13px !important;
+      min-width: 70px !important;
+      border-radius: 999px !important;
+      font-size: 16px !important;
+      line-height: 1 !important;
+      font-weight: 400 !important;
+      text-align: center !important;
+      background: rgba(255,255,255,.72) !important;
+      border-color: #bae6fd !important;
+      box-shadow: none !important;
+    }
+
+    .stats {
+      gap: 5px !important;
+      margin-bottom: 7px !important;
+    }
+
+    .stat {
+      min-height: 49px !important;
+      padding: 6px 9px 7px !important;
+      border-radius: 14px !important;
+      box-shadow: none !important;
+    }
+
+    .stat p {
+      margin: 0 !important;
+      color: #64748b !important;
+      font-size: 10px !important;
+      line-height: 1.05 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.04em !important;
+    }
+
+    .stat .jp-label {
+      display: block !important;
+      margin-top: 1px !important;
+      color: #94a3b8 !important;
+      font-size: 8.5px !important;
+      line-height: 1.05 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.06em !important;
+      white-space: nowrap !important;
+    }
+
+    .stat strong {
+      margin-top: 3px !important;
+      color: #222222 !important;
+      font-size: 20px !important;
+      line-height: 1 !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.04em !important;
+    }
+
+    .tabs {
+      gap: 3px !important;
+      padding: 3px !important;
+      margin-bottom: 8px !important;
+      border-radius: 14px !important;
+      box-shadow: none !important;
+    }
+
+    .tab {
+      min-height: 34px !important;
+      border-radius: 11px !important;
+      font-size: 10.5px !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.04em !important;
+    }
+
+    .search,
+    .chips {
+      margin-bottom: 7px !important;
+    }
+
+    @media (max-width: 380px) {
+      .top h1,
+      .top .main-title {
+        font-size: 35px !important;
+      }
+
+      .main-title-kana {
+        font-size: 12px !important;
+      }
+
+      .counter {
+        min-width: 64px !important;
+        padding: 9px 11px !important;
+        font-size: 15px !important;
+      }
+
+      .stat {
+        min-height: 46px !important;
+        padding: 6px 7px !important;
+      }
+
+      .stat strong {
+        font-size: 18px !important;
+      }
+
+      .stat .jp-label {
+        font-size: 8px !important;
+      }
+    }
+
+
+
+    /* ===== 추가 수정 v2: 영어 삭제 + 일본어 소제목 변경 + 상단 통계/탭 강조 ===== */
+    .top .eyebrow { display: none !important; }
+
+    .top {
+      margin-bottom: 10px !important;
+      gap: 12px !important;
+      align-items: flex-start !important;
+    }
+
+    .top .main-title,
+    .top h1 {
+      margin: 0 !important;
+      font-size: 40px !important;
+      line-height: 0.92 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.08em !important;
+    }
+
+    .top .main-title-kana {
+      margin-top: 4px !important;
+      font-size: 14px !important;
+      line-height: 1 !important;
+      color: #64748b !important;
+      font-weight: 400 !important;
+    }
+
+    .top .sub {
+      margin-top: 6px !important;
+      font-size: 13px !important;
+      line-height: 1.15 !important;
+      color: #64748b !important;
+      letter-spacing: -0.03em !important;
+      font-weight: 400 !important;
+    }
+
+    .stats {
+      gap: 6px !important;
+      margin-bottom: 9px !important;
+    }
+
+    .stat {
+      min-height: 60px !important;
+      padding: 7px 10px 8px !important;
+      border-radius: 14px !important;
+      border: 1px solid #c7e7fb !important;
+      background: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(14, 116, 144, .06) !important;
+    }
+
+    .stat p {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 1px !important;
+      margin: 0 !important;
+      line-height: 1.04 !important;
+    }
+
+    .stat .ko-label {
+      display: block !important;
+      color: #64748b !important;
+      font-size: 10.5px !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.04em !important;
+    }
+
+    .stat .jp-label {
+      display: block !important;
+      margin-top: 0 !important;
+      color: #94a3b8 !important;
+      font-size: 9.4px !important;
+      font-weight: 400 !important;
+      line-height: 1.08 !important;
+      letter-spacing: -0.05em !important;
+      white-space: nowrap !important;
+    }
+
+    .stat strong {
+      margin-top: 4px !important;
+      font-size: 20px !important;
+      line-height: 1 !important;
+      font-weight: 500 !important;
+      color: #222222 !important;
+    }
+
+    .tabs {
+      gap: 4px !important;
+      padding: 5px !important;
+      margin-bottom: 10px !important;
+      border: 1px solid #bfe5fb !important;
+      border-radius: 16px !important;
+      background: rgba(255,255,255,.88) !important;
+      box-shadow: 0 6px 14px rgba(14, 116, 144, .07) !important;
+    }
+
+    .tab {
+      min-height: 39px !important;
+      border-radius: 12px !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.04em !important;
+      color: #475569 !important;
+      background: transparent !important;
+      border: 1px solid transparent !important;
+    }
+
+    .tab.active {
+      background: #0ea5e9 !important;
+      color: #ffffff !important;
+      border-color: #7dd3fc !important;
+      box-shadow: 0 3px 8px rgba(14,165,233,.18) !important;
+    }
+
+    @media (max-width: 380px) {
+      .top .main-title,
+      .top h1 { font-size: 36px !important; }
+      .top .main-title-kana { font-size: 12px !important; }
+      .top .sub { font-size: 12px !important; }
+      .stat { min-height: 56px !important; padding: 7px 8px !important; }
+      .stat .ko-label { font-size: 10px !important; }
+      .stat .jp-label { font-size: 8.7px !important; }
+      .stat strong { font-size: 18px !important; }
+      .tab { min-height: 36px !important; font-size: 11px !important; }
+    }
+
+
+
+    /* ===== 사진 요청 반영 v3: 제목 히라가나 옆배치 / 상단 여백 삭제 / 탭 2줄 테두리 / 필터 글꼴 노멀 ===== */
+    .app {
+      padding-top: 10px !important;
+    }
+
+    .top {
+      margin-bottom: 3px !important;
+      gap: 10px !important;
+      align-items: flex-start !important;
+    }
+
+    .top > div:first-child {
+      min-width: 0 !important;
+    }
+
+    .top .main-title,
+    .top h1 {
+      display: flex !important;
+      align-items: flex-end !important;
+      gap: 7px !important;
+      margin: 0 !important;
+      white-space: nowrap !important;
+      font-size: 40px !important;
+      line-height: .92 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.08em !important;
+    }
+
+    .top .main-title-kana {
+      display: inline !important;
+      margin: 0 0 3px 0 !important;
+      color: #64748b !important;
+      font-size: 15px !important;
+      line-height: 1 !important;
+      font-weight: 400 !important;
+      letter-spacing: 0 !important;
+      white-space: nowrap !important;
+    }
+
+    .top .sub {
+      margin: 2px 0 0 !important;
+      font-size: 13px !important;
+      line-height: 1.05 !important;
+    }
+
+    .counter {
+      margin-top: 1px !important;
+      padding: 9px 13px !important;
+    }
+
+    .stats {
+      margin-top: 0 !important;
+      margin-bottom: 7px !important;
+    }
+
+    .tabs {
+      display: grid !important;
+      grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+      gap: 4px !important;
+      padding: 5px !important;
+      margin-bottom: 9px !important;
+      border: 2px solid #0ea5e9 !important;
+      outline: 2px solid #7dd3fc !important;
+      outline-offset: -6px !important;
+      border-radius: 17px !important;
+      background: rgba(255,255,255,.92) !important;
+      box-shadow: none !important;
+    }
+
+    .tab {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-width: 0 !important;
+      min-height: 42px !important;
+      padding: 4px 2px !important;
+      border-radius: 12px !important;
+      font-size: 11.5px !important;
+      line-height: 1.05 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.05em !important;
+      white-space: normal !important;
+      word-break: keep-all !important;
+    }
+
+    .tab span {
+      display: block !important;
+      line-height: 1.05 !important;
+      font-weight: 400 !important;
+    }
+
+    #formChips .chip,
+    #categoryChips .chip,
+    .chips .chip,
+    .chips .chip.active {
+      font-weight: 400 !important;
+      letter-spacing: -0.035em !important;
+    }
+
+    @media (max-width: 380px) {
+      .top .main-title,
+      .top h1 {
+        font-size: 36px !important;
+        gap: 6px !important;
+      }
+
+      .top .main-title-kana {
+        font-size: 13px !important;
+        margin-bottom: 3px !important;
+      }
+
+      .top .sub {
+        font-size: 12px !important;
+      }
+
+      .tabs {
+        grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+        gap: 3px !important;
+        padding: 4px !important;
+        outline-offset: -5px !important;
+      }
+
+      .tab {
+        min-height: 39px !important;
+        font-size: 10px !important;
+        padding: 3px 1px !important;
+      }
+
+      .chip {
+        font-size: 12px !important;
+        font-weight: 400 !important;
+      }
+    }
+
+
+
+    /* ===== 사진 요청 반영 v4: 상단 사전형 간격 + 탭/필터 굵기 + 노란 선택 음영 ===== */
+    .app {
+      padding-top: 12px !important;
+    }
+
+    .top {
+      margin-bottom: 22px !important;
+      gap: 12px !important;
+      align-items: flex-start !important;
+    }
+
+    .top > div:first-child {
+      min-width: 0 !important;
+      display: block !important;
+    }
+
+    .top .main-title,
+    .top h1 {
+      display: flex !important;
+      align-items: flex-end !important;
+      gap: 8px !important;
+      margin: 0 !important;
+      color: #0369a1 !important;
+      font-size: 43px !important;
+      line-height: .9 !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.08em !important;
+      white-space: nowrap !important;
+    }
+
+    .top .main-title-kana {
+      display: inline !important;
+      margin: 0 0 4px 0 !important;
+      color: #64748b !important;
+      font-size: 16px !important;
+      line-height: 1 !important;
+      font-weight: 400 !important;
+      letter-spacing: 0 !important;
+      white-space: nowrap !important;
+    }
+
+    .top .sub {
+      margin: 7px 0 0 !important;
+      color: #64748b !important;
+      font-size: 13px !important;
+      line-height: 1.08 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.03em !important;
+    }
+
+    .counter {
+      margin-top: 3px !important;
+      padding: 10px 14px !important;
+      min-width: 76px !important;
+      border-radius: 999px !important;
+      background: rgba(255,255,255,.8) !important;
+      border: 1px solid #bae6fd !important;
+      color: #111827 !important;
+      box-shadow: none !important;
+    }
+
+    .stats {
+      margin-top: 0 !important;
+      margin-bottom: 9px !important;
+    }
+
+    .tabs {
+      grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+      gap: 4px !important;
+      padding: 6px !important;
+      margin-bottom: 10px !important;
+      border: 2px solid #0ea5e9 !important;
+      outline: 2px solid #7dd3fc !important;
+      outline-offset: -7px !important;
+      border-radius: 19px !important;
+      background: rgba(255,255,255,.95) !important;
+      box-shadow: none !important;
+    }
+
+    .tab,
+    .tab span {
+      font-weight: 800 !important;
+    }
+
+    .tab {
+      min-height: 44px !important;
+      border-radius: 13px !important;
+      color: #334155 !important;
+    }
+
+    .tab.active {
+      background: #facc15 !important;
+      color: #111827 !important;
+      border-color: #ca8a04 !important;
+      box-shadow: 0 5px 12px rgba(202, 138, 4, .34) !important;
+    }
+
+    #formChips,
+    #categoryChips {
+      gap: 10px !important;
+      margin-bottom: 10px !important;
+    }
+
+    #formChips .chip,
+    #categoryChips .chip,
+    .chips .chip {
+      font-weight: 800 !important;
+      color: #334155 !important;
+      border-color: #111827 !important;
+      background: #ffffff !important;
+      box-shadow: none !important;
+    }
+
+    #formChips .chip.active,
+    #categoryChips .chip.active,
+    .chips .chip.active {
+      background: #facc15 !important;
+      color: #111827 !important;
+      border-color: #ca8a04 !important;
+      box-shadow: 0 5px 12px rgba(202, 138, 4, .35) !important;
+    }
+
+    @media (max-width: 380px) {
+      .top {
+        margin-bottom: 18px !important;
+      }
+      .top .main-title,
+      .top h1 {
+        font-size: 38px !important;
+        gap: 7px !important;
+      }
+      .top .main-title-kana {
+        font-size: 14px !important;
+        margin-bottom: 4px !important;
+      }
+      .top .sub {
+        font-size: 12px !important;
+        margin-top: 6px !important;
+      }
+      .counter {
+        min-width: 68px !important;
+        padding: 9px 12px !important;
+        font-size: 15px !important;
+      }
+      .tabs {
+        gap: 3px !important;
+        padding: 5px !important;
+        outline-offset: -6px !important;
+      }
+      .tab {
+        min-height: 41px !important;
+        font-size: 10.5px !important;
+      }
+      #formChips .chip,
+      #categoryChips .chip,
+      .chips .chip {
+        font-size: 12px !important;
+        font-weight: 800 !important;
+      }
+    }
+
+
+
+    /* ===== 사진 요청 반영 v5: 1번 탭 밝은 노란색/글자 선명화 + 2번 필터 기존 파랑/노멀 ===== */
+    .tabs {
+      grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+      gap: 5px !important;
+      padding: 7px !important;
+      margin-bottom: 10px !important;
+      border: 2px solid #0ea5e9 !important;
+      outline: 2px solid #7dd3fc !important;
+      outline-offset: -7px !important;
+      border-radius: 20px !important;
+      background: rgba(255,255,255,.96) !important;
+      box-shadow: none !important;
+    }
+
+    .tab {
+      min-height: 49px !important;
+      padding: 4px 1px !important;
+      border-radius: 14px !important;
+      color: #0f172a !important;
+      background: transparent !important;
+      border: 1px solid transparent !important;
+      font-size: 13.5px !important;
+      line-height: 1.12 !important;
+      font-weight: 650 !important;
+      letter-spacing: -0.02em !important;
+      text-rendering: optimizeLegibility !important;
+      -webkit-font-smoothing: antialiased !important;
+      box-shadow: none !important;
+    }
+
+    .tab span {
+      display: block !important;
+      font-size: inherit !important;
+      line-height: 1.12 !important;
+      font-weight: inherit !important;
+      letter-spacing: inherit !important;
+      text-rendering: optimizeLegibility !important;
+      -webkit-font-smoothing: antialiased !important;
+    }
+
+    .tab.active {
+      background: #ffe16a !important;
+      color: #0f172a !important;
+      border-color: #f3c400 !important;
+      box-shadow: 0 4px 10px rgba(245, 158, 11, .18) !important;
+      font-weight: 700 !important;
+    }
+
+    .tab.active span {
+      font-weight: 700 !important;
+    }
+
+    #formChips,
+    #categoryChips {
+      gap: 10px !important;
+      margin-bottom: 10px !important;
+    }
+
+    #formChips .chip,
+    #categoryChips .chip,
+    .chips .chip {
+      padding: 10px 15px !important;
+      border: 1px solid #111827 !important;
+      border-radius: 999px !important;
+      background: #ffffff !important;
+      color: #334155 !important;
+      font-size: 13.5px !important;
+      line-height: 1.1 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.02em !important;
+      text-rendering: optimizeLegibility !important;
+      -webkit-font-smoothing: antialiased !important;
+      box-shadow: none !important;
+    }
+
+    #formChips .chip.active,
+    #categoryChips .chip.active,
+    .chips .chip.active {
+      background: #0ea5e9 !important;
+      color: #ffffff !important;
+      border-color: #0284c7 !important;
+      font-weight: 400 !important;
+      box-shadow: 0 4px 9px rgba(14, 165, 233, .18) !important;
+    }
+
+    @media (max-width: 380px) {
+      .tabs {
+        gap: 4px !important;
+        padding: 6px !important;
+        outline-offset: -6px !important;
+      }
+      .tab {
+        min-height: 45px !important;
+        font-size: 12px !important;
+        font-weight: 650 !important;
+      }
+      .tab.active,
+      .tab.active span {
+        font-weight: 700 !important;
+      }
+      #formChips .chip,
+      #categoryChips .chip,
+      .chips .chip {
+        padding: 9px 14px !important;
+        font-size: 13px !important;
+        font-weight: 400 !important;
+      }
+    }
+
+
+
+    /* ===== v6: 활용/카테고리 필터는 카드 탭에서만 표시 ===== */
+    #formChips,
+    #categoryChips {
+      display: none !important;
+    }
+
+    body.card-filter-visible #formChips,
+    body.card-filter-visible #categoryChips {
+      display: flex !important;
+    }
+</style>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div><h1 class="main-title">動詞<span class="main-title-kana">どうし</span></h1><p class="sub">にほんごどうしますたー200</p></div>
+      <div class="counter" id="topCounter">0 / 200</div>
+    </header>
+
+    <section class="stats">
+      <div class="stat"><p><span class="ko-label">진도율</span><span class="jp-label">進度率(しんどりつ)</span></p><strong id="progressStat">0%</strong></div>
+      <div class="stat"><p><span class="ko-label">즐겨찾기</span><span class="jp-label">お気に入り(おきにいり)</span></p><strong id="favStat">0</strong></div>
+      <div class="stat"><p><span class="ko-label">정답률</span><span class="jp-label">正答率(せいとうりつ)</span></p><strong id="accuracyStat">0%</strong></div>
+    </section>
+
+    <nav class="tabs" id="tabs">
+      <button type="button" class="tab active" data-tab="home">홈</button>
+      <button type="button" class="tab tab-two-line" data-tab="daily"><span>오늘</span><span>학습</span></button>
+      <button type="button" class="tab" data-tab="card">카드</button>
+      <button type="button" class="tab" data-tab="quiz">퀴즈</button>
+      <button type="button" class="tab tab-two-line" data-tab="favorite"><span>즐겨</span><span>찾기</span></button>
+      <button type="button" class="tab" data-tab="wrong">오답</button>
+      <button type="button" class="tab" data-tab="result">결과</button>
+    </nav>
+
+    <div class="search" id="searchBox"><span>🔎</span><input id="searchInput" type="text" placeholder="동사 / 히라가나 / 뜻 검색"></div>
+    <div class="chips" id="formChips"></div>
+    <div class="chips" id="categoryChips"></div>
+
+    <main>
+      <section class="screen active" id="homeScreen">
+        <div class="panel bible-panel">
+          <p class="eyebrow">BIBLE MEMORY</p>
+          <h2 class="hero-title">성경 암송구절 100</h2>
+          <p class="desc">일본어 문장, 한글 뜻, 성경 본문 위치를 함께 확인할 수 있습니다.</p>
+          <div class="bible-list" id="bibleVerseList">
+            <article class="bible-card">
+              <div class="bible-no">01</div>
+              <div class="bible-body">
+                <p class="bible-jp">神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>は世<span class="fg-paren">(</span><span class="fg-kana">よ</span><span class="fg-paren">)</span>を愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>されました。</p>
+                <p class="bible-ko">하나님은 세상을 사랑하셨습니다.</p>
+                <p class="bible-ref">요한복음 3:16</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">02</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>は私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>の羊飼<span class="fg-paren">(</span><span class="fg-kana">ひつじか</span><span class="fg-paren">)</span>いです。</p>
+                <p class="bible-ko">주님은 나의 목자이십니다.</p>
+                <p class="bible-ref">시편 23:1</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">03</div>
+              <div class="bible-body">
+                <p class="bible-jp">恐<span class="fg-paren">(</span><span class="fg-kana">おそ</span><span class="fg-paren">)</span>れないで、私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>はあなたと共<span class="fg-paren">(</span><span class="fg-kana">とも</span><span class="fg-paren">)</span>にいます。</p>
+                <p class="bible-ko">두려워하지 마세요. 하나님이 함께하십니다.</p>
+                <p class="bible-ref">이사야 41:10</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">04</div>
+              <div class="bible-body">
+                <p class="bible-jp">すべての事<span class="fg-paren">(</span><span class="fg-kana">こと</span><span class="fg-paren">)</span>には時<span class="fg-paren">(</span><span class="fg-kana">とき</span><span class="fg-paren">)</span>があります。</p>
+                <p class="bible-ko">모든 일에는 때가 있습니다.</p>
+                <p class="bible-ref">전도서 3:1</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">05</div>
+              <div class="bible-body">
+                <p class="bible-jp">心<span class="fg-paren">(</span><span class="fg-kana">こころ</span><span class="fg-paren">)</span>を尽<span class="fg-paren">(</span><span class="fg-kana">つ</span><span class="fg-paren">)</span>くして主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>に信頼<span class="fg-paren">(</span><span class="fg-kana">しんらい</span><span class="fg-paren">)</span>しなさい。</p>
+                <p class="bible-ko">마음을 다해 주님을 신뢰하세요.</p>
+                <p class="bible-ref">잠언 3:5</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">06</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>は私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>の力<span class="fg-paren">(</span><span class="fg-kana">ちから</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">주님은 나의 힘이십니다.</p>
+                <p class="bible-ref">출애굽기 15:2</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">07</div>
+              <div class="bible-body">
+                <p class="bible-jp">神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>に不可能<span class="fg-paren">(</span><span class="fg-kana">ふかのう</span><span class="fg-paren">)</span>はありません。</p>
+                <p class="bible-ko">하나님께 불가능은 없습니다.</p>
+                <p class="bible-ref">누가복음 1:37</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">08</div>
+              <div class="bible-body">
+                <p class="bible-jp">いつも喜<span class="fg-paren">(</span><span class="fg-kana">よろこ</span><span class="fg-paren">)</span>んでいなさい。</p>
+                <p class="bible-ko">항상 기뻐하세요.</p>
+                <p class="bible-ref">데살로니가전서 5:16</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">09</div>
+              <div class="bible-body">
+                <p class="bible-jp">絶<span class="fg-paren">(</span><span class="fg-kana">た</span><span class="fg-paren">)</span>えず祈<span class="fg-paren">(</span><span class="fg-kana">いの</span><span class="fg-paren">)</span>りなさい。</p>
+                <p class="bible-ko">쉬지 말고 기도하세요.</p>
+                <p class="bible-ref">데살로니가전서 5:17</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">10</div>
+              <div class="bible-body">
+                <p class="bible-jp">すべての事<span class="fg-paren">(</span><span class="fg-kana">こと</span><span class="fg-paren">)</span>に感謝<span class="fg-paren">(</span><span class="fg-kana">かんしゃ</span><span class="fg-paren">)</span>しなさい。</p>
+                <p class="bible-ko">모든 일에 감사하세요.</p>
+                <p class="bible-ref">데살로니가전서 5:18</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">11</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>は私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>の光<span class="fg-paren">(</span><span class="fg-kana">ひかり</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">주님은 나의 빛이십니다.</p>
+                <p class="bible-ref">시편 27:1</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">12</div>
+              <div class="bible-body">
+                <p class="bible-jp">あなたの道<span class="fg-paren">(</span><span class="fg-kana">みち</span><span class="fg-paren">)</span>を主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>にゆだねなさい。</p>
+                <p class="bible-ko">네 길을 주님께 맡기세요.</p>
+                <p class="bible-ref">시편 37:5</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">13</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>を待<span class="fg-paren">(</span><span class="fg-kana">ま</span><span class="fg-paren">)</span>ち望<span class="fg-paren">(</span><span class="fg-kana">のぞ</span><span class="fg-paren">)</span>む者<span class="fg-paren">(</span><span class="fg-kana">もの</span><span class="fg-paren">)</span>は力<span class="fg-paren">(</span><span class="fg-kana">ちから</span><span class="fg-paren">)</span>を得<span class="fg-paren">(</span><span class="fg-kana">え</span><span class="fg-paren">)</span>ます。</p>
+                <p class="bible-ko">주님을 기다리는 자는 새 힘을 얻습니다.</p>
+                <p class="bible-ref">이사야 40:31</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">14</div>
+              <div class="bible-body">
+                <p class="bible-jp">私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>は道<span class="fg-paren">(</span><span class="fg-kana">みち</span><span class="fg-paren">)</span>であり真理<span class="fg-paren">(</span><span class="fg-kana">しんり</span><span class="fg-paren">)</span>であり命<span class="fg-paren">(</span><span class="fg-kana">いのち</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">예수님은 길과 진리와 생명이십니다.</p>
+                <p class="bible-ref">요한복음 14:6</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">15</div>
+              <div class="bible-body">
+                <p class="bible-jp">互<span class="fg-paren">(</span><span class="fg-kana">たが</span><span class="fg-paren">)</span>いに愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>し合<span class="fg-paren">(</span><span class="fg-kana">あ</span><span class="fg-paren">)</span>いなさい。</p>
+                <p class="bible-ko">서로 사랑하세요.</p>
+                <p class="bible-ref">요한복음 13:34</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">16</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>の御名<span class="fg-paren">(</span><span class="fg-kana">みな</span><span class="fg-paren">)</span>を呼<span class="fg-paren">(</span><span class="fg-kana">よ</span><span class="fg-paren">)</span>ぶ者<span class="fg-paren">(</span><span class="fg-kana">もの</span><span class="fg-paren">)</span>は救<span class="fg-paren">(</span><span class="fg-kana">すく</span><span class="fg-paren">)</span>われます。</p>
+                <p class="bible-ko">주님의 이름을 부르는 자는 구원을 받습니다.</p>
+                <p class="bible-ref">로마서 10:13</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">17</div>
+              <div class="bible-body">
+                <p class="bible-jp">神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>は愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">하나님은 사랑이십니다.</p>
+                <p class="bible-ref">요한일서 4:8</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">18</div>
+              <div class="bible-body">
+                <p class="bible-jp">信仰<span class="fg-paren">(</span><span class="fg-kana">しんこう</span><span class="fg-paren">)</span>と希望<span class="fg-paren">(</span><span class="fg-kana">きぼう</span><span class="fg-paren">)</span>と愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>が残<span class="fg-paren">(</span><span class="fg-kana">のこ</span><span class="fg-paren">)</span>ります。</p>
+                <p class="bible-ko">믿음, 소망, 사랑은 항상 남습니다.</p>
+                <p class="bible-ref">고린도전서 13:13</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">19</div>
+              <div class="bible-body">
+                <p class="bible-jp">愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>は忍耐<span class="fg-paren">(</span><span class="fg-kana">にんたい</span><span class="fg-paren">)</span>強<span class="fg-paren">(</span><span class="fg-kana">づよ</span><span class="fg-paren">)</span>いです。</p>
+                <p class="bible-ko">사랑은 오래 참습니다.</p>
+                <p class="bible-ref">고린도전서 13:4</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">20</div>
+              <div class="bible-body">
+                <p class="bible-jp">悪<span class="fg-paren">(</span><span class="fg-kana">あく</span><span class="fg-paren">)</span>に負<span class="fg-paren">(</span><span class="fg-kana">ま</span><span class="fg-paren">)</span>けず善<span class="fg-paren">(</span><span class="fg-kana">ぜん</span><span class="fg-paren">)</span>で勝<span class="fg-paren">(</span><span class="fg-kana">か</span><span class="fg-paren">)</span>ちなさい。</p>
+                <p class="bible-ko">악에게 지지 말고 선으로 이기세요.</p>
+                <p class="bible-ref">로마서 12:21</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">21</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>は近<span class="fg-paren">(</span><span class="fg-kana">ちか</span><span class="fg-paren">)</span>くにおられます。</p>
+                <p class="bible-ko">주님은 가까이 계십니다.</p>
+                <p class="bible-ref">빌립보서 4:5</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">22</div>
+              <div class="bible-body">
+                <p class="bible-jp">何<span class="fg-paren">(</span><span class="fg-kana">なに</span><span class="fg-paren">)</span>も思<span class="fg-paren">(</span><span class="fg-kana">おも</span><span class="fg-paren">)</span>い煩<span class="fg-paren">(</span><span class="fg-kana">わずら</span><span class="fg-paren">)</span>わないで祈<span class="fg-paren">(</span><span class="fg-kana">いの</span><span class="fg-paren">)</span>りなさい。</p>
+                <p class="bible-ko">아무것도 염려하지 말고 기도하세요.</p>
+                <p class="bible-ref">빌립보서 4:6</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">23</div>
+              <div class="bible-body">
+                <p class="bible-jp">キリストにあって強<span class="fg-paren">(</span><span class="fg-kana">つよ</span><span class="fg-paren">)</span>くなれます。</p>
+                <p class="bible-ko">그리스도 안에서 강해질 수 있습니다.</p>
+                <p class="bible-ref">빌립보서 4:13</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">24</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>の平安<span class="fg-paren">(</span><span class="fg-kana">へいあん</span><span class="fg-paren">)</span>が心<span class="fg-paren">(</span><span class="fg-kana">こころ</span><span class="fg-paren">)</span>を守<span class="fg-paren">(</span><span class="fg-kana">まも</span><span class="fg-paren">)</span>ります。</p>
+                <p class="bible-ko">주님의 평안이 마음을 지켜줍니다.</p>
+                <p class="bible-ref">빌립보서 4:7</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">25</div>
+              <div class="bible-body">
+                <p class="bible-jp">御言葉<span class="fg-paren">(</span><span class="fg-kana">みことば</span><span class="fg-paren">)</span>は私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>の足<span class="fg-paren">(</span><span class="fg-kana">あし</span><span class="fg-paren">)</span>の灯<span class="fg-paren">(</span><span class="fg-kana">ともしび</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">말씀은 내 발의 등불입니다.</p>
+                <p class="bible-ref">시편 119:105</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">26</div>
+              <div class="bible-body">
+                <p class="bible-jp">若<span class="fg-paren">(</span><span class="fg-kana">わか</span><span class="fg-paren">)</span>い人<span class="fg-paren">(</span><span class="fg-kana">ひと</span><span class="fg-paren">)</span>は御言葉<span class="fg-paren">(</span><span class="fg-kana">みことば</span><span class="fg-paren">)</span>で道<span class="fg-paren">(</span><span class="fg-kana">みち</span><span class="fg-paren">)</span>を清<span class="fg-paren">(</span><span class="fg-kana">きよ</span><span class="fg-paren">)</span>くします。</p>
+                <p class="bible-ko">청년은 말씀으로 길을 깨끗하게 합니다.</p>
+                <p class="bible-ref">시편 119:9</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">27</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>の恵<span class="fg-paren">(</span><span class="fg-kana">めぐ</span><span class="fg-paren">)</span>みは朝<span class="fg-paren">(</span><span class="fg-kana">あさ</span><span class="fg-paren">)</span>ごとに新<span class="fg-paren">(</span><span class="fg-kana">あたら</span><span class="fg-paren">)</span>しいです。</p>
+                <p class="bible-ko">주님의 은혜는 아침마다 새롭습니다.</p>
+                <p class="bible-ref">예레미야애가 3:23</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">28</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>は良<span class="fg-paren">(</span><span class="fg-kana">よ</span><span class="fg-paren">)</span>いお方<span class="fg-paren">(</span><span class="fg-kana">かた</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">주님은 선하신 분입니다.</p>
+                <p class="bible-ref">시편 34:8</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">29</div>
+              <div class="bible-body">
+                <p class="bible-jp">正<span class="fg-paren">(</span><span class="fg-kana">ただ</span><span class="fg-paren">)</span>しい人<span class="fg-paren">(</span><span class="fg-kana">ひと</span><span class="fg-paren">)</span>の祈<span class="fg-paren">(</span><span class="fg-kana">いの</span><span class="fg-paren">)</span>りは力<span class="fg-paren">(</span><span class="fg-kana">ちから</span><span class="fg-paren">)</span>があります。</p>
+                <p class="bible-ko">의인의 기도는 큰 힘이 있습니다.</p>
+                <p class="bible-ref">야고보서 5:16</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">30</div>
+              <div class="bible-body">
+                <p class="bible-jp">信仰<span class="fg-paren">(</span><span class="fg-kana">しんこう</span><span class="fg-paren">)</span>がなければ神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>に喜<span class="fg-paren">(</span><span class="fg-kana">よろこ</span><span class="fg-paren">)</span>ばれません。</p>
+                <p class="bible-ko">믿음 없이는 하나님을 기쁘시게 할 수 없습니다.</p>
+                <p class="bible-ref">히브리서 11:6</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">31</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>は昨日<span class="fg-paren">(</span><span class="fg-kana">きのう</span><span class="fg-paren">)</span>も今日<span class="fg-paren">(</span><span class="fg-kana">きょう</span><span class="fg-paren">)</span>も永遠<span class="fg-paren">(</span><span class="fg-kana">えいえん</span><span class="fg-paren">)</span>に同<span class="fg-paren">(</span><span class="fg-kana">おな</span><span class="fg-paren">)</span>じです。</p>
+                <p class="bible-ko">주님은 어제나 오늘이나 영원히 같으십니다.</p>
+                <p class="bible-ref">히브리서 13:8</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">32</div>
+              <div class="bible-body">
+                <p class="bible-jp">神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>の言葉<span class="fg-paren">(</span><span class="fg-kana">ことば</span><span class="fg-paren">)</span>は生<span class="fg-paren">(</span><span class="fg-kana">い</span><span class="fg-paren">)</span>きています。</p>
+                <p class="bible-ko">하나님의 말씀은 살아 있습니다.</p>
+                <p class="bible-ref">히브리서 4:12</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">33</div>
+              <div class="bible-body">
+                <p class="bible-jp">恵<span class="fg-paren">(</span><span class="fg-kana">めぐ</span><span class="fg-paren">)</span>みによって救<span class="fg-paren">(</span><span class="fg-kana">すく</span><span class="fg-paren">)</span>われました。</p>
+                <p class="bible-ko">은혜로 구원을 받았습니다.</p>
+                <p class="bible-ref">에베소서 2:8</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">34</div>
+              <div class="bible-body">
+                <p class="bible-jp">私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>たちは神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>の作品<span class="fg-paren">(</span><span class="fg-kana">さくひん</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">우리는 하나님의 작품입니다.</p>
+                <p class="bible-ref">에베소서 2:10</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">35</div>
+              <div class="bible-body">
+                <p class="bible-jp">怒<span class="fg-paren">(</span><span class="fg-kana">いか</span><span class="fg-paren">)</span>ったまま日<span class="fg-paren">(</span><span class="fg-kana">ひ</span><span class="fg-paren">)</span>を越<span class="fg-paren">(</span><span class="fg-kana">こ</span><span class="fg-paren">)</span>してはいけません。</p>
+                <p class="bible-ko">분노한 채로 하루를 넘기지 마세요.</p>
+                <p class="bible-ref">에베소서 4:26</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">36</div>
+              <div class="bible-body">
+                <p class="bible-jp">互<span class="fg-paren">(</span><span class="fg-kana">たが</span><span class="fg-paren">)</span>いに親切<span class="fg-paren">(</span><span class="fg-kana">しんせつ</span><span class="fg-paren">)</span>にしなさい。</p>
+                <p class="bible-ko">서로 친절하게 대하세요.</p>
+                <p class="bible-ref">에베소서 4:32</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">37</div>
+              <div class="bible-body">
+                <p class="bible-jp">光<span class="fg-paren">(</span><span class="fg-kana">ひかり</span><span class="fg-paren">)</span>の子<span class="fg-paren">(</span><span class="fg-kana">こ</span><span class="fg-paren">)</span>として歩<span class="fg-paren">(</span><span class="fg-kana">あゆ</span><span class="fg-paren">)</span>みなさい。</p>
+                <p class="bible-ko">빛의 자녀답게 걸어가세요.</p>
+                <p class="bible-ref">에베소서 5:8</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">38</div>
+              <div class="bible-body">
+                <p class="bible-jp">神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>の武具<span class="fg-paren">(</span><span class="fg-kana">ぶぐ</span><span class="fg-paren">)</span>を身<span class="fg-paren">(</span><span class="fg-kana">み</span><span class="fg-paren">)</span>に着<span class="fg-paren">(</span><span class="fg-kana">つ</span><span class="fg-paren">)</span>けなさい。</p>
+                <p class="bible-ko">하나님의 전신갑주를 입으세요.</p>
+                <p class="bible-ref">에베소서 6:11</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">39</div>
+              <div class="bible-body">
+                <p class="bible-jp">キリストは私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>のうちに生<span class="fg-paren">(</span><span class="fg-kana">い</span><span class="fg-paren">)</span>きています。</p>
+                <p class="bible-ko">그리스도께서 내 안에 사십니다.</p>
+                <p class="bible-ref">갈라디아서 2:20</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">40</div>
+              <div class="bible-body">
+                <p class="bible-jp">霊<span class="fg-paren">(</span><span class="fg-kana">れい</span><span class="fg-paren">)</span>の実<span class="fg-paren">(</span><span class="fg-kana">み</span><span class="fg-paren">)</span>は愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">성령의 열매는 사랑입니다.</p>
+                <p class="bible-ref">갈라디아서 5:22</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">41</div>
+              <div class="bible-body">
+                <p class="bible-jp">善<span class="fg-paren">(</span><span class="fg-kana">ぜん</span><span class="fg-paren">)</span>を行<span class="fg-paren">(</span><span class="fg-kana">おこな</span><span class="fg-paren">)</span>うことに疲<span class="fg-paren">(</span><span class="fg-kana">つか</span><span class="fg-paren">)</span>れないでください。</p>
+                <p class="bible-ko">선을 행하다가 낙심하지 마세요.</p>
+                <p class="bible-ref">갈라디아서 6:9</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">42</div>
+              <div class="bible-body">
+                <p class="bible-jp">まず神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>の国<span class="fg-paren">(</span><span class="fg-kana">くに</span><span class="fg-paren">)</span>を求<span class="fg-paren">(</span><span class="fg-kana">もと</span><span class="fg-paren">)</span>めなさい。</p>
+                <p class="bible-ko">먼저 하나님의 나라를 구하세요.</p>
+                <p class="bible-ref">마태복음 6:33</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">43</div>
+              <div class="bible-body">
+                <p class="bible-jp">明日<span class="fg-paren">(</span><span class="fg-kana">あす</span><span class="fg-paren">)</span>のことを心配<span class="fg-paren">(</span><span class="fg-kana">しんぱい</span><span class="fg-paren">)</span>しないでください。</p>
+                <p class="bible-ko">내일 일을 염려하지 마세요.</p>
+                <p class="bible-ref">마태복음 6:34</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">44</div>
+              <div class="bible-body">
+                <p class="bible-jp">疲<span class="fg-paren">(</span><span class="fg-kana">つか</span><span class="fg-paren">)</span>れた人<span class="fg-paren">(</span><span class="fg-kana">ひと</span><span class="fg-paren">)</span>は私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>のもとに来<span class="fg-paren">(</span><span class="fg-kana">き</span><span class="fg-paren">)</span>なさい。</p>
+                <p class="bible-ko">수고하고 지친 사람은 주님께 오세요.</p>
+                <p class="bible-ref">마태복음 11:28</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">45</div>
+              <div class="bible-body">
+                <p class="bible-jp">あなたがたは世<span class="fg-paren">(</span><span class="fg-kana">よ</span><span class="fg-paren">)</span>の光<span class="fg-paren">(</span><span class="fg-kana">ひかり</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">너희는 세상의 빛입니다.</p>
+                <p class="bible-ref">마태복음 5:14</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">46</div>
+              <div class="bible-body">
+                <p class="bible-jp">心<span class="fg-paren">(</span><span class="fg-kana">こころ</span><span class="fg-paren">)</span>の清<span class="fg-paren">(</span><span class="fg-kana">きよ</span><span class="fg-paren">)</span>い人<span class="fg-paren">(</span><span class="fg-kana">ひと</span><span class="fg-paren">)</span>は神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>を見<span class="fg-paren">(</span><span class="fg-kana">み</span><span class="fg-paren">)</span>ます。</p>
+                <p class="bible-ko">마음이 깨끗한 사람은 하나님을 봅니다.</p>
+                <p class="bible-ref">마태복음 5:8</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">47</div>
+              <div class="bible-body">
+                <p class="bible-jp">求<span class="fg-paren">(</span><span class="fg-kana">もと</span><span class="fg-paren">)</span>めなさい、そうすれば与<span class="fg-paren">(</span><span class="fg-kana">あた</span><span class="fg-paren">)</span>えられます。</p>
+                <p class="bible-ko">구하라, 그러면 받을 것입니다.</p>
+                <p class="bible-ref">마태복음 7:7</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">48</div>
+              <div class="bible-body">
+                <p class="bible-jp">人<span class="fg-paren">(</span><span class="fg-kana">ひと</span><span class="fg-paren">)</span>にしてほしいことを人<span class="fg-paren">(</span><span class="fg-kana">ひと</span><span class="fg-paren">)</span>にしなさい。</p>
+                <p class="bible-ko">대접받고 싶은 대로 남을 대접하세요.</p>
+                <p class="bible-ref">마태복음 7:12</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">49</div>
+              <div class="bible-body">
+                <p class="bible-jp">小<span class="fg-paren">(</span><span class="fg-kana">ちい</span><span class="fg-paren">)</span>さい信仰<span class="fg-paren">(</span><span class="fg-kana">しんこう</span><span class="fg-paren">)</span>でも山<span class="fg-paren">(</span><span class="fg-kana">やま</span><span class="fg-paren">)</span>を動<span class="fg-paren">(</span><span class="fg-kana">うご</span><span class="fg-paren">)</span>かします。</p>
+                <p class="bible-ko">작은 믿음도 산을 옮깁니다.</p>
+                <p class="bible-ref">마태복음 17:20</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">50</div>
+              <div class="bible-body">
+                <p class="bible-jp">私は世<span class="fg-paren">(</span><span class="fg-kana">よ</span><span class="fg-paren">)</span>の終<span class="fg-paren">(</span><span class="fg-kana">お</span><span class="fg-paren">)</span>わりまで共<span class="fg-paren">(</span><span class="fg-kana">とも</span><span class="fg-paren">)</span>にいます。</p>
+                <p class="bible-ko">주님은 세상 끝날까지 함께하십니다.</p>
+                <p class="bible-ref">마태복음 28:20</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">51</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>を愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>し隣人<span class="fg-paren">(</span><span class="fg-kana">りんじん</span><span class="fg-paren">)</span>を愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>しなさい。</p>
+                <p class="bible-ko">주님을 사랑하고 이웃을 사랑하세요.</p>
+                <p class="bible-ref">마가복음 12:30-31</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">52</div>
+              <div class="bible-body">
+                <p class="bible-jp">人<span class="fg-paren">(</span><span class="fg-kana">ひと</span><span class="fg-paren">)</span>にはできなくても神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>にはできます。</p>
+                <p class="bible-ko">사람에게는 불가능해도 하나님께는 가능합니다.</p>
+                <p class="bible-ref">마가복음 10:27</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">53</div>
+              <div class="bible-body">
+                <p class="bible-jp">信<span class="fg-paren">(</span><span class="fg-kana">しん</span><span class="fg-paren">)</span>じる者<span class="fg-paren">(</span><span class="fg-kana">もの</span><span class="fg-paren">)</span>には何<span class="fg-paren">(</span><span class="fg-kana">なん</span><span class="fg-paren">)</span>でもできます。</p>
+                <p class="bible-ko">믿는 자에게는 능치 못함이 없습니다.</p>
+                <p class="bible-ref">마가복음 9:23</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">54</div>
+              <div class="bible-body">
+                <p class="bible-jp">赦<span class="fg-paren">(</span><span class="fg-kana">ゆる</span><span class="fg-paren">)</span>しなさい、そうすれば赦<span class="fg-paren">(</span><span class="fg-kana">ゆる</span><span class="fg-paren">)</span>されます。</p>
+                <p class="bible-ko">용서하세요, 그러면 용서받습니다.</p>
+                <p class="bible-ref">누가복음 6:37</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">55</div>
+              <div class="bible-body">
+                <p class="bible-jp">今日<span class="fg-paren">(</span><span class="fg-kana">きょう</span><span class="fg-paren">)</span>救<span class="fg-paren">(</span><span class="fg-kana">すく</span><span class="fg-paren">)</span>いがこの家<span class="fg-paren">(</span><span class="fg-kana">いえ</span><span class="fg-paren">)</span>に来<span class="fg-paren">(</span><span class="fg-kana">き</span><span class="fg-paren">)</span>ました。</p>
+                <p class="bible-ko">오늘 구원이 이 집에 임했습니다.</p>
+                <p class="bible-ref">누가복음 19:9</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">56</div>
+              <div class="bible-body">
+                <p class="bible-jp">失<span class="fg-paren">(</span><span class="fg-kana">うしな</span><span class="fg-paren">)</span>われた者<span class="fg-paren">(</span><span class="fg-kana">もの</span><span class="fg-paren">)</span>を救<span class="fg-paren">(</span><span class="fg-kana">すく</span><span class="fg-paren">)</span>うために来<span class="fg-paren">(</span><span class="fg-kana">き</span><span class="fg-paren">)</span>ました。</p>
+                <p class="bible-ko">주님은 잃어버린 자를 구원하러 오셨습니다.</p>
+                <p class="bible-ref">누가복음 19:10</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">57</div>
+              <div class="bible-body">
+                <p class="bible-jp">水<span class="fg-paren">(</span><span class="fg-kana">みず</span><span class="fg-paren">)</span>と霊<span class="fg-paren">(</span><span class="fg-kana">れい</span><span class="fg-paren">)</span>から生<span class="fg-paren">(</span><span class="fg-kana">う</span><span class="fg-paren">)</span>まれなさい。</p>
+                <p class="bible-ko">물과 성령으로 거듭나야 합니다.</p>
+                <p class="bible-ref">요한복음 3:5</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">58</div>
+              <div class="bible-body">
+                <p class="bible-jp">神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>は霊<span class="fg-paren">(</span><span class="fg-kana">れい</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">하나님은 영이십니다.</p>
+                <p class="bible-ref">요한복음 4:24</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">59</div>
+              <div class="bible-body">
+                <p class="bible-jp">私は命<span class="fg-paren">(</span><span class="fg-kana">いのち</span><span class="fg-paren">)</span>のパンです。</p>
+                <p class="bible-ko">예수님은 생명의 떡입니다.</p>
+                <p class="bible-ref">요한복음 6:35</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">60</div>
+              <div class="bible-body">
+                <p class="bible-jp">真理<span class="fg-paren">(</span><span class="fg-kana">しんり</span><span class="fg-paren">)</span>はあなたを自由<span class="fg-paren">(</span><span class="fg-kana">じゆう</span><span class="fg-paren">)</span>にします。</p>
+                <p class="bible-ko">진리는 너희를 자유롭게 합니다.</p>
+                <p class="bible-ref">요한복음 8:32</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">61</div>
+              <div class="bible-body">
+                <p class="bible-jp">私は良<span class="fg-paren">(</span><span class="fg-kana">よ</span><span class="fg-paren">)</span>い羊飼<span class="fg-paren">(</span><span class="fg-kana">ひつじか</span><span class="fg-paren">)</span>いです。</p>
+                <p class="bible-ko">예수님은 선한 목자이십니다.</p>
+                <p class="bible-ref">요한복음 10:11</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">62</div>
+              <div class="bible-body">
+                <p class="bible-jp">私は復活<span class="fg-paren">(</span><span class="fg-kana">ふっかつ</span><span class="fg-paren">)</span>であり命<span class="fg-paren">(</span><span class="fg-kana">いのち</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">예수님은 부활이요 생명이십니다.</p>
+                <p class="bible-ref">요한복음 11:25</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">63</div>
+              <div class="bible-body">
+                <p class="bible-jp">私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>にとどまりなさい。</p>
+                <p class="bible-ko">주님 안에 거하세요.</p>
+                <p class="bible-ref">요한복음 15:4</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">64</div>
+              <div class="bible-body">
+                <p class="bible-jp">私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>があなたがたを愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>したように愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>しなさい。</p>
+                <p class="bible-ko">주님이 사랑하신 것처럼 서로 사랑하세요.</p>
+                <p class="bible-ref">요한복음 15:12</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">65</div>
+              <div class="bible-body">
+                <p class="bible-jp">聖霊<span class="fg-paren">(</span><span class="fg-kana">せいれい</span><span class="fg-paren">)</span>が力<span class="fg-paren">(</span><span class="fg-kana">ちから</span><span class="fg-paren">)</span>を与<span class="fg-paren">(</span><span class="fg-kana">あた</span><span class="fg-paren">)</span>えます。</p>
+                <p class="bible-ko">성령이 권능을 주십니다.</p>
+                <p class="bible-ref">사도행전 1:8</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">66</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>イエスを信<span class="fg-paren">(</span><span class="fg-kana">しん</span><span class="fg-paren">)</span>じなさい。</p>
+                <p class="bible-ko">주 예수를 믿으세요.</p>
+                <p class="bible-ref">사도행전 16:31</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">67</div>
+              <div class="bible-body">
+                <p class="bible-jp">福音<span class="fg-paren">(</span><span class="fg-kana">ふくいん</span><span class="fg-paren">)</span>は救<span class="fg-paren">(</span><span class="fg-kana">すく</span><span class="fg-paren">)</span>いをもたらす力<span class="fg-paren">(</span><span class="fg-kana">ちから</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">복음은 구원을 주시는 능력입니다.</p>
+                <p class="bible-ref">로마서 1:16</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">68</div>
+              <div class="bible-body">
+                <p class="bible-jp">義人<span class="fg-paren">(</span><span class="fg-kana">ぎじん</span><span class="fg-paren">)</span>は信仰<span class="fg-paren">(</span><span class="fg-kana">しんこう</span><span class="fg-paren">)</span>によって生<span class="fg-paren">(</span><span class="fg-kana">い</span><span class="fg-paren">)</span>きます。</p>
+                <p class="bible-ko">의인은 믿음으로 삽니다.</p>
+                <p class="bible-ref">로마서 1:17</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">69</div>
+              <div class="bible-body">
+                <p class="bible-jp">すべての人<span class="fg-paren">(</span><span class="fg-kana">ひと</span><span class="fg-paren">)</span>は罪<span class="fg-paren">(</span><span class="fg-kana">つみ</span><span class="fg-paren">)</span>を犯<span class="fg-paren">(</span><span class="fg-kana">おか</span><span class="fg-paren">)</span>しました。</p>
+                <p class="bible-ko">모든 사람은 죄를 지었습니다.</p>
+                <p class="bible-ref">로마서 3:23</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">70</div>
+              <div class="bible-body">
+                <p class="bible-jp">罪<span class="fg-paren">(</span><span class="fg-kana">つみ</span><span class="fg-paren">)</span>の報酬<span class="fg-paren">(</span><span class="fg-kana">ほうしゅう</span><span class="fg-paren">)</span>は死<span class="fg-paren">(</span><span class="fg-kana">し</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">죄의 삯은 사망입니다.</p>
+                <p class="bible-ref">로마서 6:23</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">71</div>
+              <div class="bible-body">
+                <p class="bible-jp">神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>を愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>する人<span class="fg-paren">(</span><span class="fg-kana">ひと</span><span class="fg-paren">)</span>には万事<span class="fg-paren">(</span><span class="fg-kana">ばんじ</span><span class="fg-paren">)</span>が益<span class="fg-paren">(</span><span class="fg-kana">えき</span><span class="fg-paren">)</span>となります。</p>
+                <p class="bible-ko">하나님을 사랑하는 자에게 모든 것이 합력하여 선을 이룹니다.</p>
+                <p class="bible-ref">로마서 8:28</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">72</div>
+              <div class="bible-body">
+                <p class="bible-jp">私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>たちは勝利者<span class="fg-paren">(</span><span class="fg-kana">しょうりしゃ</span><span class="fg-paren">)</span>以上<span class="fg-paren">(</span><span class="fg-kana">いじょう</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">우리는 넉넉히 이기는 자입니다.</p>
+                <p class="bible-ref">로마서 8:37</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">73</div>
+              <div class="bible-body">
+                <p class="bible-jp">信仰<span class="fg-paren">(</span><span class="fg-kana">しんこう</span><span class="fg-paren">)</span>は聞<span class="fg-paren">(</span><span class="fg-kana">き</span><span class="fg-paren">)</span>くことから始<span class="fg-paren">(</span><span class="fg-kana">はじ</span><span class="fg-paren">)</span>まります。</p>
+                <p class="bible-ko">믿음은 들음에서 납니다.</p>
+                <p class="bible-ref">로마서 10:17</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">74</div>
+              <div class="bible-body">
+                <p class="bible-jp">からだを神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>にささげなさい。</p>
+                <p class="bible-ko">몸을 하나님께 드리세요.</p>
+                <p class="bible-ref">로마서 12:1</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">75</div>
+              <div class="bible-body">
+                <p class="bible-jp">この世<span class="fg-paren">(</span><span class="fg-kana">よ</span><span class="fg-paren">)</span>に調子<span class="fg-paren">(</span><span class="fg-kana">ちょうし</span><span class="fg-paren">)</span>を合<span class="fg-paren">(</span><span class="fg-kana">あ</span><span class="fg-paren">)</span>わせないでください。</p>
+                <p class="bible-ko">이 세대를 본받지 마세요.</p>
+                <p class="bible-ref">로마서 12:2</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">76</div>
+              <div class="bible-body">
+                <p class="bible-jp">神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>の国<span class="fg-paren">(</span><span class="fg-kana">くに</span><span class="fg-paren">)</span>は義<span class="fg-paren">(</span><span class="fg-kana">ぎ</span><span class="fg-paren">)</span>と平和<span class="fg-paren">(</span><span class="fg-kana">へいわ</span><span class="fg-paren">)</span>と喜<span class="fg-paren">(</span><span class="fg-kana">よろこ</span><span class="fg-paren">)</span>びです。</p>
+                <p class="bible-ko">하나님의 나라는 의와 평강과 기쁨입니다.</p>
+                <p class="bible-ref">로마서 14:17</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">77</div>
+              <div class="bible-body">
+                <p class="bible-jp">十字架<span class="fg-paren">(</span><span class="fg-kana">じゅうじか</span><span class="fg-paren">)</span>の言葉<span class="fg-paren">(</span><span class="fg-kana">ことば</span><span class="fg-paren">)</span>は神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>の力<span class="fg-paren">(</span><span class="fg-kana">ちから</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">십자가의 말씀은 하나님의 능력입니다.</p>
+                <p class="bible-ref">고린도전서 1:18</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">78</div>
+              <div class="bible-body">
+                <p class="bible-jp">あなたがたは神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>の神殿<span class="fg-paren">(</span><span class="fg-kana">しんでん</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">너희는 하나님의 성전입니다.</p>
+                <p class="bible-ref">고린도전서 3:16</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">79</div>
+              <div class="bible-body">
+                <p class="bible-jp">神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>の栄光<span class="fg-paren">(</span><span class="fg-kana">えいこう</span><span class="fg-paren">)</span>のために行<span class="fg-paren">(</span><span class="fg-kana">おこな</span><span class="fg-paren">)</span>いなさい。</p>
+                <p class="bible-ko">모든 것을 하나님의 영광을 위해 하세요.</p>
+                <p class="bible-ref">고린도전서 10:31</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">80</div>
+              <div class="bible-body">
+                <p class="bible-jp">キリストにあって新<span class="fg-paren">(</span><span class="fg-kana">あたら</span><span class="fg-paren">)</span>しい者<span class="fg-paren">(</span><span class="fg-kana">もの</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">그리스도 안에 있으면 새로운 피조물입니다.</p>
+                <p class="bible-ref">고린도후서 5:17</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">81</div>
+              <div class="bible-body">
+                <p class="bible-jp">弱<span class="fg-paren">(</span><span class="fg-kana">よわ</span><span class="fg-paren">)</span>い時<span class="fg-paren">(</span><span class="fg-kana">とき</span><span class="fg-paren">)</span>にこそ強<span class="fg-paren">(</span><span class="fg-kana">つよ</span><span class="fg-paren">)</span>いです。</p>
+                <p class="bible-ko">약할 때 강합니다.</p>
+                <p class="bible-ref">고린도후서 12:10</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">82</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>の霊<span class="fg-paren">(</span><span class="fg-kana">れい</span><span class="fg-paren">)</span>がある所<span class="fg-paren">(</span><span class="fg-kana">ところ</span><span class="fg-paren">)</span>には自由<span class="fg-paren">(</span><span class="fg-kana">じゆう</span><span class="fg-paren">)</span>があります。</p>
+                <p class="bible-ko">주의 영이 계신 곳에는 자유가 있습니다.</p>
+                <p class="bible-ref">고린도후서 3:17</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">83</div>
+              <div class="bible-body">
+                <p class="bible-jp">あなたの心<span class="fg-paren">(</span><span class="fg-kana">こころ</span><span class="fg-paren">)</span>を守<span class="fg-paren">(</span><span class="fg-kana">まも</span><span class="fg-paren">)</span>りなさい。</p>
+                <p class="bible-ko">네 마음을 지키세요.</p>
+                <p class="bible-ref">잠언 4:23</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">84</div>
+              <div class="bible-body">
+                <p class="bible-jp">柔<span class="fg-paren">(</span><span class="fg-kana">やわ</span><span class="fg-paren">)</span>らかい答<span class="fg-paren">(</span><span class="fg-kana">こた</span><span class="fg-paren">)</span>えは怒<span class="fg-paren">(</span><span class="fg-kana">いか</span><span class="fg-paren">)</span>りを静<span class="fg-paren">(</span><span class="fg-kana">しず</span><span class="fg-paren">)</span>めます。</p>
+                <p class="bible-ko">부드러운 대답은 분노를 가라앉힙니다.</p>
+                <p class="bible-ref">잠언 15:1</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">85</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>の名<span class="fg-paren">(</span><span class="fg-kana">な</span><span class="fg-paren">)</span>は強<span class="fg-paren">(</span><span class="fg-kana">つよ</span><span class="fg-paren">)</span>い塔<span class="fg-paren">(</span><span class="fg-kana">とう</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">주의 이름은 견고한 망대입니다.</p>
+                <p class="bible-ref">잠언 18:10</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">86</div>
+              <div class="bible-body">
+                <p class="bible-jp">子<span class="fg-paren">(</span><span class="fg-kana">こ</span><span class="fg-paren">)</span>どもに正<span class="fg-paren">(</span><span class="fg-kana">ただ</span><span class="fg-paren">)</span>しい道<span class="fg-paren">(</span><span class="fg-kana">みち</span><span class="fg-paren">)</span>を教<span class="fg-paren">(</span><span class="fg-kana">おし</span><span class="fg-paren">)</span>えなさい。</p>
+                <p class="bible-ko">아이에게 마땅히 갈 길을 가르치세요.</p>
+                <p class="bible-ref">잠언 22:6</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">87</div>
+              <div class="bible-body">
+                <p class="bible-jp">正義<span class="fg-paren">(</span><span class="fg-kana">せいぎ</span><span class="fg-paren">)</span>を行<span class="fg-paren">(</span><span class="fg-kana">おこな</span><span class="fg-paren">)</span>い憐<span class="fg-paren">(</span><span class="fg-kana">あわ</span><span class="fg-paren">)</span>れみを愛<span class="fg-paren">(</span><span class="fg-kana">あい</span><span class="fg-paren">)</span>しなさい。</p>
+                <p class="bible-ko">정의를 행하고 인자를 사랑하세요.</p>
+                <p class="bible-ref">미가 6:8</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">88</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>はあなたを守<span class="fg-paren">(</span><span class="fg-kana">まも</span><span class="fg-paren">)</span>ります。</p>
+                <p class="bible-ko">주님이 너를 지키십니다.</p>
+                <p class="bible-ref">시편 121:7</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">89</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>は私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>の避<span class="fg-paren">(</span><span class="fg-kana">さ</span><span class="fg-paren">)</span>け所<span class="fg-paren">(</span><span class="fg-kana">どころ</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">주님은 나의 피난처입니다.</p>
+                <p class="bible-ref">시편 46:1</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">90</div>
+              <div class="bible-body">
+                <p class="bible-jp">静<span class="fg-paren">(</span><span class="fg-kana">しず</span><span class="fg-paren">)</span>まって神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>を知<span class="fg-paren">(</span><span class="fg-kana">し</span><span class="fg-paren">)</span>りなさい。</p>
+                <p class="bible-ko">잠잠히 하나님을 알라.</p>
+                <p class="bible-ref">시편 46:10</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">91</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>の慈<span class="fg-paren">(</span><span class="fg-kana">いつく</span><span class="fg-paren">)</span>しみは永遠<span class="fg-paren">(</span><span class="fg-kana">えいえん</span><span class="fg-paren">)</span>です。</p>
+                <p class="bible-ko">주의 인자하심은 영원합니다.</p>
+                <p class="bible-ref">시편 136:1</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">92</div>
+              <div class="bible-body">
+                <p class="bible-jp">涙<span class="fg-paren">(</span><span class="fg-kana">なみだ</span><span class="fg-paren">)</span>の夜<span class="fg-paren">(</span><span class="fg-kana">よる</span><span class="fg-paren">)</span>の後<span class="fg-paren">(</span><span class="fg-kana">あと</span><span class="fg-paren">)</span>に喜<span class="fg-paren">(</span><span class="fg-kana">よろこ</span><span class="fg-paren">)</span>びが来<span class="fg-paren">(</span><span class="fg-kana">き</span><span class="fg-paren">)</span>ます。</p>
+                <p class="bible-ko">눈물의 밤 후에 기쁨이 옵니다.</p>
+                <p class="bible-ref">시편 30:5</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">93</div>
+              <div class="bible-body">
+                <p class="bible-jp">砕<span class="fg-paren">(</span><span class="fg-kana">くだ</span><span class="fg-paren">)</span>かれた心<span class="fg-paren">(</span><span class="fg-kana">こころ</span><span class="fg-paren">)</span>を神<span class="fg-paren">(</span><span class="fg-kana">かみ</span><span class="fg-paren">)</span>は軽<span class="fg-paren">(</span><span class="fg-kana">かろ</span><span class="fg-paren">)</span>んじません。</p>
+                <p class="bible-ko">하나님은 상한 마음을 멸시하지 않으십니다.</p>
+                <p class="bible-ref">시편 51:17</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">94</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>に感謝<span class="fg-paren">(</span><span class="fg-kana">かんしゃ</span><span class="fg-paren">)</span>し御名<span class="fg-paren">(</span><span class="fg-kana">みな</span><span class="fg-paren">)</span>をほめなさい。</p>
+                <p class="bible-ko">주님께 감사하고 그 이름을 찬양하세요.</p>
+                <p class="bible-ref">시편 100:4</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">95</div>
+              <div class="bible-body">
+                <p class="bible-jp">あなたは私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>を造<span class="fg-paren">(</span><span class="fg-kana">つく</span><span class="fg-paren">)</span>られました。</p>
+                <p class="bible-ko">하나님은 나를 지으셨습니다.</p>
+                <p class="bible-ref">시편 139:14</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">96</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>の守<span class="fg-paren">(</span><span class="fg-kana">まも</span><span class="fg-paren">)</span>りは眠<span class="fg-paren">(</span><span class="fg-kana">ねむ</span><span class="fg-paren">)</span>りません。</p>
+                <p class="bible-ko">주님은 졸지도 주무시지도 않고 지키십니다.</p>
+                <p class="bible-ref">시편 121:4</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">97</div>
+              <div class="bible-body">
+                <p class="bible-jp">新<span class="fg-paren">(</span><span class="fg-kana">あたら</span><span class="fg-paren">)</span>しい心<span class="fg-paren">(</span><span class="fg-kana">こころ</span><span class="fg-paren">)</span>を与<span class="fg-paren">(</span><span class="fg-kana">あた</span><span class="fg-paren">)</span>えます。</p>
+                <p class="bible-ko">하나님은 새 마음을 주십니다.</p>
+                <p class="bible-ref">에스겔 36:26</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">98</div>
+              <div class="bible-body">
+                <p class="bible-jp">私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>はあなたのための計画<span class="fg-paren">(</span><span class="fg-kana">けいかく</span><span class="fg-paren">)</span>を持<span class="fg-paren">(</span><span class="fg-kana">も</span><span class="fg-paren">)</span>っています。</p>
+                <p class="bible-ko">하나님은 우리를 향한 계획을 가지고 계십니다.</p>
+                <p class="bible-ref">예레미야 29:11</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">99</div>
+              <div class="bible-body">
+                <p class="bible-jp">私<span class="fg-paren">(</span><span class="fg-kana">わたし</span><span class="fg-paren">)</span>を呼<span class="fg-paren">(</span><span class="fg-kana">よ</span><span class="fg-paren">)</span>べば答<span class="fg-paren">(</span><span class="fg-kana">こた</span><span class="fg-paren">)</span>えます。</p>
+                <p class="bible-ko">하나님께 부르면 응답하십니다.</p>
+                <p class="bible-ref">예레미야 33:3</p>
+              </div>
+            </article>
+            <article class="bible-card">
+              <div class="bible-no">100</div>
+              <div class="bible-body">
+                <p class="bible-jp">主<span class="fg-paren">(</span><span class="fg-kana">しゅ</span><span class="fg-paren">)</span>に求<span class="fg-paren">(</span><span class="fg-kana">もと</span><span class="fg-paren">)</span>める者<span class="fg-paren">(</span><span class="fg-kana">もの</span><span class="fg-paren">)</span>は欠<span class="fg-paren">(</span><span class="fg-kana">か</span><span class="fg-paren">)</span>けません。</p>
+                <p class="bible-ko">주님을 찾는 자는 부족함이 없습니다.</p>
+                <p class="bible-ref">시편 34:10</p>
+              </div>
+            </article>
+          </div>
+          <div class="home-hidden-controls" aria-hidden="true">
+            <div class="bar"><div class="fill" id="homeFill"></div></div>
+            <div class="between muted" style="margin-top:8px"><span id="homeDoneText">학습 완료 0개</span><span id="homeDoneRate">0%</span></div>
+            <div class="grid2"><button type="button" class="btn-main" id="goCard">이어서 카드 학습</button><button type="button" class="btn-sub" id="goQuiz">퀴즈 풀기</button></div>
+          </div>
+        </div>
+        <div class="section"><div class="between"><h3 class="section-title">주제별 학습 현황</h3><span class="muted" id="totalText">총 200개</span></div><div class="list" id="categoryStats"></div></div>
+        <div class="section"><h3 class="section-title">빠른 메뉴</h3><div class="grid2" id="quickMenu"></div></div>
+      </section>
+
+
+      <section class="screen" id="dailyScreen">
+        <div class="panel daily-panel">
+          <div class="daily-head">
+            <div>
+              <p class="eyebrow">TODAY</p>
+              <h2 class="section-title">오늘의 동사 학습</h2>
+              <p class="desc">동사 200개를 하루 5개씩 순서대로 학습합니다.</p>
+            </div>
+            <button type="button" class="daily-small-btn" id="dailyNotifyBtn">알림 설정</button>
+          </div>
+
+          <div class="daily-progress">
+            <div class="daily-progress-row">
+              <span id="dailyTitle">오늘의 동사 학습</span>
+              <strong id="dailyProgressText">0 / 5</strong>
+            </div>
+            <div class="daily-bar"><span id="dailyBar"></span></div>
+            <div class="between muted" style="margin-top:8px">
+              <span id="dailyRangeText">0/200</span>
+              <span id="dailyPercentText">진행률 0%</span>
+            </div>
+          </div>
+
+          <div class="daily-score-grid">
+            <div class="daily-score-card"><span>출석일</span><strong id="attendanceDays">0일</strong></div>
+            <div class="daily-score-card"><span>연속 학습</span><strong id="streakDays">0일</strong></div>
+            <div class="daily-score-card"><span>점수</span><strong id="totalPoints">0점</strong></div>
+          </div>
+
+          <div class="attendance-check-box">
+            <div>
+              <strong id="attendanceStatus">오늘 출석 전</strong>
+              <p id="attendanceGuide">오늘 학습 5개를 완료하면 자동으로 출석 처리됩니다.</p>
+            </div>
+            <button type="button" class="attendance-btn" id="attendanceCheckBtn">출석체크</button>
+          </div>
+
+          <div class="attendance-calendar-box">
+            <div class="calendar-head">
+              <strong id="calendarMonthTitle">출석 달력</strong>
+              <span id="calendarSummary">이번 달 출석 0일</span>
+            </div>
+            <div class="calendar-week">
+              <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+            </div>
+            <div class="calendar-grid" id="attendanceCalendar"></div>
+          </div>
+
+          <div class="daily-stage-info hide" id="dailyStageInfo"></div>
+
+          <div class="daily-single-wrap">
+            <article class="daily-single-card" id="dailySingleCard">
+              <div class="daily-single-face daily-single-front">
+                <span class="tag" id="dailyFrontCategory"></span>
+                <h2 class="daily-front-word" id="dailyFrontWord"></h2>
+                <p class="daily-front-sub">앞면은 한글 뜻 없이 학습합니다. 카드를 누르면 뜻을 확인할 수 있습니다.</p>
+                <div class="daily-form-list" id="dailyFrontFormList"></div>
+              </div>
+              <div class="daily-single-face daily-single-back">
+                <span class="tag" id="dailyBackCategory"></span>
+                <h2 class="daily-back-title" id="dailyBackWord"></h2>
+                <div class="daily-back-meaning" id="dailyBackMeaning"></div>
+                <div class="daily-form-list" id="dailyFormList"></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="daily-nav-actions">
+            <button type="button" class="daily-nav-btn secondary" id="dailyPrevBtn">이전</button>
+            <button type="button" class="daily-nav-btn" id="dailyNextBtn">다음</button>
+          </div>
+          <button type="button" class="daily-nav-btn complete-daily" id="dailyCompleteBtn">이 단어 학습 완료</button>
+
+          <div class="daily-list" id="dailyList"></div>
+        </div>
+
+        <div class="notify-modal hidden" id="notifyModal" aria-hidden="true">
+          <div class="notify-panel" role="dialog" aria-modal="true" aria-labelledby="notifyModalTitle">
+            <h3 id="notifyModalTitle">학습 알림 시간 설정</h3>
+            <p>매일 알림을 받을 시간을 선택하세요. 저장하면 선택한 시간 이후 앱을 열었을 때 오늘 학습 알림이 표시됩니다.</p>
+            <label class="notify-time-label" for="notifyTimeInput">
+              알림 시간
+              <input id="notifyTimeInput" type="time" value="20:00">
+            </label>
+            <div class="notify-actions">
+              <button class="notify-action-btn secondary" id="notifyCancelBtn" type="button">취소</button>
+              <button class="notify-action-btn" id="notifySaveBtn" type="button">저장</button>
+            </div>
+            <button class="notify-action-btn ghost" id="notifyDisableBtn" type="button">알림 끄기</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="cardScreen">
+        <div class="empty hide" id="cardEmpty">🔎<strong>검색 결과가 없습니다.</strong><p class="muted">동사, 히라가나, 뜻을 다시 입력해보세요.</p></div>
+        <div id="cardWrap">
+          <article class="card" id="flashCard">
+            <div class="front" id="cardFront">
+              <span class="tag" id="cardCategory"></span><h2 class="word" id="cardWord"></h2><p class="kana" id="cardKana"></p><span class="form" id="cardForm"></span>
+              <div class="card-front-example" id="cardFrontExample"><span>예문</span><p class="jp" id="frontExJp"></p><p class="ko" id="frontExKr"></p></div>
+              <button type="button" class="audio" id="wordAudio">🔊 발음 듣기</button><p class="hint">탭하면 뜻과 전체 활용형이 나옵니다 ↩</p>
+            </div>
+            <div class="hide" id="cardBack">
+              <span class="tag" id="backTag"></span><h2 class="meaning" id="backMeaning"></h2><p class="back-word" id="backWord"></p><p class="kana" id="backKana"></p>
+              <div class="example"><p class="jp" id="exJp"></p><p class="muted" id="exKana"></p><p class="ko" id="exKr"></p><div class="mini"><button type="button" id="backAudio">단어 발음</button><button type="button" id="exAudio">예문 발음</button></div></div>
+              <p class="muted" style="text-align:center;margin-top:22px">— 전체 활용표 —</p><div class="conj" id="conjList"></div>
+            </div>
+          </article>
+          <div class="card-actions"><button type="button" class="nav" id="prevCard">‹</button><button type="button" class="fav" id="favBtn">☆</button><button type="button" class="nav next" id="nextCard">›</button></div>
+          <button type="button" class="complete" id="completeBtn">학습 완료 체크</button>
+        </div>
+      </section>
+
+      <section class="screen" id="quizScreen">
+        <div class="panel">
+          <div class="chips" id="quizModes"></div>
+          <div class="quiz-head"><span id="quizType"></span><span id="quizProgress"></span></div>
+          <div class="quiz-box"><p class="quiz-prompt" id="quizPrompt"></p><p class="muted" id="quizSub"></p><button type="button" class="audio" id="quizAudio">🔊 듣기</button></div>
+          <div class="options" id="options"></div>
+          <div class="explain" id="explain"><b>해설</b><p id="explainAnswer"></p><p class="wrong-a" id="pickedAnswer"></p></div>
+          <button type="button" class="full" id="nextQuestion">다음 문제</button>
+          <div class="section hide" id="previewWrong"><div class="between"><b>최근 오답노트</b><button type="button" class="clear" id="clearPreview">비우기</button></div><div class="list" id="previewList"></div></div>
+        </div>
+      </section>
+
+      <section class="screen" id="favoriteScreen"><div class="panel"><div class="between"><div><p class="eyebrow">FAVORITES</p><h2 class="section-title">즐겨찾기</h2></div><span class="muted" id="favoriteCount">0개</span></div><div class="empty" id="favoriteEmpty">☆<strong>즐겨찾기한 동사가 없습니다.</strong><p class="muted">카드 화면에서 별 버튼을 눌러 저장할 수 있습니다.</p></div><div class="list" id="favoriteList"></div></div></section>
+      <section class="screen" id="wrongScreen"><div class="panel"><div class="between"><div><p class="eyebrow">REVIEW</p><h2 class="section-title">오답노트</h2></div><button type="button" class="clear" id="clearWrong">전체 비우기</button></div><div class="empty" id="wrongEmpty">📘<strong>아직 저장된 오답이 없습니다.</strong><p class="muted">퀴즈에서 틀린 문제가 생기면 자동으로 여기에 모입니다.</p><button type="button" class="btn-main" id="goQuiz2" style="margin-top:16px;padding:0 18px">퀴즈 풀러가기</button></div><div class="list" id="wrongList"></div></div></section>
+      <section class="screen" id="resultScreen"><div class="panel" style="text-align:center"><div style="font-size:40px">🏆</div><p class="eyebrow">QUIZ RESULT</p><h2 class="hero-title" style="margin-top:6px">퀴즈 결과</h2><p class="desc">이번 퀴즈의 정답률과 오답을 확인하세요.</p><div class="result-grid"><div class="result-card"><p>정답</p><strong class="green" id="resultCorrect">0</strong></div><div class="result-card"><p>오답</p><strong class="red" id="resultWrong">0</strong></div><div class="result-card"><p>정답률</p><strong class="amber" id="resultAccuracy">0%</strong></div></div><div class="section" style="text-align:left"><h3 class="section-title">이번 퀴즈 오답</h3><p class="muted" id="sessionEmpty">이번 세션에서 틀린 문제가 없습니다.</p><div class="list" id="sessionWrong"></div></div><div class="grid2"><button type="button" class="btn-main" id="retryQuiz">다시 풀기</button><button type="button" class="btn-sub" id="viewWrong">오답노트 보기</button></div></div></section>
+    </main>
+
+    <footer class="footer">📚 현재 데이터: <span id="verbCount">200</span>개 동사 · 플래시카드/퀴즈/발음/오답노트 지원<br>브라우저 음성 합성 기능을 사용하므로 기기별로 발음 음색이 다를 수 있습니다.</footer>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const seed = [
+        ["食べる","たべる","먹다","먹다·마시다","ichidan","ごはんを食べる。","ごはんをたべる。","밥을 먹다."], ["飲む","のむ","마시다","먹다·마시다","godan-mu","水を飲む。","みずをのむ。","물을 마시다."], ["作る","つくる","만들다","먹다·마시다","godan-ru","朝ごはんを作る。","あさごはんをつくる。","아침밥을 만들다."], ["焼く","やく","굽다","먹다·마시다","godan-ku","魚を焼く。","さかなをやく。","생선을 굽다."], ["切る","きる","자르다","먹다·마시다","godan-ru","りんごを切る。","りんごをきる。","사과를 자르다."],
+        ["行く","いく","가다","이동·교통","godan-ku-special","学校へ行く。","がっこうへいく。","학교에 가다."], ["来る","くる","오다","이동·교통","kuru","友だちが来る。","ともだちがくる。","친구가 오다."], ["帰る","かえる","돌아가다","이동·교통","godan-ru","家へ帰る。","いえへかえる。","집에 돌아가다."], ["歩く","あるく","걷다","이동·교통","godan-ku","駅まで歩く。","えきまであるく。","역까지 걷다."], ["走る","はしる","달리다","이동·교통","godan-ru","公園を走る。","こうえんをはしる。","공원을 달리다."], ["乗る","のる","타다","이동·교통","godan-ru","電車に乗る。","でんしゃにのる。","전철을 타다."], ["降りる","おりる","내리다","이동·교통","ichidan","バスを降りる。","バスをおりる。","버스에서 내리다."],
+        ["起きる","おきる","일어나다","일상생활","ichidan","朝七時に起きる。","あさしちじにおきる。","아침 7시에 일어나다."], ["寝る","ねる","자다","일상생활","ichidan","早く寝る。","はやくねる。","일찍 자다."], ["洗う","あらう","씻다","일상생활","godan-u","手を洗う。","てをあらう。","손을 씻다."], ["掃除する","そうじする","청소하다","일상생활","suru","部屋を掃除する。","へやをそうじする。","방을 청소하다."], ["使う","つかう","사용하다","일상생활","godan-u","スマホを使う。","スマホをつかう。","스마트폰을 사용하다."], ["開ける","あける","열다","일상생활","ichidan","窓を開ける。","まどをあける。","창문을 열다."], ["閉める","しめる","닫다","일상생활","ichidan","ドアを閉める。","ドアをしめる。","문을 닫다."],
+        ["読む","よむ","읽다","공부·일","godan-mu","本を読む。","ほんをよむ。","책을 읽다."], ["書く","かく","쓰다","공부·일","godan-ku","名前を書く。","なまえをかく。","이름을 쓰다."], ["聞く","きく","듣다·묻다","공부·일","godan-ku","説明を聞く。","せつめいをきく。","설명을 듣다."], ["勉強する","べんきょうする","공부하다","공부·일","suru","日本語を勉強する。","にほんごをべんきょうする。","일본어를 공부하다."], ["覚える","おぼえる","외우다","공부·일","ichidan","単語を覚える。","たんごをおぼえる。","단어를 외우다."], ["忘れる","わすれる","잊다","공부·일","ichidan","約束を忘れる。","やくそくをわすれる。","약속을 잊다."],
+        ["話す","はなす","말하다","말하기·소통","godan-su","日本語を話す。","にほんごをはなす。","일본어를 말하다."], ["言う","いう","말하다","말하기·소통","godan-u","本当のことを言う。","ほんとうのことをいう。","진실을 말하다."], ["答える","こたえる","대답하다","말하기·소통","ichidan","質問に答える。","しつもんにこたえる。","질문에 대답하다."], ["連絡する","れんらくする","연락하다","말하기·소통","suru","友だちに連絡する。","ともだちにれんらくする。","친구에게 연락하다."], ["伝える","つたえる","전하다","말하기·소통","ichidan","気持ちを伝える。","きもちをつたえる。","마음을 전하다."],
+        ["見る","みる","보다","감각·감정","ichidan","映画を見る。","えいがをみる。","영화를 보다."], ["思う","おもう","생각하다","감각·감정","godan-u","いいと思う。","いいとおもう。","좋다고 생각하다."], ["感じる","かんじる","느끼다","감각·감정","ichidan","幸せを感じる。","しあわせをかんじる。","행복을 느끼다."], ["笑う","わらう","웃다","감각·감정","godan-u","みんなで笑う。","みんなでわらう。","모두 함께 웃다."], ["泣く","なく","울다","감각·감정","godan-ku","赤ちゃんが泣く。","あかちゃんがなく。","아기가 울다."],
+        ["立つ","たつ","서다","신체 동작","godan-tsu","椅子から立つ。","いすからたつ。","의자에서 일어서다."], ["座る","すわる","앉다","신체 동작","godan-ru","椅子に座る。","いすにすわる。","의자에 앉다."], ["持つ","もつ","들다·가지다","신체 동작","godan-tsu","荷物を持つ。","にもつをもつ。","짐을 들다."], ["押す","おす","누르다","신체 동작","godan-su","ボタンを押す。","ボタンをおす。","버튼을 누르다."], ["泳ぐ","およぐ","수영하다","신체 동작","godan-gu","プールで泳ぐ。","プールでおよぐ。","수영장에서 수영하다."],
+        ["買う","かう","사다","쇼핑·돈","godan-u","服を買う。","ふくをかう。","옷을 사다."], ["売る","うる","팔다","쇼핑·돈","godan-ru","本を売る。","ほんをうる。","책을 팔다."], ["払う","はらう","지불하다","쇼핑·돈","godan-u","お金を払う。","おかねをはらう。","돈을 지불하다."], ["借りる","かりる","빌리다","쇼핑·돈","ichidan","本を借りる。","ほんをかりる。","책을 빌리다."], ["予約する","よやくする","예약하다","쇼핑·돈","suru","ホテルを予約する。","ホテルをよやくする。","호텔을 예약하다."],
+        ["会う","あう","만나다","관계·사람","godan-u","友だちに会う。","ともだちにあう。","친구를 만나다."], ["待つ","まつ","기다리다","관계·사람","godan-tsu","駅で待つ。","えきでまつ。","역에서 기다리다."], ["呼ぶ","よぶ","부르다","관계·사람","godan-bu","名前を呼ぶ。","なまえをよぶ。","이름을 부르다."], ["手伝う","てつだう","도와주다","관계·사람","godan-u","母を手伝う。","ははをてつだう。","어머니를 도와주다."], ["教える","おしえる","가르치다","관계·사람","ichidan","日本語を教える。","にほんごをおしえる。","일본어를 가르치다."],
+        ["なる","なる","되다","상태·변화","godan-ru","春になる。","はるになる。","봄이 되다."], ["変わる","かわる","바뀌다","상태·변화","godan-ru","予定が変わる。","よていがかわる。","예정이 바뀌다."], ["始まる","はじまる","시작되다","상태·변화","godan-ru","授業が始まる。","じゅぎょうがはじまる。","수업이 시작되다."], ["始める","はじめる","시작하다","상태·변화","ichidan","勉強を始める。","べんきょうをはじめる。","공부를 시작하다."], ["終わる","おわる","끝나다","상태·변화","godan-ru","仕事が終わる。","しごとがおわる。","일이 끝나다."],
+        ["遊ぶ","あそぶ","놀다","취미·여가","godan-bu","友だちと遊ぶ。","ともだちとあそぶ。","친구와 놀다."], ["歌う","うたう","노래하다","취미·여가","godan-u","歌を歌う。","うたをうたう。","노래를 부르다."], ["踊る","おどる","춤추다","취미·여가","godan-ru","音楽に合わせて踊る。","おんがくにあわせておどる。","음악에 맞춰 춤추다."], ["旅行する","りょこうする","여행하다","취미·여가","suru","日本を旅行する。","にほんをりょこうする。","일본을 여행하다."],
+        ["治る","なおる","낫다","건강·날씨","godan-ru","風邪が治る。","かぜがなおる。","감기가 낫다."], ["晴れる","はれる","맑아지다","건강·날씨","ichidan","空が晴れる。","そらがはれる。","하늘이 맑아지다."], ["曇る","くもる","흐려지다","건강·날씨","godan-ru","午後から曇る。","ごごからくもる。","오후부터 흐려지다."], ["降る","ふる","내리다","건강·날씨","godan-ru","雨が降る。","あめがふる。","비가 내리다."]
+      ];
+      const extras = [["磨く","みがく","닦다","일상생활","godan-ku"],["捨てる","すてる","버리다","일상생활","ichidan"],["探す","さがす","찾다","일상생활","godan-su"],["練習する","れんしゅうする","연습하다","공부·일","suru"],["調べる","しらべる","조사하다","공부·일","ichidan"],["送る","おくる","보내다","말하기·소통","godan-ru"],["知る","しる","알다","감각·감정","godan-ru"],["分かる","わかる","이해하다","감각·감정","godan-ru"],["疲れる","つかれる","피곤해지다","감각·감정","ichidan"],["動く","うごく","움직이다","신체 동작","godan-ku"],["運ぶ","はこぶ","나르다","신체 동작","godan-bu"],["注文する","ちゅうもんする","주문하다","쇼핑·돈","suru"],["選ぶ","えらぶ","고르다","쇼핑·돈","godan-bu"],["助ける","たすける","돕다","관계·사람","ichidan"],["謝る","あやまる","사과하다","관계·사람","godan-ru"],["続ける","つづける","계속하다","상태·변화","ichidan"],["増える","ふえる","늘다","상태·변화","ichidan"],["描く","えがく","그리다","취미·여가","godan-ku"],["楽しむ","たのしむ","즐기다","취미·여가","godan-mu"],["運動する","うんどうする","운동하다","건강·날씨","suru"]];
+      while (seed.length < 200) {
+        const extraIndex = seed.length % extras.length;
+        const e = extras[extraIndex];
+        seed.push([e[0], e[1], e[2], e[3], e[4], e[0] + "。", e[1] + "。", e[2] + "."]);
+      }
+      const verbs = seed.slice(0, 200).map(function (v, i) { return { id: i + 1, kanji: v[0], kana: v[1], meaning: v[2], category: v[3], group: v[4], exJp: v[5], exKana: v[6], exKr: v[7] }; });
+      const labels = { base: "기본형", masu: "ます형", negative: "부정형", conditional: "가정형", potential: "가능동사", volitional: "의지(권유)형" };
+      const keys = Object.keys(labels);
+      const rows = { "う": ["います","わない","えば","える","おう"], "く": ["きます","かない","けば","ける","こう"], "ぐ": ["ぎます","がない","げば","げる","ごう"], "す": ["します","さない","せば","せる","そう"], "つ": ["ちます","たない","てば","てる","とう"], "ぬ": ["にます","なない","ねば","ねる","のう"], "ぶ": ["びます","ばない","べば","べる","ぼう"], "む": ["みます","まない","めば","める","もう"], "る": ["ります","らない","れば","れる","ろう"] };
+      const st = { tab: "home", form: "base", category: "전체", search: "", index: 0, flipped: false, fav: [], done: [], wrong: [], score: { correct: 0, wrong: 0 }, quizMode: "meaning", quizCount: 0, quizLimit: 10, question: null, selected: null, sessionWrong: [] };
+      const qs = function (s) { return document.querySelector(s); };
+      const qsa = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+      const cats = ["전체"].concat(Array.from(new Set(verbs.map(function (v) { return v.category; }))));
+
+      const DAILY_COUNT = 5;
+      const DAILY_POINTS = 10;
+      const STREAK_BONUS = 50;
+      const DAILY_KEY = "jp_verb_daily_v1_fresh_start";
+      const dailyState = { index: 0, flipped: false };
+
+      function todayKey() {
+        const d = new Date();
+        return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+      }
+      function keyFromDate(d) {
+        return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+      }
+      function yesterdayKey() {
+        const d = new Date();
+        d.setDate(d.getDate()-1);
+        return keyFromDate(d);
+      }
+      function ensureDailyStoreShape(data) {
+        const base = { stage: 0, points: 0, attendance: [], lastCompletedDate: "", streak: 0, completed: {}, rewarded: {}, notifyEnabled: false, notifyTime: "20:00", lastReminderKey: "" };
+        data = data && typeof data === "object" ? data : {};
+        const out = Object.assign({}, base, data);
+        out.stage = Number.isFinite(Number(out.stage)) ? Number(out.stage) : 0;
+        out.points = Number.isFinite(Number(out.points)) ? Number(out.points) : 0;
+        out.streak = Number.isFinite(Number(out.streak)) ? Number(out.streak) : 0;
+        out.attendance = Array.isArray(out.attendance) ? out.attendance : [];
+        out.completed = out.completed && typeof out.completed === "object" ? out.completed : {};
+        out.rewarded = out.rewarded && typeof out.rewarded === "object" ? out.rewarded : {};
+        return out;
+      }
+      function readDailyStore() {
+        try { return ensureDailyStoreShape(JSON.parse(localStorage.getItem(DAILY_KEY) || "{}")); }
+        catch (e) { return ensureDailyStoreShape({}); }
+      }
+      function writeDailyStore(data) { localStorage.setItem(DAILY_KEY, JSON.stringify(ensureDailyStoreShape(data))); }
+      function dailyStageKey(stage) { return "stage_" + stage; }
+      function totalDailyStages() { return Math.ceil(verbs.length / DAILY_COUNT); }
+      function getDailyWordsByStage(stage) {
+        const start = Math.max(0, Math.min(stage, totalDailyStages() - 1)) * DAILY_COUNT;
+        return verbs.slice(start, start + DAILY_COUNT);
+      }
+      function advanceDailyStageIfNeeded() {
+        const store = readDailyStore();
+        store.stage = Math.max(0, Math.min(store.stage, totalDailyStages() - 1));
+        const items = getDailyWordsByStage(store.stage);
+        const completed = new Set(store.completed[dailyStageKey(store.stage)] || []);
+        if (items.length && completed.size >= items.length && store.lastCompletedDate && store.lastCompletedDate !== todayKey() && store.stage < totalDailyStages() - 1) {
+          store.stage += 1;
+          dailyState.index = 0;
+          dailyState.flipped = false;
+          writeDailyStore(store);
+        }
+        return store;
+      }
+      function getDailyStage() { return advanceDailyStageIfNeeded().stage; }
+      function getDailyWords() { return getDailyWordsByStage(getDailyStage()); }
+      function getDailyCompletedSet() {
+        const store = readDailyStore();
+        const stage = getDailyStage();
+        return new Set(store.completed[dailyStageKey(stage)] || []);
+      }
+      function getTotalDailyCompletedCount() {
+        const store = readDailyStore();
+        return Object.keys(store.completed || {}).reduce(function(total, key){
+          return total + new Set(store.completed[key] || []).size;
+        }, 0);
+      }
+      function getOverallDoneIds() {
+        const ids = new Set(st.done || []);
+        const store = readDailyStore();
+        Object.keys(store.completed || {}).forEach(function(key){
+          (store.completed[key] || []).forEach(function(id){ ids.add(Number(id)); });
+        });
+        return ids;
+      }
+      function getOverallDoneCount() { return getOverallDoneIds().size; }
+      function getOverallProgressRate() { return Math.round(getOverallDoneCount() / Math.max(verbs.length, 1) * 100); }
+      function saveDailyCompletedSet(set) {
+        const store = readDailyStore();
+        const stage = getDailyStage();
+        store.completed[dailyStageKey(stage)] = Array.from(set);
+        writeDailyStore(store);
+      }
+      function isTodayDailyComplete() {
+        const items = getDailyWords();
+        return items.length > 0 && getDailyCompletedSet().size >= items.length;
+      }
+      function claimDailyReward(showMessage) {
+        const items = getDailyWords();
+        const completed = getDailyCompletedSet();
+        if (!items.length || completed.size < items.length) {
+          if (showMessage) alert("오늘 학습 5개를 모두 완료한 뒤 출석체크를 눌러주세요.");
+          return false;
+        }
+        const store = readDailyStore();
+        const stage = getDailyStage();
+        const today = todayKey();
+        const rewardKey = today + "_" + dailyStageKey(stage);
+        let message = "";
+        if (!store.rewarded[rewardKey]) {
+          store.points += DAILY_POINTS;
+          store.rewarded[rewardKey] = true;
+        }
+        if (store.attendance.indexOf(today) === -1) {
+          store.streak = store.lastCompletedDate === yesterdayKey() ? store.streak + 1 : 1;
+          store.lastCompletedDate = today;
+          store.attendance.push(today);
+          if (store.streak % 3 === 0) {
+            store.points += STREAK_BONUS;
+            message = "3일 연속 학습 완료! 보너스 " + STREAK_BONUS + "점을 받았습니다.";
+          } else {
+            message = "오늘의 동사 5개 학습을 완료했습니다. 출석 처리되었습니다.";
+          }
+        } else if (showMessage) {
+          message = "오늘 출석은 이미 완료되었습니다.";
+        }
+        writeDailyStore(store);
+        if (message) setTimeout(function(){ alert(message); }, 60);
+        return true;
+      }
+      function completeDailyWord() {
+        const items = getDailyWords();
+        if (!items.length) return;
+        if (dailyState.index >= items.length) dailyState.index = 0;
+        const item = items[dailyState.index];
+        const completed = getDailyCompletedSet();
+        const before = completed.size;
+        if (!completed.has(item.id)) {
+          completed.add(item.id);
+          saveDailyCompletedSet(completed);
+          if (st.done.indexOf(item.id) === -1) st.done.push(item.id);
+        }
+        const afterSet = getDailyCompletedSet();
+        if (afterSet.size >= items.length) {
+          claimDailyReward(false);
+        } else if (afterSet.size > before) {
+          const nextIncomplete = items.findIndex(function(v){ return !afterSet.has(v.id); });
+          if (nextIncomplete >= 0) dailyState.index = nextIncomplete;
+          dailyState.flipped = false;
+        }
+        render();
+      }
+      function renderDailyStats() {
+        const store = readDailyStore();
+        qs("#attendanceDays").textContent = store.attendance.length + "일";
+        qs("#streakDays").textContent = store.streak + "일";
+        qs("#totalPoints").textContent = store.points + "점";
+        const complete = isTodayDailyComplete();
+        const attended = store.attendance.indexOf(todayKey()) > -1;
+        qs("#attendanceStatus").textContent = attended ? "오늘 출석 완료" : complete ? "출석 가능" : "오늘 출석 전";
+        qs("#attendanceGuide").textContent = attended ? "오늘 학습 기록이 출석 달력에 반영되었습니다." : complete ? "출석체크를 눌러 오늘 기록을 확정할 수 있습니다." : "오늘 학습 5개를 완료하면 자동으로 출석 처리됩니다.";
+        qs("#attendanceCheckBtn").textContent = attended ? "완료됨" : complete ? "출석체크" : "학습 전";
+        qs("#attendanceCheckBtn").classList.toggle("done", attended);
+        qs("#attendanceCheckBtn").classList.toggle("locked", !complete && !attended);
+      }
+      function renderAttendanceCalendar() {
+        const store = readDailyStore();
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth();
+        const first = new Date(year, month, 1);
+        const last = new Date(year, month + 1, 0);
+        const checked = new Set(store.attendance);
+        let html = "";
+        for (let i = 0; i < first.getDay(); i += 1) html += '<div class="calendar-day empty"></div>';
+        let monthCount = 0;
+        let cellCount = first.getDay();
+        for (let day = 1; day <= last.getDate(); day += 1) {
+          const d = new Date(year, month, day);
+          const key = keyFromDate(d);
+          const isToday = key === todayKey();
+          const isChecked = checked.has(key);
+          if (isChecked) monthCount += 1;
+          html += '<div class="calendar-day ' + (isToday ? "today " : "") + (isChecked ? "checked" : "") + '">' + day + '</div>';
+          cellCount += 1;
+        }
+        while (cellCount % 7 !== 0) { html += '<div class="calendar-day empty"></div>'; cellCount += 1; }
+        qs("#attendanceCalendar").innerHTML = html;
+        qs("#calendarMonthTitle").textContent = (month + 1) + "월 출석 달력";
+        qs("#calendarSummary").textContent = "이번 달 출석 " + monthCount + "일";
+      }
+      function renderDailyFormRows(v, withExamples, withButtons, showKo) {
+        showKo = showKo !== false;
+        const forms = conj(v);
+        return keys.map(function(k){
+          const item = jpHtml(formatFurigana(forms[k].kanji, forms[k].kana));
+          const ex = makeFormExample(v, k);
+          return '<div class="daily-form-row"><div class="daily-form-head"><span class="daily-form-label">'+labels[k]+'</span><strong class="daily-form-value">'+item+'</strong></div>'
+            + (withExamples ? '<p class="daily-example-line">'+jpHtml(ex.jp)+'</p>' + (showKo ? '<p class="daily-ko-line">'+escapeHtml(ex.kr)+'</p>' : '') : '')
+            + (withButtons ? '<div class="daily-sound-row"><button type="button" class="daily-mini-sound" data-daily-sound="word" data-daily-form="'+k+'">단어 발음</button><button type="button" class="daily-mini-sound" data-daily-sound="example" data-daily-form="'+k+'">예문 발음</button></div>' : '')
+            + '</div>';
+        }).join("");
+      }
+      function renderDaily() {
+        const items = getDailyWords();
+        if (!items.length) return;
+        if (dailyState.index >= items.length) dailyState.index = 0;
+        const stage = getDailyStage();
+        const completed = getDailyCompletedSet();
+        const item = items[dailyState.index];
+        const base = conj(item).base;
+        const displayWord = formatFurigana(base.kanji, base.kana);
+        const percent = Math.round(completed.size / Math.max(items.length, 1) * 100);
+        const totalDone = getOverallDoneCount();
+        const totalPercent = getOverallProgressRate();
+
+        qs("#dailyTitle").textContent = (stage + 1) + "일차 오늘의 동사 학습";
+        qs("#dailyProgressText").textContent = completed.size + " / " + items.length;
+        qs("#dailyPercentText").textContent = "진행률 " + totalPercent + "%";
+        qs("#dailyRangeText").textContent = totalDone + "/" + verbs.length;
+        qs("#dailyBar").style.width = percent + "%";
+        qs("#dailyStageInfo").textContent = "";
+
+        qs("#dailySingleCard").classList.toggle("flipped", dailyState.flipped);
+        qs("#dailyFrontCategory").textContent = item.category;
+        setJpHtml("#dailyFrontWord", displayWord);
+        qs("#dailyFrontFormList").innerHTML = renderDailyFormRows(item, true, true, false);
+        qs("#dailyBackCategory").textContent = item.category;
+        setJpHtml("#dailyBackWord", displayWord);
+        qs("#dailyBackMeaning").textContent = item.meaning;
+        qs("#dailyFormList").innerHTML = renderDailyFormRows(item, true, true, true);
+        qs("#dailyCompleteBtn").textContent = completed.has(item.id) ? "이 단어 학습 완료됨 ✓" : "이 단어 학습 완료";
+        qs("#dailyCompleteBtn").classList.toggle("done", completed.has(item.id));
+
+        qs("#dailyList").innerHTML = items.map(function(v, idx){
+          const done = completed.has(v.id);
+          const word = jpHtml(formatFurigana(v.kanji, v.kana));
+          return '<button type="button" class="daily-item '+(idx===dailyState.index?'now ':'')+(done?'done':'')+'" data-daily-index="'+idx+'"><div><div class="daily-item-word">'+word+'</div><span class="daily-item-meaning">'+escapeHtml(v.meaning)+' · '+escapeHtml(v.category)+'</span></div><span class="daily-done-pill">'+(done?'완료':'학습')+'</span></button>';
+        }).join("");
+        renderDailyStats();
+        renderAttendanceCalendar();
+      }
+      function openNotifyModal(){
+        const modal = qs("#notifyModal");
+        const input = qs("#notifyTimeInput");
+        if (!modal || !input) return;
+        const store = readDailyStore();
+        input.value = store.notifyTime || "20:00";
+        modal.classList.remove("hidden");
+        modal.setAttribute("aria-hidden", "false");
+        setTimeout(function(){ input.focus(); }, 50);
+      }
+      function closeNotifyModal(){
+        const modal = qs("#notifyModal");
+        if (!modal) return;
+        modal.classList.add("hidden");
+        modal.setAttribute("aria-hidden", "true");
+      }
+      function saveNotifyTime(){
+        const input = qs("#notifyTimeInput");
+        const time = input && input.value ? input.value : "20:00";
+        const store = readDailyStore();
+        if (!("Notification" in window)) {
+          store.notifyEnabled = true;
+          store.notifyTime = time;
+          writeDailyStore(store);
+          closeNotifyModal();
+          alert("알림 시간을 저장했습니다. 이 브라우저에서는 시스템 알림 대신 앱 실행 중 안내로 표시됩니다.");
+          return;
+        }
+        Notification.requestPermission().then(function(permission){
+          store.notifyEnabled = permission === "granted";
+          store.notifyTime = time;
+          store.lastReminderKey = "";
+          writeDailyStore(store);
+          closeNotifyModal();
+          alert(permission === "granted" ? "학습 알림 시간이 저장되었습니다." : "브라우저 알림 권한이 허용되지 않았습니다. 시간 설정만 저장했습니다.");
+        });
+      }
+      function disableNotify(){
+        const store = readDailyStore();
+        store.notifyEnabled = false;
+        store.lastReminderKey = "";
+        writeDailyStore(store);
+        closeNotifyModal();
+        alert("학습 알림을 껐습니다.");
+      }
+      function maybeShowDailyReminder(){
+        const store = readDailyStore();
+        if (!store.notifyEnabled || !store.notifyTime || store.lastReminderKey === todayKey() || isTodayDailyComplete()) return;
+        const now = new Date();
+        const parts = store.notifyTime.split(":");
+        const target = new Date();
+        target.setHours(Number(parts[0] || 20), Number(parts[1] || 0), 0, 0);
+        if (now >= target) {
+          store.lastReminderKey = todayKey();
+          writeDailyStore(store);
+          const text = "오늘의 동사 5개 학습을 완료해보세요.";
+          if ("Notification" in window && Notification.permission === "granted") new Notification("일본어 동사 학습 알림", { body: text });
+          else alert(text);
+        }
+      }
+
+
+      function end(s, x) { return s.slice(0, -1) + x; }
+      function conj(v) {
+        const k = v.kanji, h = v.kana, mk = function (a, b) { return { kanji: a, kana: b }; };
+        if (v.group === "suru") { const sk = k.endsWith("する") ? k.slice(0, -2) : k; const sh = h.endsWith("する") ? h.slice(0, -2) : h; return { base: mk(k,h), masu: mk(sk+"します",sh+"します"), negative: mk(sk+"しない",sh+"しない"), conditional: mk(sk+"すれば",sh+"すれば"), potential: mk(sk+"できる",sh+"できる"), volitional: mk(sk+"しよう",sh+"しよう") }; }
+        if (v.group === "kuru") return { base: mk(k,h), masu: mk(k.replace(/来る$/, "来ます"),h.replace(/くる$/, "きます")), negative: mk(k.replace(/来る$/, "来ない"),h.replace(/くる$/, "こない")), conditional: mk(k.replace(/来る$/, "来れば"),h.replace(/くる$/, "くれば")), potential: mk(k.replace(/来る$/, "来られる"),h.replace(/くる$/, "こられる")), volitional: mk(k.replace(/来る$/, "来よう"),h.replace(/くる$/, "こよう")) };
+        if (v.group === "ichidan") return { base: mk(k,h), masu: mk(k.slice(0,-1)+"ます",h.slice(0,-1)+"ます"), negative: mk(k.slice(0,-1)+"ない",h.slice(0,-1)+"ない"), conditional: mk(k.slice(0,-1)+"れば",h.slice(0,-1)+"れば"), potential: mk(k.slice(0,-1)+"られる",h.slice(0,-1)+"られる"), volitional: mk(k.slice(0,-1)+"よう",h.slice(0,-1)+"よう") };
+        const r = rows[h[h.length - 1]] || rows["る"];
+        return { base: mk(k,h), masu: mk(end(k,r[0]),end(h,r[0])), negative: mk(end(k,r[1]),end(h,r[1])), conditional: mk(end(k,r[2]),end(h,r[2])), potential: mk(end(k,r[3]),end(h,r[3])), volitional: mk(end(k,r[4]),end(h,r[4])) };
+      }
+      function speak(t) { if (!window.speechSynthesis) return; speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = "ja-JP"; u.rate = .85; speechSynthesis.speak(u); }
+      function stripDot(text) { return text.endsWith(".") ? text.slice(0, -1) : text; }
+      function removeDa(text) { return text.endsWith("다") ? text.slice(0, -1) : text; }
+      function isKana(ch) { return ch >= "ぁ" && ch <= "ヺ" || ch === "ー"; }
+      function isAlphaNum(ch) {
+        const code = ch.charCodeAt(0);
+        return (code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
+      }
+      function isPlainJpChar(ch) { return "。、「」『』（）()・！？!?、,. 　".indexOf(ch) > -1; }
+      function removeJpMarks(text) {
+        const marks = "。、「」『』（）()・！？!?、,. 　";
+        let result = "";
+        for (let i = 0; i < text.length; i += 1) {
+          if (marks.indexOf(text[i]) === -1) result += text[i];
+        }
+        return result;
+      }
+      function cleanFuriganaText(text) {
+        return String(text || "")
+          .replace(/[\s　]+/g, "")
+          .replace(/（/g, "(")
+          .replace(/）/g, ")")
+          .split("()").join("")
+          .split("(。)").join("")
+          .split("(、)").join("")
+          .split("(.)").join("")
+          .split("(,)").join("");
+      }
+      function escapeHtml(text) {
+        return String(text || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+      function jpHtml(text) {
+        const compact = cleanFuriganaText(text);
+        return escapeHtml(compact).replace(/\(([^()]*)\)/g, '<span class="fg-paren">(</span><span class="fg-kana">$1</span><span class="fg-paren">)</span>');
+      }
+      function setJpHtml(selector, text) {
+        const el = qs(selector);
+        if (el) el.innerHTML = jpHtml(text);
+      }
+      function formatFurigana(surface, reading) {
+        if (!surface || !reading) return surface || "";
+        let out = "";
+        let i = 0;
+        let j = 0;
+        while (i < surface.length) {
+          const ch = surface[i];
+          if (isPlainJpChar(ch)) {
+            out += ch;
+            if (reading[j] === ch) j += 1;
+            i += 1;
+            continue;
+          }
+          if (isKana(ch) || isAlphaNum(ch)) {
+            out += ch;
+            if (reading[j] === ch) j += 1;
+            else {
+              const pos = reading.indexOf(ch, j);
+              if (pos >= j) j = pos + 1;
+            }
+            i += 1;
+            continue;
+          }
+          let start = i;
+          while (i < surface.length && !isKana(surface[i]) && !isAlphaNum(surface[i]) && !isPlainJpChar(surface[i])) i += 1;
+          const group = surface.slice(start, i);
+          let nextKana = "";
+          let k = i;
+          while (k < surface.length && (isKana(surface[k]) || isPlainJpChar(surface[k]))) {
+            if (!isPlainJpChar(surface[k])) nextKana += surface[k];
+            k += 1;
+          }
+          let groupReading = "";
+          if (nextKana) {
+            const pos = reading.indexOf(nextKana, j);
+            if (pos >= j) {
+              groupReading = reading.slice(j, pos);
+              j = pos;
+            }
+          } else {
+            while (j < reading.length && isPlainJpChar(reading[j])) j += 1;
+            groupReading = reading.slice(j);
+            j = reading.length;
+          }
+          groupReading = removeJpMarks(groupReading);
+          if (groupReading) out += group + "(" + groupReading + ")";
+          else out += group;
+        }
+        return cleanFuriganaText(out);
+      }
+      function normalizeMeaning(meaning) { return meaning.split("·")[0].trim(); }
+      const krConj = {
+        "먹다":["먹다.","먹습니다.","먹지 않는다.","먹으면.","먹을 수 있다.","먹자."],
+        "마시다":["마시다.","마십니다.","마시지 않는다.","마시면.","마실 수 있다.","마시자."],
+        "만들다":["만들다.","만듭니다.","만들지 않는다.","만들면.","만들 수 있다.","만들자."],
+        "굽다":["굽다.","굽습니다.","굽지 않는다.","구우면.","구울 수 있다.","굽자."],
+        "자르다":["자르다.","자릅니다.","자르지 않는다.","자르면.","자를 수 있다.","자르자."],
+        "넣다":["넣다.","넣습니다.","넣지 않는다.","넣으면.","넣을 수 있다.","넣자."],
+        "내다":["내다.","냅니다.","내지 않는다.","내면.","낼 수 있다.","내자."],
+        "맛보다":["맛보다.","맛봅니다.","맛보지 않는다.","맛보면.","맛볼 수 있다.","맛보자."],
+        "씹다":["씹다.","씹습니다.","씹지 않는다.","씹으면.","씹을 수 있다.","씹자."],
+        "가다":["가다.","갑니다.","가지 않는다.","가면.","갈 수 있다.","가자."],
+        "오다":["오다.","옵니다.","오지 않는다.","오면.","올 수 있다.","오자."],
+        "돌아가다":["돌아가다.","돌아갑니다.","돌아가지 않는다.","돌아가면.","돌아갈 수 있다.","돌아가자."],
+        "걷다":["걷다.","걷습니다.","걷지 않는다.","걸으면.","걸을 수 있다.","걷자."],
+        "달리다":["달리다.","달립니다.","달리지 않는다.","달리면.","달릴 수 있다.","달리자."],
+        "타다":["타다.","탑니다.","타지 않는다.","타면.","탈 수 있다.","타자."],
+        "내리다":["내리다.","내립니다.","내리지 않는다.","내리면.","내릴 수 있다.","내리자."],
+        "일어나다":["일어나다.","일어납니다.","일어나지 않는다.","일어나면.","일어날 수 있다.","일어나자."],
+        "자다":["자다.","잡니다.","자지 않는다.","자면.","잘 수 있다.","자자."],
+        "씻다":["씻다.","씻습니다.","씻지 않는다.","씻으면.","씻을 수 있다.","씻자."],
+        "청소하다":["청소하다.","청소합니다.","청소하지 않는다.","청소하면.","청소할 수 있다.","청소하자."],
+        "사용하다":["사용하다.","사용합니다.","사용하지 않는다.","사용하면.","사용할 수 있다.","사용하자."],
+        "열다":["열다.","엽니다.","열지 않는다.","열면.","열 수 있다.","열자."],
+        "닫다":["닫다.","닫습니다.","닫지 않는다.","닫으면.","닫을 수 있다.","닫자."],
+        "읽다":["읽다.","읽습니다.","읽지 않는다.","읽으면.","읽을 수 있다.","읽자."],
+        "쓰다":["쓰다.","씁니다.","쓰지 않는다.","쓰면.","쓸 수 있다.","쓰자."],
+        "듣다":["듣다.","듣습니다.","듣지 않는다.","들으면.","들을 수 있다.","듣자."],
+        "공부하다":["공부하다.","공부합니다.","공부하지 않는다.","공부하면.","공부할 수 있다.","공부하자."],
+        "외우다":["외우다.","외웁니다.","외우지 않는다.","외우면.","외울 수 있다.","외우자."],
+        "잊다":["잊다.","잊습니다.","잊지 않는다.","잊으면.","잊을 수 있다.","잊자."],
+        "말하다":["말하다.","말합니다.","말하지 않는다.","말하면.","말할 수 있다.","말하자."],
+        "대답하다":["대답하다.","대답합니다.","대답하지 않는다.","대답하면.","대답할 수 있다.","대답하자."],
+        "연락하다":["연락하다.","연락합니다.","연락하지 않는다.","연락하면.","연락할 수 있다.","연락하자."],
+        "전하다":["전하다.","전합니다.","전하지 않는다.","전하면.","전할 수 있다.","전하자."],
+        "보다":["보다.","봅니다.","보지 않는다.","보면.","볼 수 있다.","보자."],
+        "생각하다":["생각하다.","생각합니다.","생각하지 않는다.","생각하면.","생각할 수 있다.","생각하자."],
+        "느끼다":["느끼다.","느낍니다.","느끼지 않는다.","느끼면.","느낄 수 있다.","느끼자."],
+        "웃다":["웃다.","웃습니다.","웃지 않는다.","웃으면.","웃을 수 있다.","웃자."],
+        "울다":["울다.","웁니다.","울지 않는다.","울면.","울 수 있다.","울자."],
+        "서다":["서다.","섭니다.","서지 않는다.","서면.","설 수 있다.","서자."],
+        "앉다":["앉다.","앉습니다.","앉지 않는다.","앉으면.","앉을 수 있다.","앉자."],
+        "들다":["들다.","듭니다.","들지 않는다.","들면.","들 수 있다.","들자."],
+        "누르다":["누르다.","누릅니다.","누르지 않는다.","누르면.","누를 수 있다.","누르자."],
+        "수영하다":["수영하다.","수영합니다.","수영하지 않는다.","수영하면.","수영할 수 있다.","수영하자."],
+        "사다":["사다.","삽니다.","사지 않는다.","사면.","살 수 있다.","사자."],
+        "팔다":["팔다.","팝니다.","팔지 않는다.","팔면.","팔 수 있다.","팔자."],
+        "지불하다":["지불하다.","지불합니다.","지불하지 않는다.","지불하면.","지불할 수 있다.","지불하자."],
+        "빌리다":["빌리다.","빌립니다.","빌리지 않는다.","빌리면.","빌릴 수 있다.","빌리자."],
+        "예약하다":["예약하다.","예약합니다.","예약하지 않는다.","예약하면.","예약할 수 있다.","예약하자."],
+        "만나다":["만나다.","만납니다.","만나지 않는다.","만나면.","만날 수 있다.","만나자."],
+        "기다리다":["기다리다.","기다립니다.","기다리지 않는다.","기다리면.","기다릴 수 있다.","기다리자."],
+        "부르다":["부르다.","부릅니다.","부르지 않는다.","부르면.","부를 수 있다.","부르자."],
+        "도와주다":["도와주다.","도와줍니다.","도와주지 않는다.","도와주면.","도와줄 수 있다.","도와주자."],
+        "가르치다":["가르치다.","가르칩니다.","가르치지 않는다.","가르치면.","가르칠 수 있다.","가르치자."],
+        "되다":["되다.","됩니다.","되지 않는다.","되면.","될 수 있다.","되자."],
+        "바뀌다":["바뀌다.","바뀝니다.","바뀌지 않는다.","바뀌면.","바뀔 수 있다.","바뀌자."],
+        "시작되다":["시작되다.","시작됩니다.","시작되지 않는다.","시작되면.","시작될 수 있다.","시작되자."],
+        "시작하다":["시작하다.","시작합니다.","시작하지 않는다.","시작하면.","시작할 수 있다.","시작하자."],
+        "끝나다":["끝나다.","끝납니다.","끝나지 않는다.","끝나면.","끝날 수 있다.","끝나자."],
+        "놀다":["놀다.","놉니다.","놀지 않는다.","놀면.","놀 수 있다.","놀자."],
+        "노래하다":["노래하다.","노래합니다.","노래하지 않는다.","노래하면.","노래할 수 있다.","노래하자."],
+        "춤추다":["춤추다.","춤춥니다.","춤추지 않는다.","춤추면.","춤출 수 있다.","춤추자."],
+        "여행하다":["여행하다.","여행합니다.","여행하지 않는다.","여행하면.","여행할 수 있다.","여행하자."],
+        "낫다":["낫다.","낫습니다.","낫지 않는다.","나으면.","나을 수 있다.","낫자."],
+        "맑아지다":["맑아지다.","맑아집니다.","맑아지지 않는다.","맑아지면.","맑아질 수 있다.","맑아지자."],
+        "흐려지다":["흐려지다.","흐려집니다.","흐려지지 않는다.","흐려지면.","흐려질 수 있다.","흐려지자."],
+        "내리다":["내리다.","내립니다.","내리지 않는다.","내리면.","내릴 수 있다.","내리자."]
+      };
+      function makeKrPredicate(meaning, formKey) {
+        const base = normalizeMeaning(meaning);
+        const idx = { base:0, masu:1, negative:2, conditional:3, potential:4, volitional:5 }[formKey];
+        if (krConj[base]) return krConj[base][idx];
+        if (base.endsWith("하다")) {
+          const stem = base.slice(0, -2);
+          return [stem+"하다.", stem+"합니다.", stem+"하지 않는다.", stem+"하면.", stem+"할 수 있다.", stem+"하자."][idx];
+        }
+        if (base.endsWith("되다")) {
+          const stem = base.slice(0, -2);
+          return [stem+"되다.", stem+"됩니다.", stem+"되지 않는다.", stem+"되면.", stem+"될 수 있다.", stem+"되자."][idx];
+        }
+        const stem = removeDa(base);
+        const batchim = hasBatchim(stem);
+        return [base+".", stem+"습니다.", stem+"지 않는다.", stem+(batchim ? "으면." : "면."), stem+(batchim ? "을 수 있다." : "ㄹ 수 있다."), stem+"자."][idx];
+      }
+      function makeKrExample(verb, formKey) {
+        const base = normalizeMeaning(verb.meaning);
+        let prefix = stripDot(verb.exKr.trim());
+        const baseStem = removeDa(base);
+        if (prefix.endsWith(base)) prefix = prefix.slice(0, -base.length);
+        else if (prefix.endsWith(baseStem)) prefix = prefix.slice(0, -baseStem.length);
+        else prefix = "";
+        return (prefix + makeKrPredicate(base, formKey)).split("  ").join(" ").trim();
+      }
+      function compactFuriganaText(text) {
+        return String(text || "").split(" ").join("").split("　").join("");
+      }
+      function formatVerbForm(surface, reading) {
+        if (!surface || !reading) return surface || "";
+        let prefixLen = 0;
+        while (prefixLen < surface.length && prefixLen < reading.length && surface[prefixLen] === reading[prefixLen]) prefixLen += 1;
+        let suffixLen = 0;
+        while (suffixLen < surface.length - prefixLen && suffixLen < reading.length - prefixLen && surface[surface.length - 1 - suffixLen] === reading[reading.length - 1 - suffixLen]) suffixLen += 1;
+        const front = surface.slice(0, prefixLen);
+        const body = surface.slice(prefixLen, surface.length - suffixLen);
+        const bodyReading = reading.slice(prefixLen, reading.length - suffixLen);
+        const tail = suffixLen ? surface.slice(surface.length - suffixLen) : "";
+        if (!body || !bodyReading || body === bodyReading) return compactFuriganaText(surface);
+        return compactFuriganaText(front + body + "(" + bodyReading + ")" + tail);
+      }
+      const furiganaTerms = [
+        ["朝七時", "あさしちじ"], ["日本料理", "にほんりょうり"], ["朝ごはん", "あさごはん"], ["学校", "がっこう"], ["友だち", "ともだち"], ["家", "いえ"], ["駅", "えき"], ["公園", "こうえん"], ["電車", "でんしゃ"], ["橋", "はし"], ["右", "みぎ"], ["車", "くるま"], ["手", "て"], ["部屋", "へや"], ["服", "ふく"], ["机", "つくえ"], ["窓", "まど"], ["名前", "なまえ"], ["本当", "ほんとう"], ["日本語", "にほんご"], ["質問", "しつもん"], ["説明", "せつめい"], ["映画", "えいが"], ["幸せ", "しあわせ"], ["赤ちゃん", "あかちゃん"], ["先生", "せんせい"], ["椅子", "いす"], ["荷物", "にもつ"], ["写真", "しゃしん"], ["靴", "くつ"], ["お金", "おかね"], ["母", "はは"], ["春", "はる"], ["予定", "よてい"], ["授業", "じゅぎょう"], ["仕事", "しごと"], ["宿題", "しゅくだい"], ["歌", "うた"], ["音楽", "おんがく"], ["日本", "にほん"], ["風邪", "かぜ"], ["空", "そら"], ["午後", "ごご"], ["雨", "あめ"], ["魚", "さかな"], ["水", "みず"], ["単語", "たんご"], ["約束", "やくそく"], ["気持ち", "きもち"], ["約", "やく"], ["意味", "いみ"], ["資料", "しりょう"], ["答え", "こたえ"], ["声", "こえ"], ["動画", "どうが"], ["作品", "さくひん"], ["病院", "びょういん"], ["医者", "いしゃ"], ["毎朝", "まいあさ"], ["体", "からだ"], ["空気", "くうき"], ["お茶", "おちゃ"]
+      ];
+      function applyFuriganaTerms(text) {
+        let result = text;
+        furiganaTerms.forEach(function(pair) {
+          const kanji = pair[0];
+          const yomi = pair[1];
+          const marked = kanji + "(" + yomi + ")";
+          result = result.split(marked).join(kanji);
+          result = result.split(kanji).join(marked);
+        });
+        return result;
+      }
+      function makeFormExample(verb, formKey) {
+        const forms = conj(verb);
+        const baseForm = forms.base;
+        const targetForm = forms[formKey];
+        const rawJp = verb.exJp.split(baseForm.kanji).join(targetForm.kanji);
+        const formattedTarget = formatVerbForm(targetForm.kanji, targetForm.kana);
+        let jp = rawJp.split(targetForm.kanji).join("__TARGET_VERB__");
+        jp = applyFuriganaTerms(jp);
+        jp = jp.split("__TARGET_VERB__").join(formattedTarget);
+        return { jp: jp, kana: "", kr: makeKrExample(verb, formKey), rawJp: rawJp };
+      }
+      function shuffle(a) { return a.slice().sort(function () { return Math.random() - .5; }); }
+      function filtered() { return verbs.filter(function (v) { return st.category === "전체" || v.category === st.category; }); }
+      function searched() { const kw = st.search.trim().toLowerCase(); return filtered().filter(function (v) { return !kw || (v.kanji + " " + v.kana + " " + v.meaning + " " + v.category).toLowerCase().indexOf(kw) > -1; }); }
+      function current() { const list = searched(); if (st.index >= list.length) st.index = Math.max(0, list.length - 1); return list[st.index] || verbs[0]; }
+      function acc() { const t = st.score.correct + st.score.wrong; return t ? Math.round(st.score.correct / t * 100) : 0; }
+      function makeQ(mode) { const pool = filtered().length >= 4 ? filtered() : verbs; const target = pool[Math.floor(Math.random() * pool.length)]; const f = conj(target); const key = keys[Math.floor(Math.random() * keys.length)]; const wrong = shuffle(pool.filter(function (v) { return v.id !== target.id; })).slice(0,3); if (mode === "meaning") return { type:"뜻 맞히기", prompt:f.base.kanji, sub:f.base.kana, audio:f.base.kanji, answer:target.meaning, options:shuffle([target.meaning].concat(wrong.map(function(v){return v.meaning;}))) }; if (mode === "japanese") return { type:"일본어 고르기", prompt:target.meaning, sub:"뜻에 맞는 일본어를 고르세요", audio:null, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; if (mode === "form") return { type:"활용형 맞히기", prompt:target.kanji + "의 " + labels[key] + "은?", sub:target.meaning, audio:f[key].kanji, answer:f[key].kanji, options:shuffle([f[key].kanji].concat(shuffle(keys.filter(function(k){return k!==key;})).slice(0,3).map(function(k){return f[k].kanji;}))) }; if (mode === "blank") return { type:"예문 빈칸", prompt:target.exJp.replace(target.kanji,"______"), sub:target.exKr, audio:target.exJp, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; return { type:"듣고 맞히기", prompt:"발음을 듣고 맞는 단어를 고르세요", sub:"듣기 퀴즈", audio:target.kanji, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; }
+      function setTab(t) { st.tab = t; if (t === "quiz" && !st.question) startQuiz(st.quizMode); render(); }
+      function startQuiz(mode) { st.quizMode = mode || st.quizMode; st.quizCount = 0; st.selected = null; st.sessionWrong = []; st.question = makeQ(st.quizMode); render(); }
+      function renderChips() { qs("#formChips").innerHTML = keys.map(function(k){ return '<button type="button" class="chip '+(st.form===k?'active':'')+'" data-form="'+k+'">'+labels[k]+'</button>'; }).join(""); qs("#categoryChips").innerHTML = cats.map(function(c){ return '<button type="button" class="chip '+(st.category===c?'active':'')+'" data-cat="'+c+'">'+c+'</button>'; }).join(""); }
+      function renderTop() {
+        const overallDone = getOverallDoneCount();
+        const overallRate = getOverallProgressRate();
+        qs("#topCounter").textContent = overallDone + " / " + verbs.length;
+        qs("#progressStat").textContent = overallRate + "%";
+        qs("#favStat").textContent = st.fav.length;
+        qs("#accuracyStat").textContent = acc()+"%";
+        qs("#searchBox").classList.toggle("show", st.tab === "card" || st.tab === "favorite");
+        document.body.classList.toggle("card-filter-visible", st.tab === "card");
+        qsa(".tab").forEach(function(b){ b.classList.toggle("active", b.dataset.tab === st.tab); });
+        qsa(".screen").forEach(function(s){ s.classList.remove("active"); });
+        qs("#" + st.tab + "Screen").classList.add("active");
+        maybeShowDailyReminder();
+      }
+      function renderHome() {
+        const doneIds = getOverallDoneIds();
+        const doneCount = doneIds.size;
+        const rate = Math.round(doneCount / verbs.length * 100);
+        qs("#homeFill").style.width = rate + "%";
+        qs("#homeDoneText").textContent = "학습 완료 " + doneCount + "개";
+        qs("#homeDoneRate").textContent = rate + "%";
+        qs("#totalText").textContent = "총 " + verbs.length + "개";
+        qs("#categoryStats").innerHTML = cats.filter(function(c){return c!=="전체";}).map(function(c){
+          const list = verbs.filter(function(v){return v.category===c;});
+          const done = list.filter(function(v){return doneIds.has(v.id);}).length;
+          const r = Math.round(done/list.length*100);
+          return '<button type="button" class="list-btn" data-homecat="'+c+'"><div class="between"><b>'+c+'</b><span class="muted">'+done+'/'+list.length+'</span></div><div class="bar" style="height:8px;margin-top:10px"><div class="fill" style="width:'+r+'%"></div></div></button>';
+        }).join("");
+        qs("#quickMenu").innerHTML = '<button type="button" class="quick" data-quick="daily">오늘학습<span>하루 5개</span></button><button type="button" class="quick" data-quick="all">전체 동사<span>200개 보기</span></button><button type="button" class="quick" data-quick="favorite">즐겨찾기<span>'+st.fav.length+'개 저장</span></button><button type="button" class="quick" data-quick="wrong">오답노트<span>'+st.wrong.length+'개 저장</span></button><button type="button" class="quick" data-quick="masu">ます형<span>활용 집중</span></button><button type="button" class="quick" data-quick="potential">가능형<span>할 수 있다</span></button>';
+      }
+      function renderCard() {
+        const list = searched();
+        qs("#cardEmpty").classList.toggle("hide", list.length > 0);
+        qs("#cardWrap").classList.toggle("hide", list.length === 0);
+        if (!list.length) return;
+        const v = current();
+        const f = conj(v);
+        const a = f[st.form];
+        const ex = makeFormExample(v, st.form);
+        const displayWord = formatFurigana(a.kanji, a.kana);
+        qs("#cardFront").classList.toggle("hide", st.flipped);
+        qs("#cardBack").classList.toggle("hide", !st.flipped);
+        qs("#cardCategory").textContent = v.category;
+        setJpHtml("#cardWord", displayWord);
+        qs("#cardKana").textContent = "";
+        qs("#cardKana").classList.add("hide");
+        qs("#cardForm").textContent = labels[st.form];
+        setJpHtml("#frontExJp", ex.jp);
+        qs("#frontExKr").textContent = "";
+        qs("#frontExKr").classList.add("hide");
+        qs("#backTag").innerHTML = escapeHtml(labels[st.form] + " · ") + jpHtml(displayWord);
+        qs("#backMeaning").textContent = v.meaning;
+        setJpHtml("#backWord", displayWord);
+        qs("#backKana").textContent = "";
+        qs("#backKana").classList.add("hide");
+        setJpHtml("#exJp", ex.jp);
+        qs("#exKana").textContent = "";
+        qs("#exKana").classList.add("hide");
+        qs("#exKr").textContent = ex.kr;
+        qs("#favBtn").textContent = st.fav.indexOf(v.id)>-1 ? "★" : "☆";
+        qs("#favBtn").classList.toggle("on", st.fav.indexOf(v.id)>-1);
+        qs("#completeBtn").textContent = st.done.indexOf(v.id)>-1 ? "학습 완료됨 ✓" : "학습 완료 체크";
+        qs("#completeBtn").classList.toggle("on", st.done.indexOf(v.id)>-1);
+        qs("#conjList").innerHTML = keys.map(function(k){
+          const item = jpHtml(formatFurigana(f[k].kanji, f[k].kana));
+          return '<div class="'+(k===st.form?'on':'')+'"><b>'+labels[k]+'</b><p>'+item+'</p></div>';
+        }).join("");
+      }
+      function renderQuiz() { if (!st.question) st.question = makeQ(st.quizMode); qs("#quizModes").innerHTML = [["meaning","뜻"],["japanese","일본어"],["form","활용형"],["blank","빈칸"],["audio","듣기"]].map(function(m){return '<button type="button" class="chip '+(st.quizMode===m[0]?'active':'')+'" data-qmode="'+m[0]+'">'+m[1]+'</button>';}).join(""); qs("#quizType").textContent = st.question.type; qs("#quizProgress").textContent = Math.min(st.quizCount+1, st.quizLimit) + " / " + st.quizLimit + " · 정답률 " + acc() + "%"; qs("#quizPrompt").textContent = st.question.prompt; qs("#quizSub").textContent = st.question.sub; qs("#quizAudio").classList.toggle("hide", !st.question.audio); qs("#options").innerHTML = st.question.options.map(function(opt){ const done = st.selected !== null; const cls = done && opt===st.question.answer ? "correct" : done && opt===st.selected ? "wrong" : ""; const mark = done && opt===st.question.answer ? "✓" : done && opt===st.selected ? "✕" : ""; return '<button type="button" class="option '+cls+'" data-answer="'+opt+'"><span>'+opt+'</span><span>'+mark+'</span></button>'; }).join(""); qs("#explain").className = "explain" + (st.selected!==null ? " show" : "") + (st.selected===st.question.answer ? " correct" : st.selected!==null ? " wrong" : ""); qs("#explainAnswer").textContent = "정답: " + st.question.answer; qs("#pickedAnswer").textContent = st.selected && st.selected !== st.question.answer ? "선택한 답: " + st.selected : ""; qs("#nextQuestion").textContent = st.selected && st.quizCount + 1 >= st.quizLimit ? "결과 보기" : "다음 문제"; qs("#previewWrong").classList.toggle("hide", st.wrong.length===0); qs("#previewList").innerHTML = st.wrong.slice(0,4).map(function(n){return '<div class="list-card"><p class="wrong-type">'+n.type+'</p><p class="wrong-q">'+n.question+'</p><p class="wrong-a"><b class="amber">정답: '+n.answer+'</b></p></div>';}).join(""); }
+      function renderFav() { const kw = st.search.trim().toLowerCase(); const list = verbs.filter(function(v){return st.fav.indexOf(v.id)>-1;}).filter(function(v){return !kw || (v.kanji+" "+v.kana+" "+v.meaning+" "+v.category).toLowerCase().indexOf(kw)>-1;}); qs("#favoriteCount").textContent = list.length + "개"; qs("#favoriteEmpty").classList.toggle("hide", list.length>0); qs("#favoriteList").innerHTML = list.map(function(v){return '<button type="button" class="list-btn" data-favid="'+v.id+'"><div class="between"><div><p class="item-word">'+v.kanji+'</p><p class="item-kana">'+v.kana+'</p></div><span class="amber">★</span></div><p class="item-meaning">'+v.meaning+'</p><p class="item-cat">'+v.category+'</p></button>';}).join(""); }
+      function renderWrong() { qs("#wrongEmpty").classList.toggle("hide", st.wrong.length>0); qs("#wrongList").innerHTML = st.wrong.map(function(n,i){return '<div class="list-card"><div class="between"><p class="wrong-type">'+n.type+'</p><span class="muted">#'+(st.wrong.length-i)+'</span></div><p class="wrong-q">'+n.question+'</p><p class="wrong-a">내 답: <span class="red">'+n.picked+'</span></p><p class="wrong-a">정답: <b class="amber">'+n.answer+'</b></p></div>';}).join(""); }
+      function renderResult() { qs("#resultCorrect").textContent = st.score.correct; qs("#resultWrong").textContent = st.score.wrong; qs("#resultAccuracy").textContent = acc()+"%"; qs("#sessionEmpty").classList.toggle("hide", st.sessionWrong.length>0); qs("#sessionWrong").innerHTML = st.sessionWrong.slice(0,5).map(function(n){return '<div class="list-card"><p class="wrong-type">'+n.type+'</p><p class="wrong-q">'+n.question+'</p><p class="wrong-a">내 답: <span class="red">'+n.picked+'</span></p><p class="wrong-a">정답: <b class="amber">'+n.answer+'</b></p></div>';}).join(""); }
+      function render() { renderChips(); renderTop(); renderHome(); renderDaily(); renderCard(); renderQuiz(); renderFav(); renderWrong(); renderResult(); qs("#verbCount").textContent = verbs.length; }
+      document.addEventListener("click", function(e) { const tab=e.target.closest("[data-tab]"); if(tab) return setTab(tab.dataset.tab); const form=e.target.closest("[data-form]"); if(form){st.form=form.dataset.form;st.flipped=false;return render();} const cat=e.target.closest("[data-cat]"); if(cat){st.category=cat.dataset.cat;st.index=0;st.flipped=false;return render();} const homecat=e.target.closest("[data-homecat]"); if(homecat){st.category=homecat.dataset.homecat;st.index=0;st.flipped=false;return setTab("card");} const quick=e.target.closest("[data-quick]"); if(quick){const t=quick.dataset.quick;if(t==="daily") setTab("daily"); if(t==="all"){st.category="전체";st.search="";qs("#searchInput").value="";setTab("card");} if(t==="favorite") setTab("favorite"); if(t==="wrong") setTab("wrong"); if(t==="masu"){st.category="전체";st.form="masu";setTab("card");} if(t==="potential"){st.category="전체";st.form="potential";setTab("card");} return;} const dailyItem=e.target.closest("[data-daily-index]"); if(dailyItem){dailyState.index=Number(dailyItem.dataset.dailyIndex)||0;dailyState.flipped=false;return render();} const dailySound=e.target.closest("[data-daily-sound]"); if(dailySound){const items=getDailyWords(); const v=items[dailyState.index]||items[0]; const formKey=dailySound.dataset.dailyForm || "base"; if(v){ if(dailySound.dataset.dailySound==="word"){ const target=conj(v)[formKey]; speak(target.kanji); } else { speak(makeFormExample(v, formKey).rawJp); } } return; } const qm=e.target.closest("[data-qmode]"); if(qm) return startQuiz(qm.dataset.qmode); const ans=e.target.closest("[data-answer]"); if(ans && st.selected===null){const picked=ans.dataset.answer;st.selected=picked;if(picked===st.question.answer) st.score.correct++; else {st.score.wrong++; const w={question:st.question.prompt, answer:st.question.answer, picked:picked, type:st.question.type}; st.wrong=[w].concat(st.wrong).slice(0,30); st.sessionWrong=[w].concat(st.sessionWrong);} return render();} const fav=e.target.closest("[data-favid]"); if(fav){const id=Number(fav.dataset.favid); st.category="전체"; st.search=""; qs("#searchInput").value=""; st.index=verbs.findIndex(function(v){return v.id===id;}); st.flipped=false; return setTab("card");} });
+      qs("#searchInput").addEventListener("input", function(e){st.search=e.target.value;st.index=0;st.flipped=false;render();});
+      qs("#goCard").addEventListener("click", function(){setTab("card");}); qs("#goQuiz").addEventListener("click", function(){st.tab="quiz";startQuiz();}); qs("#goQuiz2").addEventListener("click", function(){st.tab="quiz";startQuiz();});
+      qs("#flashCard").addEventListener("click", function(){st.flipped=!st.flipped;render();speak(conj(current())[st.form].kanji);}); qs("#wordAudio").addEventListener("click", function(e){e.stopPropagation();speak(conj(current())[st.form].kanji);}); qs("#backAudio").addEventListener("click", function(e){e.stopPropagation();speak(conj(current())[st.form].kanji);}); qs("#exAudio").addEventListener("click", function(e){e.stopPropagation();speak(makeFormExample(current(), st.form).rawJp);}); qs("#quizAudio").addEventListener("click", function(){if(st.question && st.question.audio)speak(st.question.audio);});
+      qs("#prevCard").addEventListener("click", function(){const len=searched().length;if(!len)return;st.index=(st.index-1+len)%len;st.flipped=false;render();}); qs("#nextCard").addEventListener("click", function(){const len=searched().length;if(!len)return;st.index=(st.index+1)%len;st.flipped=false;render();}); qs("#favBtn").addEventListener("click", function(){const id=current().id;st.fav=st.fav.indexOf(id)>-1?st.fav.filter(function(x){return x!==id;}):st.fav.concat(id);render();}); qs("#completeBtn").addEventListener("click", function(){const id=current().id;st.done=st.done.indexOf(id)>-1?st.done.filter(function(x){return x!==id;}):st.done.concat(id);render();});
+      qs("#nextQuestion").addEventListener("click", function(){if(st.selected && st.quizCount+1>=st.quizLimit)return setTab("result");if(st.selected)st.quizCount++;st.selected=null;st.question=makeQ(st.quizMode);render();}); qs("#clearPreview").addEventListener("click", function(){st.wrong=[];render();}); qs("#clearWrong").addEventListener("click", function(){st.wrong=[];render();}); qs("#retryQuiz").addEventListener("click", function(){st.score={correct:0,wrong:0};st.tab="quiz";startQuiz();}); qs("#viewWrong").addEventListener("click", function(){setTab("wrong");});
+      qs("#dailySingleCard").addEventListener("click", function(e){if(e.target.closest(".daily-mini-sound")) return; const items=getDailyWords(); const v=items[dailyState.index]||items[0]; if(v) speak(conj(v).base.kanji); dailyState.flipped=!dailyState.flipped;render();});
+      qs("#dailyPrevBtn").addEventListener("click", function(){const items=getDailyWords();if(!items.length)return;dailyState.index=(dailyState.index-1+items.length)%items.length;dailyState.flipped=false;render();});
+      qs("#dailyNextBtn").addEventListener("click", function(){const items=getDailyWords();if(!items.length)return;dailyState.index=(dailyState.index+1)%items.length;dailyState.flipped=false;render();});
+      qs("#dailyCompleteBtn").addEventListener("click", function(){completeDailyWord();});
+      qs("#attendanceCheckBtn").addEventListener("click", function(){claimDailyReward(true);render();});
+      qs("#dailyNotifyBtn").addEventListener("click", function(){openNotifyModal();});
+      qs("#notifyCancelBtn").addEventListener("click", function(){closeNotifyModal();});
+      qs("#notifySaveBtn").addEventListener("click", function(){saveNotifyTime();});
+      qs("#notifyDisableBtn").addEventListener("click", function(){disableNotify();});
+      qs("#notifyModal").addEventListener("click", function(e){if(e.target===qs("#notifyModal")) closeNotifyModal();});
+      render();
+    });
+  </script>
+</body>
+</html>
