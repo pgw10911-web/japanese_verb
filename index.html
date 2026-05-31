@@ -1638,6 +1638,89 @@
     body.card-filter-visible #categoryChips {
       display: flex !important;
     }
+
+
+    /* ===== v8: 돋보기/검색창 활성화 보정 ===== */
+    #searchBox.search {
+      min-height: 58px !important;
+      display: none;
+      align-items: center !important;
+      gap: 10px !important;
+      padding: 10px 14px !important;
+      margin-bottom: 12px !important;
+      border: 1px solid #bae6fd !important;
+      border-radius: 22px !important;
+      background: rgba(255,255,255,.94) !important;
+      box-shadow: 0 8px 18px rgba(14,116,144,.06) !important;
+      cursor: text !important;
+    }
+
+    #searchBox.search.show {
+      display: flex !important;
+    }
+
+    #searchBox:focus-within {
+      border-color: #0ea5e9 !important;
+      box-shadow: 0 0 0 3px rgba(14,165,233,.14), 0 8px 18px rgba(14,116,144,.06) !important;
+    }
+
+    .search-icon-btn,
+    .search-clear-btn {
+      flex: 0 0 auto !important;
+      width: 36px !important;
+      height: 36px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 0 !important;
+      border-radius: 50% !important;
+      background: transparent !important;
+      color: #0369a1 !important;
+      font-size: 22px !important;
+      line-height: 1 !important;
+      box-shadow: none !important;
+      cursor: pointer !important;
+    }
+
+    .search-clear-btn {
+      background: #e0f2fe !important;
+      color: #475569 !important;
+      font-size: 24px !important;
+    }
+
+    #searchInput {
+      display: block !important;
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      width: 100% !important;
+      height: 38px !important;
+      padding: 0 !important;
+      border: 0 !important;
+      outline: 0 !important;
+      background: transparent !important;
+      color: #0f172a !important;
+      caret-color: #0ea5e9 !important;
+      font-size: 17px !important;
+      line-height: 1.2 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.03em !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
+    }
+
+    #searchInput::placeholder {
+      color: #64748b !important;
+      opacity: 1 !important;
+      font-weight: 400 !important;
+    }
+
+    #searchInput::-webkit-search-decoration,
+    #searchInput::-webkit-search-cancel-button,
+    #searchInput::-webkit-search-results-button,
+    #searchInput::-webkit-search-results-decoration {
+      display: none !important;
+    }
+
 </style>
 </head>
 <body>
@@ -1663,7 +1746,7 @@
       <button type="button" class="tab" data-tab="result">결과</button>
     </nav>
 
-    <div class="search" id="searchBox"><span>🔎</span><input id="searchInput" type="text" placeholder="동사 / 히라가나 / 뜻 검색"></div>
+    <div class="search" id="searchBox"><button type="button" class="search-icon-btn" id="searchIconBtn" aria-label="검색창 활성화">🔎</button><input id="searchInput" type="search" autocomplete="off" inputmode="search" placeholder="동사 / 히라가나 / 뜻 검색"><button type="button" class="search-clear-btn hide" id="searchClearBtn" aria-label="검색어 지우기">×</button></div>
     <div class="chips" id="formChips"></div>
     <div class="chips" id="categoryChips"></div>
 
@@ -3191,7 +3274,15 @@
       }
       function shuffle(a) { return a.slice().sort(function () { return Math.random() - .5; }); }
       function filtered() { return verbs.filter(function (v) { return st.category === "전체" || v.category === st.category; }); }
-      function searched() { const kw = st.search.trim().toLowerCase(); return filtered().filter(function (v) { return !kw || (v.kanji + " " + v.kana + " " + v.meaning + " " + v.category).toLowerCase().indexOf(kw) > -1; }); }
+      function searchableText(v) {
+        const forms = conj(v);
+        const formTexts = keys.map(function(k){ return labels[k] + " " + forms[k].kanji + " " + forms[k].kana; }).join(" ");
+        return (v.kanji + " " + v.kana + " " + v.meaning + " " + v.category + " " + v.exJp + " " + v.exKana + " " + v.exKr + " " + formTexts).toLowerCase();
+      }
+      function searched() {
+        const kw = st.search.trim().toLowerCase();
+        return filtered().filter(function (v) { return !kw || searchableText(v).indexOf(kw) > -1; });
+      }
       function current() { const list = searched(); if (st.index >= list.length) st.index = Math.max(0, list.length - 1); return list[st.index] || verbs[0]; }
       function acc() { const t = st.score.correct + st.score.wrong; return t ? Math.round(st.score.correct / t * 100) : 0; }
       function makeQ(mode) { const pool = filtered().length >= 4 ? filtered() : verbs; const target = pool[Math.floor(Math.random() * pool.length)]; const f = conj(target); const key = keys[Math.floor(Math.random() * keys.length)]; const wrong = shuffle(pool.filter(function (v) { return v.id !== target.id; })).slice(0,3); if (mode === "meaning") return { type:"뜻 맞히기", prompt:f.base.kanji, sub:f.base.kana, audio:f.base.kanji, answer:target.meaning, options:shuffle([target.meaning].concat(wrong.map(function(v){return v.meaning;}))) }; if (mode === "japanese") return { type:"일본어 고르기", prompt:target.meaning, sub:"뜻에 맞는 일본어를 고르세요", audio:null, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; if (mode === "form") return { type:"활용형 맞히기", prompt:target.kanji + "의 " + labels[key] + "은?", sub:target.meaning, audio:f[key].kanji, answer:f[key].kanji, options:shuffle([f[key].kanji].concat(shuffle(keys.filter(function(k){return k!==key;})).slice(0,3).map(function(k){return f[k].kanji;}))) }; if (mode === "blank") return { type:"예문 빈칸", prompt:target.exJp.replace(target.kanji,"______"), sub:target.exKr, audio:target.exJp, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; return { type:"듣고 맞히기", prompt:"발음을 듣고 맞는 단어를 고르세요", sub:"듣기 퀴즈", audio:target.kanji, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; }
@@ -3206,6 +3297,10 @@
         qs("#favStat").textContent = st.fav.length;
         qs("#accuracyStat").textContent = acc()+"%";
         qs("#searchBox").classList.toggle("show", st.tab === "card" || st.tab === "favorite");
+        const searchInputEl = qs("#searchInput");
+        if (searchInputEl && searchInputEl.value !== st.search) searchInputEl.value = st.search;
+        const searchClearEl = qs("#searchClearBtn");
+        if (searchClearEl) searchClearEl.classList.toggle("hide", !st.search);
         document.body.classList.toggle("card-filter-visible", st.tab === "card");
         qsa(".tab").forEach(function(b){ b.classList.toggle("active", b.dataset.tab === st.tab); });
         qsa(".screen").forEach(function(s){ s.classList.remove("active"); });
@@ -3272,7 +3367,29 @@
       function renderResult() { qs("#resultCorrect").textContent = st.score.correct; qs("#resultWrong").textContent = st.score.wrong; qs("#resultAccuracy").textContent = acc()+"%"; qs("#sessionEmpty").classList.toggle("hide", st.sessionWrong.length>0); qs("#sessionWrong").innerHTML = st.sessionWrong.slice(0,5).map(function(n){return '<div class="list-card"><p class="wrong-type">'+n.type+'</p><p class="wrong-q">'+n.question+'</p><p class="wrong-a">내 답: <span class="red">'+n.picked+'</span></p><p class="wrong-a">정답: <b class="amber">'+n.answer+'</b></p></div>';}).join(""); }
       function render() { renderChips(); renderTop(); renderHome(); renderDaily(); renderCard(); renderQuiz(); renderFav(); renderWrong(); renderResult(); qs("#verbCount").textContent = verbs.length; }
       document.addEventListener("click", function(e) { const bible=e.target.closest(".bible-card"); if(bible){ const text=getBibleSpeechText(bible); if(text) speak(text); return; } const tab=e.target.closest("[data-tab]"); if(tab) return setTab(tab.dataset.tab); const form=e.target.closest("[data-form]"); if(form){st.form=form.dataset.form;st.flipped=false;return render();} const cat=e.target.closest("[data-cat]"); if(cat){st.category=cat.dataset.cat;st.index=0;st.flipped=false;return render();} const homecat=e.target.closest("[data-homecat]"); if(homecat){st.category=homecat.dataset.homecat;st.index=0;st.flipped=false;return setTab("card");} const quick=e.target.closest("[data-quick]"); if(quick){const t=quick.dataset.quick;if(t==="daily") setTab("daily"); if(t==="all"){st.category="전체";st.search="";qs("#searchInput").value="";setTab("card");} if(t==="favorite") setTab("favorite"); if(t==="wrong") setTab("wrong"); if(t==="masu"){st.category="전체";st.form="masu";setTab("card");} if(t==="potential"){st.category="전체";st.form="potential";setTab("card");} return;} const dailyItem=e.target.closest("[data-daily-index]"); if(dailyItem){dailyState.index=Number(dailyItem.dataset.dailyIndex)||0;dailyState.flipped=false;return render();} const dailySound=e.target.closest("[data-daily-sound]"); if(dailySound){const items=getDailyWords(); const v=items[dailyState.index]||items[0]; const formKey=dailySound.dataset.dailyForm || "base"; if(v){ if(dailySound.dataset.dailySound==="word"){ const target=conj(v)[formKey]; speak(target.kanji); } else { speak(makeFormExample(v, formKey).rawJp); } } return; } const qm=e.target.closest("[data-qmode]"); if(qm) return startQuiz(qm.dataset.qmode); const ans=e.target.closest("[data-answer]"); if(ans && st.selected===null){const picked=ans.dataset.answer;st.selected=picked;if(picked===st.question.answer) st.score.correct++; else {st.score.wrong++; const w={question:st.question.prompt, answer:st.question.answer, picked:picked, type:st.question.type}; st.wrong=[w].concat(st.wrong).slice(0,30); st.sessionWrong=[w].concat(st.sessionWrong);} return render();} const fav=e.target.closest("[data-favid]"); if(fav){const id=Number(fav.dataset.favid); st.category="전체"; st.search=""; qs("#searchInput").value=""; st.index=verbs.findIndex(function(v){return v.id===id;}); st.flipped=false; return setTab("card");} });
-      qs("#searchInput").addEventListener("input", function(e){st.search=e.target.value;st.index=0;st.flipped=false;render();});
+      qs("#searchBox").addEventListener("click", function(e){
+        if (e.target.closest("#searchClearBtn")) return;
+        qs("#searchInput").focus();
+      });
+      qs("#searchIconBtn").addEventListener("click", function(e){
+        e.stopPropagation();
+        qs("#searchInput").focus();
+      });
+      qs("#searchInput").addEventListener("input", function(e){
+        st.search=e.target.value;
+        st.index=0;
+        st.flipped=false;
+        render();
+      });
+      qs("#searchClearBtn").addEventListener("click", function(e){
+        e.stopPropagation();
+        st.search="";
+        st.index=0;
+        st.flipped=false;
+        qs("#searchInput").value="";
+        render();
+        qs("#searchInput").focus();
+      });
       qs("#goCard").addEventListener("click", function(){setTab("card");}); qs("#goQuiz").addEventListener("click", function(){st.tab="quiz";startQuiz();}); qs("#goQuiz2").addEventListener("click", function(){st.tab="quiz";startQuiz();});
       qs("#flashCard").addEventListener("click", function(){st.flipped=!st.flipped;render();speak(conj(current())[st.form].kanji);}); qs("#wordAudio").addEventListener("click", function(e){e.stopPropagation();speak(conj(current())[st.form].kanji);}); qs("#backAudio").addEventListener("click", function(e){e.stopPropagation();speak(conj(current())[st.form].kanji);}); qs("#exAudio").addEventListener("click", function(e){e.stopPropagation();speak(makeFormExample(current(), st.form).rawJp);}); qs("#quizAudio").addEventListener("click", function(){if(st.question && st.question.audio)speak(st.question.audio);});
       qs("#prevCard").addEventListener("click", function(){const len=searched().length;if(!len)return;st.index=(st.index-1+len)%len;st.flipped=false;render();}); qs("#nextCard").addEventListener("click", function(){const len=searched().length;if(!len)return;st.index=(st.index+1)%len;st.flipped=false;render();}); qs("#favBtn").addEventListener("click", function(){const id=current().id;st.fav=st.fav.indexOf(id)>-1?st.fav.filter(function(x){return x!==id;}):st.fav.concat(id);render();}); qs("#completeBtn").addEventListener("click", function(){const id=current().id;st.done=st.done.indexOf(id)>-1?st.done.filter(function(x){return x!==id;}):st.done.concat(id);render();});
