@@ -1721,6 +1721,116 @@
       display: none !important;
     }
 
+
+
+    /* ===== 요청 반영: 한자 위 히라가나 ruby 표기 + 단어 굵기 노멀 ===== */
+    ruby {
+      ruby-position: over;
+      ruby-align: center;
+      line-height: 1.45;
+    }
+    ruby rt {
+      color: #64748b !important;
+      font-size: 0.42em !important;
+      font-weight: 400 !important;
+      line-height: 1.05 !important;
+      letter-spacing: 0 !important;
+      text-align: center !important;
+    }
+    .word,
+    .kana,
+    .back-word,
+    .meaning,
+    .daily-front-word,
+    .daily-back-title,
+    .daily-back-meaning,
+    .daily-form-value,
+    .daily-example-line,
+    .daily-item-word,
+    .item-word,
+    .quiz-prompt,
+    .option span:first-child,
+    .example .jp,
+    .card-front-example .jp,
+    .conj p,
+    .bible-jp {
+      font-weight: 400 !important;
+    }
+    .daily-form-row *,
+    #cardBack .conj p,
+    #cardBack .example .jp,
+    #frontExJp {
+      font-weight: 400 !important;
+    }
+
+
+
+    /* ===== 2026-06-02 재수정: 한자 위 히라가나(ruby) + 단어 굵기 노멀 고정 ===== */
+    ruby {
+      ruby-position: over !important;
+      ruby-align: center !important;
+      font-weight: 400 !important;
+      line-height: 1.35 !important;
+    }
+    rt {
+      display: ruby-text !important;
+      color: #64748b !important;
+      font-size: 0.42em !important;
+      line-height: 1 !important;
+      font-weight: 400 !important;
+      letter-spacing: 0 !important;
+      text-align: center !important;
+    }
+    .word,
+    .kana,
+    .back-word,
+    .meaning,
+    .example .jp,
+    .example .ko,
+    .card-front-example .jp,
+    .card-front-example .ko,
+    .conj p,
+    .conj span,
+    .daily-front-word,
+    .daily-back-title,
+    .daily-back-meaning,
+    .daily-form-value,
+    .daily-example-line,
+    .daily-ko-line,
+    .daily-item-word,
+    .item-word,
+    .quiz-prompt,
+    .option,
+    .option span,
+    .bible-jp,
+    .bible-ko,
+    .bible-ref {
+      font-weight: 400 !important;
+    }
+    .word rt,
+    .back-word rt,
+    .daily-front-word rt,
+    .daily-back-title rt {
+      font-size: 0.36em !important;
+    }
+    .daily-form-value rt,
+    .daily-example-line rt,
+    .example .jp rt,
+    .card-front-example .jp rt,
+    .daily-item-word rt,
+    .item-word rt {
+      font-size: 0.48em !important;
+    }
+
+
+/* ===== 히라가나(후리가나) 2배 확대 ===== */
+#dailyScreen ruby rt,
+#cardScreen ruby rt {
+  font-size: 0.48em !important;
+  line-height: 1 !important;
+  font-weight: 500 !important;
+}
+
 </style>
 </head>
 <body>
@@ -2736,7 +2846,7 @@
       const DAILY_COUNT = 5;
       const DAILY_POINTS = 10;
       const STREAK_BONUS = 50;
-      const DAILY_KEY = "jp_verb_daily_v1_fresh_start";
+      const DAILY_KEY = "jp_verb_daily_v2_reset_20260602";
       const dailyState = { index: 0, flipped: false };
 
       function todayKey() {
@@ -2769,10 +2879,15 @@
       }
       function writeDailyStore(data) { localStorage.setItem(DAILY_KEY, JSON.stringify(ensureDailyStoreShape(data))); }
       function dailyStageKey(stage) { return "stage_" + stage; }
-      function totalDailyStages() { return Math.ceil(verbs.length / DAILY_COUNT); }
+      function totalDailyStages() { return Math.ceil(getCardOrderWords().length / DAILY_COUNT); }
+      function getCardOrderWords() {
+        // 카드 탭 기본 배열 순서를 오늘학습에서도 그대로 사용합니다.
+        return verbs.slice();
+      }
       function getDailyWordsByStage(stage) {
+        const cardOrder = getCardOrderWords();
         const start = Math.max(0, Math.min(stage, totalDailyStages() - 1)) * DAILY_COUNT;
-        return verbs.slice(start, start + DAILY_COUNT);
+        return cardOrder.slice(start, start + DAILY_COUNT);
       }
       function advanceDailyStageIfNeeded() {
         const store = readDailyStore();
@@ -2867,7 +2982,7 @@
         }
         const afterSet = getDailyCompletedSet();
         if (afterSet.size >= items.length) {
-          claimDailyReward(false);
+          claimDailyReward(false); // 5개 완료 즉시 자동 출석 처리
         } else if (afterSet.size > before) {
           const nextIncomplete = items.findIndex(function(v){ return !afterSet.has(v.id); });
           if (nextIncomplete >= 0) dailyState.index = nextIncomplete;
@@ -2931,7 +3046,14 @@
         if (!items.length) return;
         if (dailyState.index >= items.length) dailyState.index = 0;
         const stage = getDailyStage();
-        const completed = getDailyCompletedSet();
+        let completed = getDailyCompletedSet();
+        if (items.length && completed.size >= items.length) {
+          const storeForAutoAttendance = readDailyStore();
+          if (storeForAutoAttendance.attendance.indexOf(todayKey()) === -1) {
+            claimDailyReward(false);
+            completed = getDailyCompletedSet();
+          }
+        }
         const item = items[dailyState.index];
         const base = conj(item).base;
         const displayWord = formatFurigana(base.kanji, base.kana);
@@ -3081,7 +3203,10 @@
       }
       function jpHtml(text) {
         const compact = cleanFuriganaText(text);
-        return escapeHtml(compact).replace(/\(([^()]*)\)/g, '<span class="fg-paren">(</span><span class="fg-kana">$1</span><span class="fg-paren">)</span>');
+        const escaped = escapeHtml(compact);
+        // 한자 바로 뒤의 (히라가나)만 ruby로 변환합니다.
+        // 예: 浅草橋(あさくさばし)です。 → <ruby>浅草橋<rt>あさくさばし</rt></ruby>です。
+        return escaped.replace(/([\u3400-\u9FFF\uF900-\uFAFF々〆ヶ]+)\(([^()]*)\)/g, '<ruby>$1<rt>$2</rt></ruby>');
       }
       function setJpHtml(selector, text) {
         const el = qs(selector);
@@ -3407,5 +3532,14 @@
       render();
     });
   </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll(".bible-jp").forEach(function(el){
+        el.innerHTML = el.innerHTML.replace(/([\u3400-\u9FFF\uF900-\uFAFF々〆ヶ]+)<span class="fg-paren">\(<\/span><span class="fg-kana">([^<]+)<\/span><span class="fg-paren">\)<\/span>/g, '<ruby>$1<rt>$2</rt></ruby>');
+      });
+    });
+  </script>
+
 </body>
 </html>
