@@ -1831,6 +1831,35 @@
   font-weight: 500 !important;
 }
 
+
+
+    /* ===== 그룹동사 표시 배지 ===== */
+    .verb-group-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #7dd3fc;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 500 !important;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+    }
+    #dailyScreen .verb-group-badge,
+    #cardScreen .verb-group-badge {
+      margin-left: 6px;
+    }
+    .verb-group-line {
+      margin: 7px 0 0;
+      color: #0369a1;
+      font-size: 12px;
+      font-weight: 400 !important;
+    }
+
 </style>
 </head>
 <body>
@@ -3069,10 +3098,10 @@
         qs("#dailyStageInfo").textContent = "";
 
         qs("#dailySingleCard").classList.toggle("flipped", dailyState.flipped);
-        qs("#dailyFrontCategory").textContent = item.category;
+        qs("#dailyFrontCategory").innerHTML = escapeHtml(item.category) + groupBadge(item);
         setJpHtml("#dailyFrontWord", displayWord);
         qs("#dailyFrontFormList").innerHTML = renderDailyFormRows(item, true, true, false);
-        qs("#dailyBackCategory").textContent = item.category;
+        qs("#dailyBackCategory").innerHTML = escapeHtml(item.category) + groupBadge(item);
         setJpHtml("#dailyBackWord", displayWord);
         qs("#dailyBackMeaning").textContent = item.meaning;
         qs("#dailyFormList").innerHTML = renderDailyFormRows(item, true, true, true);
@@ -3082,7 +3111,7 @@
         qs("#dailyList").innerHTML = items.map(function(v, idx){
           const done = completed.has(v.id);
           const word = jpHtml(formatFurigana(v.kanji, v.kana));
-          return '<button type="button" class="daily-item '+(idx===dailyState.index?'now ':'')+(done?'done':'')+'" data-daily-index="'+idx+'"><div><div class="daily-item-word">'+word+'</div><span class="daily-item-meaning">'+escapeHtml(v.meaning)+' · '+escapeHtml(v.category)+'</span></div><span class="daily-done-pill">'+(done?'완료':'학습')+'</span></button>';
+          return '<button type="button" class="daily-item '+(idx===dailyState.index?'now ':'')+(done?'done':'')+'" data-daily-index="'+idx+'"><div><div class="daily-item-word">'+word+'</div><span class="daily-item-meaning">'+escapeHtml(v.meaning)+' · '+escapeHtml(v.category)+' · '+groupLabel(v)+'</span></div><span class="daily-done-pill">'+(done?'완료':'학습')+'</span></button>';
         }).join("");
         renderDailyStats();
         renderAttendanceCalendar();
@@ -3410,7 +3439,17 @@
       }
       function current() { const list = searched(); if (st.index >= list.length) st.index = Math.max(0, list.length - 1); return list[st.index] || verbs[0]; }
       function acc() { const t = st.score.correct + st.score.wrong; return t ? Math.round(st.score.correct / t * 100) : 0; }
-      function makeQ(mode) { const pool = filtered().length >= 4 ? filtered() : verbs; const target = pool[Math.floor(Math.random() * pool.length)]; const f = conj(target); const key = keys[Math.floor(Math.random() * keys.length)]; const wrong = shuffle(pool.filter(function (v) { return v.id !== target.id; })).slice(0,3); if (mode === "meaning") return { type:"뜻 맞히기", prompt:f.base.kanji, sub:f.base.kana, audio:f.base.kanji, answer:target.meaning, options:shuffle([target.meaning].concat(wrong.map(function(v){return v.meaning;}))) }; if (mode === "japanese") return { type:"일본어 고르기", prompt:target.meaning, sub:"뜻에 맞는 일본어를 고르세요", audio:null, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; if (mode === "form") return { type:"활용형 맞히기", prompt:target.kanji + "의 " + labels[key] + "은?", sub:target.meaning, audio:f[key].kanji, answer:f[key].kanji, options:shuffle([f[key].kanji].concat(shuffle(keys.filter(function(k){return k!==key;})).slice(0,3).map(function(k){return f[k].kanji;}))) }; if (mode === "blank") return { type:"예문 빈칸", prompt:target.exJp.replace(target.kanji,"______"), sub:target.exKr, audio:target.exJp, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; return { type:"듣고 맞히기", prompt:"발음을 듣고 맞는 단어를 고르세요", sub:"듣기 퀴즈", audio:target.kanji, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; }
+      function groupLabel(v) {
+        if (!v) return "";
+        if (v.group === "ichidan") return "2그룹동사";
+        if (v.group === "suru" || v.group === "kuru") return "3그룹동사";
+        return "1그룹동사";
+      }
+      function groupBadge(v) {
+        return '<span class="verb-group-badge">' + groupLabel(v) + '</span>';
+      }
+
+      function makeQ(mode) { const pool = filtered().length >= 4 ? filtered() : verbs; const target = pool[Math.floor(Math.random() * pool.length)]; const f = conj(target); const key = keys[Math.floor(Math.random() * keys.length)]; const wrong = shuffle(pool.filter(function (v) { return v.id !== target.id; })).slice(0,3); if (mode === "meaning") return { group:groupLabel(target), type:"뜻 맞히기", prompt:f.base.kanji, sub:f.base.kana, audio:f.base.kanji, answer:target.meaning, options:shuffle([target.meaning].concat(wrong.map(function(v){return v.meaning;}))) }; if (mode === "japanese") return { group:groupLabel(target), type:"일본어 고르기", prompt:target.meaning, sub:"뜻에 맞는 일본어를 고르세요", audio:null, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; if (mode === "form") return { group:groupLabel(target), type:"활용형 맞히기", prompt:target.kanji + "의 " + labels[key] + "은?", sub:target.meaning, audio:f[key].kanji, answer:f[key].kanji, options:shuffle([f[key].kanji].concat(shuffle(keys.filter(function(k){return k!==key;})).slice(0,3).map(function(k){return f[k].kanji;}))) }; if (mode === "blank") return { group:groupLabel(target), type:"예문 빈칸", prompt:target.exJp.replace(target.kanji,"______"), sub:target.exKr, audio:target.exJp, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; return { group:groupLabel(target), type:"듣고 맞히기", prompt:"발음을 듣고 맞는 단어를 고르세요", sub:"듣기 퀴즈", audio:target.kanji, answer:target.kanji, options:shuffle([target.kanji].concat(wrong.map(function(v){return v.kanji;}))) }; }
       function setTab(t) { st.tab = t; if (t === "quiz" && !st.question) startQuiz(st.quizMode); render(); }
       function startQuiz(mode) { st.quizMode = mode || st.quizMode; st.quizCount = 0; st.selected = null; st.sessionWrong = []; st.question = makeQ(st.quizMode); render(); }
       function renderChips() { qs("#formChips").innerHTML = keys.map(function(k){ return '<button type="button" class="chip '+(st.form===k?'active':'')+'" data-form="'+k+'">'+labels[k]+'</button>'; }).join(""); qs("#categoryChips").innerHTML = cats.map(function(c){ return '<button type="button" class="chip '+(st.category===c?'active':'')+'" data-cat="'+c+'">'+c+'</button>'; }).join(""); }
@@ -3460,7 +3499,7 @@
         const displayWord = formatFurigana(a.kanji, a.kana);
         qs("#cardFront").classList.toggle("hide", st.flipped);
         qs("#cardBack").classList.toggle("hide", !st.flipped);
-        qs("#cardCategory").textContent = v.category;
+        qs("#cardCategory").innerHTML = escapeHtml(v.category) + groupBadge(v);
         setJpHtml("#cardWord", displayWord);
         qs("#cardKana").textContent = "";
         qs("#cardKana").classList.add("hide");
@@ -3468,7 +3507,7 @@
         setJpHtml("#frontExJp", ex.jp);
         qs("#frontExKr").textContent = "";
         qs("#frontExKr").classList.add("hide");
-        qs("#backTag").innerHTML = escapeHtml(labels[st.form] + " · ") + jpHtml(displayWord);
+        qs("#backTag").innerHTML = escapeHtml(labels[st.form] + " · ") + jpHtml(displayWord) + groupBadge(v);
         qs("#backMeaning").textContent = v.meaning;
         setJpHtml("#backWord", displayWord);
         qs("#backKana").textContent = "";
@@ -3481,17 +3520,17 @@
         qs("#favBtn").classList.toggle("on", st.fav.indexOf(v.id)>-1);
         qs("#completeBtn").textContent = st.done.indexOf(v.id)>-1 ? "학습 완료됨 ✓" : "학습 완료 체크";
         qs("#completeBtn").classList.toggle("on", st.done.indexOf(v.id)>-1);
-        qs("#conjList").innerHTML = keys.map(function(k){
+        qs("#conjList").innerHTML = '<div><b>동사 그룹</b><p class="verb-group-line">'+groupLabel(v)+'</p></div>' + keys.map(function(k){
           const item = jpHtml(formatFurigana(f[k].kanji, f[k].kana));
           return '<div class="'+(k===st.form?'on':'')+'"><b>'+labels[k]+'</b><p>'+item+'</p></div>';
         }).join("");
       }
-      function renderQuiz() { if (!st.question) st.question = makeQ(st.quizMode); qs("#quizModes").innerHTML = [["meaning","뜻"],["japanese","일본어"],["form","활용형"],["blank","빈칸"],["audio","듣기"]].map(function(m){return '<button type="button" class="chip '+(st.quizMode===m[0]?'active':'')+'" data-qmode="'+m[0]+'">'+m[1]+'</button>';}).join(""); qs("#quizType").textContent = st.question.type; qs("#quizProgress").textContent = Math.min(st.quizCount+1, st.quizLimit) + " / " + st.quizLimit + " · 정답률 " + acc() + "%"; qs("#quizPrompt").textContent = st.question.prompt; qs("#quizSub").textContent = st.question.sub; qs("#quizAudio").classList.toggle("hide", !st.question.audio); qs("#options").innerHTML = st.question.options.map(function(opt){ const done = st.selected !== null; const cls = done && opt===st.question.answer ? "correct" : done && opt===st.selected ? "wrong" : ""; const mark = done && opt===st.question.answer ? "✓" : done && opt===st.selected ? "✕" : ""; return '<button type="button" class="option '+cls+'" data-answer="'+opt+'"><span>'+opt+'</span><span>'+mark+'</span></button>'; }).join(""); qs("#explain").className = "explain" + (st.selected!==null ? " show" : "") + (st.selected===st.question.answer ? " correct" : st.selected!==null ? " wrong" : ""); qs("#explainAnswer").textContent = "정답: " + st.question.answer; qs("#pickedAnswer").textContent = st.selected && st.selected !== st.question.answer ? "선택한 답: " + st.selected : ""; qs("#nextQuestion").textContent = st.selected && st.quizCount + 1 >= st.quizLimit ? "결과 보기" : "다음 문제"; qs("#previewWrong").classList.toggle("hide", st.wrong.length===0); qs("#previewList").innerHTML = st.wrong.slice(0,4).map(function(n){return '<div class="list-card"><p class="wrong-type">'+n.type+'</p><p class="wrong-q">'+n.question+'</p><p class="wrong-a"><b class="amber">정답: '+n.answer+'</b></p></div>';}).join(""); }
-      function renderFav() { const kw = st.search.trim().toLowerCase(); const list = verbs.filter(function(v){return st.fav.indexOf(v.id)>-1;}).filter(function(v){return !kw || (v.kanji+" "+v.kana+" "+v.meaning+" "+v.category).toLowerCase().indexOf(kw)>-1;}); qs("#favoriteCount").textContent = list.length + "개"; qs("#favoriteEmpty").classList.toggle("hide", list.length>0); qs("#favoriteList").innerHTML = list.map(function(v){return '<button type="button" class="list-btn" data-favid="'+v.id+'"><div class="between"><div><p class="item-word">'+v.kanji+'</p><p class="item-kana">'+v.kana+'</p></div><span class="amber">★</span></div><p class="item-meaning">'+v.meaning+'</p><p class="item-cat">'+v.category+'</p></button>';}).join(""); }
-      function renderWrong() { qs("#wrongEmpty").classList.toggle("hide", st.wrong.length>0); qs("#wrongList").innerHTML = st.wrong.map(function(n,i){return '<div class="list-card"><div class="between"><p class="wrong-type">'+n.type+'</p><span class="muted">#'+(st.wrong.length-i)+'</span></div><p class="wrong-q">'+n.question+'</p><p class="wrong-a">내 답: <span class="red">'+n.picked+'</span></p><p class="wrong-a">정답: <b class="amber">'+n.answer+'</b></p></div>';}).join(""); }
-      function renderResult() { qs("#resultCorrect").textContent = st.score.correct; qs("#resultWrong").textContent = st.score.wrong; qs("#resultAccuracy").textContent = acc()+"%"; qs("#sessionEmpty").classList.toggle("hide", st.sessionWrong.length>0); qs("#sessionWrong").innerHTML = st.sessionWrong.slice(0,5).map(function(n){return '<div class="list-card"><p class="wrong-type">'+n.type+'</p><p class="wrong-q">'+n.question+'</p><p class="wrong-a">내 답: <span class="red">'+n.picked+'</span></p><p class="wrong-a">정답: <b class="amber">'+n.answer+'</b></p></div>';}).join(""); }
+      function renderQuiz() { if (!st.question) st.question = makeQ(st.quizMode); qs("#quizModes").innerHTML = [["meaning","뜻"],["japanese","일본어"],["form","활용형"],["blank","빈칸"],["audio","듣기"]].map(function(m){return '<button type="button" class="chip '+(st.quizMode===m[0]?'active':'')+'" data-qmode="'+m[0]+'">'+m[1]+'</button>';}).join(""); qs("#quizType").textContent = st.question.type + " · " + st.question.group; qs("#quizProgress").textContent = Math.min(st.quizCount+1, st.quizLimit) + " / " + st.quizLimit + " · 정답률 " + acc() + "%"; qs("#quizPrompt").textContent = st.question.prompt; qs("#quizSub").textContent = st.question.sub; qs("#quizAudio").classList.toggle("hide", !st.question.audio); qs("#options").innerHTML = st.question.options.map(function(opt){ const done = st.selected !== null; const cls = done && opt===st.question.answer ? "correct" : done && opt===st.selected ? "wrong" : ""; const mark = done && opt===st.question.answer ? "✓" : done && opt===st.selected ? "✕" : ""; return '<button type="button" class="option '+cls+'" data-answer="'+opt+'"><span>'+opt+'</span><span>'+mark+'</span></button>'; }).join(""); qs("#explain").className = "explain" + (st.selected!==null ? " show" : "") + (st.selected===st.question.answer ? " correct" : st.selected!==null ? " wrong" : ""); qs("#explainAnswer").textContent = "정답: " + st.question.answer; qs("#pickedAnswer").textContent = st.selected && st.selected !== st.question.answer ? "선택한 답: " + st.selected : ""; qs("#nextQuestion").textContent = st.selected && st.quizCount + 1 >= st.quizLimit ? "결과 보기" : "다음 문제"; qs("#previewWrong").classList.toggle("hide", st.wrong.length===0); qs("#previewList").innerHTML = st.wrong.slice(0,4).map(function(n){return '<div class="list-card"><p class="wrong-type">'+n.type+' · '+(n.group||'')+'</p><p class="wrong-q">'+n.question+'</p><p class="wrong-a"><b class="amber">정답: '+n.answer+'</b></p></div>';}).join(""); }
+      function renderFav() { const kw = st.search.trim().toLowerCase(); const list = verbs.filter(function(v){return st.fav.indexOf(v.id)>-1;}).filter(function(v){return !kw || (v.kanji+" "+v.kana+" "+v.meaning+" "+v.category).toLowerCase().indexOf(kw)>-1;}); qs("#favoriteCount").textContent = list.length + "개"; qs("#favoriteEmpty").classList.toggle("hide", list.length>0); qs("#favoriteList").innerHTML = list.map(function(v){return '<button type="button" class="list-btn" data-favid="'+v.id+'"><div class="between"><div><p class="item-word">'+v.kanji+'</p><p class="item-kana">'+v.kana+'</p></div><span class="amber">★</span></div><p class="item-meaning">'+v.meaning+'</p><p class="item-cat">'+v.category+' · '+groupLabel(v)+'</p></button>';}).join(""); }
+      function renderWrong() { qs("#wrongEmpty").classList.toggle("hide", st.wrong.length>0); qs("#wrongList").innerHTML = st.wrong.map(function(n,i){return '<div class="list-card"><div class="between"><p class="wrong-type">'+n.type+' · '+(n.group||'')+'</p><span class="muted">#'+(st.wrong.length-i)+'</span></div><p class="wrong-q">'+n.question+'</p><p class="wrong-a">내 답: <span class="red">'+n.picked+'</span></p><p class="wrong-a">정답: <b class="amber">'+n.answer+'</b></p></div>';}).join(""); }
+      function renderResult() { qs("#resultCorrect").textContent = st.score.correct; qs("#resultWrong").textContent = st.score.wrong; qs("#resultAccuracy").textContent = acc()+"%"; qs("#sessionEmpty").classList.toggle("hide", st.sessionWrong.length>0); qs("#sessionWrong").innerHTML = st.sessionWrong.slice(0,5).map(function(n){return '<div class="list-card"><p class="wrong-type">'+n.type+' · '+(n.group||'')+'</p><p class="wrong-q">'+n.question+'</p><p class="wrong-a">내 답: <span class="red">'+n.picked+'</span></p><p class="wrong-a">정답: <b class="amber">'+n.answer+'</b></p></div>';}).join(""); }
       function render() { renderChips(); renderTop(); renderHome(); renderDaily(); renderCard(); renderQuiz(); renderFav(); renderWrong(); renderResult(); qs("#verbCount").textContent = verbs.length; }
-      document.addEventListener("click", function(e) { const bible=e.target.closest(".bible-card"); if(bible){ const text=getBibleSpeechText(bible); if(text) speak(text); return; } const tab=e.target.closest("[data-tab]"); if(tab) return setTab(tab.dataset.tab); const form=e.target.closest("[data-form]"); if(form){st.form=form.dataset.form;st.flipped=false;return render();} const cat=e.target.closest("[data-cat]"); if(cat){st.category=cat.dataset.cat;st.index=0;st.flipped=false;return render();} const homecat=e.target.closest("[data-homecat]"); if(homecat){st.category=homecat.dataset.homecat;st.index=0;st.flipped=false;return setTab("card");} const quick=e.target.closest("[data-quick]"); if(quick){const t=quick.dataset.quick;if(t==="daily") setTab("daily"); if(t==="all"){st.category="전체";st.search="";qs("#searchInput").value="";setTab("card");} if(t==="favorite") setTab("favorite"); if(t==="wrong") setTab("wrong"); if(t==="masu"){st.category="전체";st.form="masu";setTab("card");} if(t==="potential"){st.category="전체";st.form="potential";setTab("card");} return;} const dailyItem=e.target.closest("[data-daily-index]"); if(dailyItem){dailyState.index=Number(dailyItem.dataset.dailyIndex)||0;dailyState.flipped=false;return render();} const dailySound=e.target.closest("[data-daily-sound]"); if(dailySound){const items=getDailyWords(); const v=items[dailyState.index]||items[0]; const formKey=dailySound.dataset.dailyForm || "base"; if(v){ if(dailySound.dataset.dailySound==="word"){ const target=conj(v)[formKey]; speak(target.kanji); } else { speak(makeFormExample(v, formKey).rawJp); } } return; } const qm=e.target.closest("[data-qmode]"); if(qm) return startQuiz(qm.dataset.qmode); const ans=e.target.closest("[data-answer]"); if(ans && st.selected===null){const picked=ans.dataset.answer;st.selected=picked;if(picked===st.question.answer) st.score.correct++; else {st.score.wrong++; const w={question:st.question.prompt, answer:st.question.answer, picked:picked, type:st.question.type}; st.wrong=[w].concat(st.wrong).slice(0,30); st.sessionWrong=[w].concat(st.sessionWrong);} return render();} const fav=e.target.closest("[data-favid]"); if(fav){const id=Number(fav.dataset.favid); st.category="전체"; st.search=""; qs("#searchInput").value=""; st.index=verbs.findIndex(function(v){return v.id===id;}); st.flipped=false; return setTab("card");} });
+      document.addEventListener("click", function(e) { const bible=e.target.closest(".bible-card"); if(bible){ const text=getBibleSpeechText(bible); if(text) speak(text); return; } const tab=e.target.closest("[data-tab]"); if(tab) return setTab(tab.dataset.tab); const form=e.target.closest("[data-form]"); if(form){st.form=form.dataset.form;st.flipped=false;return render();} const cat=e.target.closest("[data-cat]"); if(cat){st.category=cat.dataset.cat;st.index=0;st.flipped=false;return render();} const homecat=e.target.closest("[data-homecat]"); if(homecat){st.category=homecat.dataset.homecat;st.index=0;st.flipped=false;return setTab("card");} const quick=e.target.closest("[data-quick]"); if(quick){const t=quick.dataset.quick;if(t==="daily") setTab("daily"); if(t==="all"){st.category="전체";st.search="";qs("#searchInput").value="";setTab("card");} if(t==="favorite") setTab("favorite"); if(t==="wrong") setTab("wrong"); if(t==="masu"){st.category="전체";st.form="masu";setTab("card");} if(t==="potential"){st.category="전체";st.form="potential";setTab("card");} return;} const dailyItem=e.target.closest("[data-daily-index]"); if(dailyItem){dailyState.index=Number(dailyItem.dataset.dailyIndex)||0;dailyState.flipped=false;return render();} const dailySound=e.target.closest("[data-daily-sound]"); if(dailySound){const items=getDailyWords(); const v=items[dailyState.index]||items[0]; const formKey=dailySound.dataset.dailyForm || "base"; if(v){ if(dailySound.dataset.dailySound==="word"){ const target=conj(v)[formKey]; speak(target.kanji); } else { speak(makeFormExample(v, formKey).rawJp); } } return; } const qm=e.target.closest("[data-qmode]"); if(qm) return startQuiz(qm.dataset.qmode); const ans=e.target.closest("[data-answer]"); if(ans && st.selected===null){const picked=ans.dataset.answer;st.selected=picked;if(picked===st.question.answer) st.score.correct++; else {st.score.wrong++; const w={question:st.question.prompt, answer:st.question.answer, picked:picked, type:st.question.type, group:st.question.group}; st.wrong=[w].concat(st.wrong).slice(0,30); st.sessionWrong=[w].concat(st.sessionWrong);} return render();} const fav=e.target.closest("[data-favid]"); if(fav){const id=Number(fav.dataset.favid); st.category="전체"; st.search=""; qs("#searchInput").value=""; st.index=verbs.findIndex(function(v){return v.id===id;}); st.flipped=false; return setTab("card");} });
       qs("#searchBox").addEventListener("click", function(e){
         if (e.target.closest("#searchClearBtn")) return;
         qs("#searchInput").focus();
